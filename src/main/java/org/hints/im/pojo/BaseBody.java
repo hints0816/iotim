@@ -12,8 +12,16 @@ import java.io.Serializable;
 @Data
 public abstract class BaseBody implements Serializable {
 
-    private Integer tag = 1;
+    private Byte version = 1;
 
-    public abstract Byte code();
+    public Byte getVersion() {
+        return version;
+    }
+
+    public void setVersion(Byte version) {
+        this.version = version;
+    }
+
+    public abstract Byte getCommand();
 
 }

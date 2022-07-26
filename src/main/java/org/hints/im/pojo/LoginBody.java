@@ -11,12 +11,9 @@ import java.io.Serializable;
  */
 @Data
 public class LoginBody extends BaseBody implements Serializable {
-    private Integer status;
-    private String msg;
-    private Integer userid;
 
     @Override
-    public Byte code() {
-        return 2;
+    public Byte getCommand() {
+        return null;
     }
 }

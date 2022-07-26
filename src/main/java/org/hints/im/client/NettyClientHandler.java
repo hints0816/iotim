@@ -1,13 +1,13 @@
 package org.hints.im.client;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gree.chat.pojo.MsgBody;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.hints.im.pojo.MsgBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

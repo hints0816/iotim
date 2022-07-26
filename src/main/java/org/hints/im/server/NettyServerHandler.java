@@ -1,35 +1,43 @@
 package org.hints.im.server;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gree.chat.pojo.MsgBody;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.mqtt.MqttMessage;
+import lombok.extern.slf4j.Slf4j;
+import org.hints.im.pojo.MsgBody;
+import org.slf4j.Logger;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by 180686 on 2022/5/9 17:28
  */
-
+@Slf4j
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+    private final ProtocolProcessor m_processor;
+
+    public NettyServerHandler(ProtocolProcessor processor) {
+        m_processor = processor;
+    }
 
     // 保存id和容器的关系
     private static Map<String, ChannelHandlerContext> map = new HashMap<>();
 
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-
-        super.userEventTriggered(ctx, evt);
-    }
+    // 保存id和容器的关系
+    private static ArrayList<Channel> list = new ArrayList<Channel>();
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-        System.out.println("ServerHandler channelActive()" + ctx.channel().remoteAddress());
+    public void channelActive(ChannelHandlerContext context) throws Exception {
+        Channel channel = context.channel();
+        map.put(channel.id().toString(), context);
+        log.info("ServerHandler channelActive(){}", channel.remoteAddress());
+        channel.writeAndFlush(new TextWebSocketFrame("login success"));
     }
 
     @Override
@@ -44,36 +52,31 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
+    public void channelRead(ChannelHandlerContext channelHandlerContext, Object message) throws Exception {
+
+        if (!(message instanceof MqttMessage)) {
+            log.error("Unknown mqtt message type {}, {}", message.getClass().getName(), message);
+            return;
+        }
 
         Channel channel = channelHandlerContext.channel();
         ChannelId channelId = channel.id();
-        map.put(channelId.toString(), channelHandlerContext);
-        TextWebSocketFrame textWebSocketFrame = (TextWebSocketFrame) o;
+        TextWebSocketFrame textWebSocketFrame = (TextWebSocketFrame)message;
         String msg = textWebSocketFrame.text();
-        System.out.println("msg:" + msg);
-        ByteBuf byteBuf = (ByteBuf) o;
-        String rev = getMessage(byteBuf);
-        MsgBody msgBody = JSONObject.parseObject(rev, MsgBody.class);
-        String format = String.format("服务器接收到客户端消息，发送人：%s, 发送消息：%s .", msgBody.getSendUserName(), msgBody.getMsg());
-        System.out.println(format);
 
-        map.forEach((k, v) -> {
-            try {
-                // 出现问题1的原因：遇到不是自身的客户端过滤掉了，但实际上返回消息是需要自身的
-                if (channelId.toString().equals(k)) {
-                    return;
-                }
 
-                MsgBody sendMsgBody = new MsgBody();
-                sendMsgBody.setSendUserName(msgBody.getSendUserName());
-                sendMsgBody.setMsg(msgBody.getMsg());
-                v.writeAndFlush(getSendByteBuf(JSONObject.toJSONString(sendMsgBody)));
-                System.out.println("服务端回复消息： " + JSONObject.toJSONString(sendMsgBody));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        if (msg.startsWith("@")) {
+            int i = msg.indexOf(" ");
+            String id = msg.substring(1, i);
+            String tomsg = msg.substring(i);
+            System.out.println(tomsg);
+            ChannelHandlerContext channelHandlerContext1 = map.get(id);
+            channelHandlerContext1.channel().writeAndFlush(new TextWebSocketFrame(tomsg));
+        } else {
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(channelId).append(":").append(msg);
+            channel.writeAndFlush(new TextWebSocketFrame(stringBuffer.toString()));
+        }
     }
 
     /**
