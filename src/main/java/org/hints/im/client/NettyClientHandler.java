@@ -53,8 +53,8 @@ public class NettyClientHandler extends SimpleChannelInboundHandler {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         this.ctx = ctx;
         MsgBody msgBody = new MsgBody();
-        msgBody.setSendUserName(userName);
-        msgBody.setMsg("进入聊天室");
+        msgBody.setToUserId(userName);
+        msgBody.setMessage("进入聊天室");
         byte[] data = JSONObject.toJSONString(msgBody).getBytes();
         firstMessage = Unpooled.buffer();
         firstMessage.writeBytes(data);
@@ -72,7 +72,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler {
         ByteBuf buf = (ByteBuf) o;
         String rev = getMessage(buf);
         MsgBody msgBody = JSONObject.parseObject(rev, MsgBody.class);
-        String format = String.format("客户端收到服务端的消息，发送人:%s , 发送消息:%s .", msgBody.getSendUserName(), msgBody.getMsg());
+        String format = String.format("客户端收到服务端的消息，发送人:%s , 发送消息:%s .", msgBody.getToUserId(), msgBody.getMessage());
         System.out.println(format);
     }
 

@@ -82,8 +82,9 @@ public class NettyServer{
                                     .addLast("http-chunked", new ChunkedWriteHandler())
 
                                     .addLast(HttpRequestHandler.INSTANCE)
-                                    .addLast(RegisterRequestHandler.INSTANCE);
-                            ;
+                                    .addLast(RegisterRequestHandler.INSTANCE)
+                                    .addLast(HeartBeatRequestHandler.INSTANCE)
+                                    .addLast(ExceptionHandler.INSTANCE);;
                         }
                     });
 

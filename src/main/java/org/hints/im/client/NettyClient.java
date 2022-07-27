@@ -73,10 +73,6 @@ public class NettyClient {
                         Scanner sc = new Scanner(System.in);
                         while (sc.hasNext()) {
 
-                            MsgBody msgBody = new MsgBody();
-                            msgBody.setSendUserName(sendUserName);
-                            msgBody.setMsg(sc.next());
-                            nettyClientHandler.sendMsg(JSONObject.toJSONString(msgBody));
                         }
                     }
                 }).start();
