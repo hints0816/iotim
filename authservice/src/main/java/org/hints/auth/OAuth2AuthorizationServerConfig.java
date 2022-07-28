@@ -34,16 +34,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         oauthServer.checkTokenAccess("isAuthenticated()");
     }
 
-    //进行 Client 客户端的配置。
-    //设置使用基于内存的 Client 存储器。实际情况下，最好放入数据库中，方便管理。
-    /*
-     *
-     * 创建一个 Client 配置。如果要继续添加另外的 Client 配置，可以在 <4.3> 处使用 #and() 方法继续拼接。
-     * 注意，这里的 .withClient("clientapp").secret("112233") 代码段，就是 client-id 和 client-secret。
-     *补充知识：可能会有胖友会问，为什么要创建 Client 的 client-id 和 client-secret 呢？
-     *通过 client-id 编号和 client-secret，授权服务器可以知道调用的来源以及正确性。这样，
-     *即使“坏人”拿到 Access Token ，但是没有 client-id 编号和 client-secret，也不能和授权服务器发生有效的交互。
-     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory() // <4.1>

@@ -2,28 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b0d2b38-af40-4996-aad4-5228bcabf9a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/AuthApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/ImServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/ImServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/Client1.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/Client2.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/Client3.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/BaseBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/BaseBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/LoginBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/LoginBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/MsgBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/MsgBody.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/ExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/ExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/HttpRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HttpRequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/MessageRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MessageRequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/ProtocolProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/ProtocolProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/RegisterRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/RegisterRequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -79,28 +60,28 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="1" />
-          <entry key="java" value="43" />
+          <entry key="java" value="44" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="43" />
+          <entry key="JAVA" value="44" />
           <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1173" />
-          <entry key="txt" value="28" />
+          <entry key="java" value="1185" />
+          <entry key="txt" value="45" />
           <entry key="xml" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1173" />
-          <entry key="PLAIN_TEXT" value="28" />
+          <entry key="JAVA" value="1185" />
+          <entry key="PLAIN_TEXT" value="45" />
           <entry key="XML" value="14" />
         </counts>
       </usages-collector>
@@ -161,7 +142,7 @@
         <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/MsgBody.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="336">
-              <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -172,10 +153,24 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="382">
+              <caret line="39" column="38" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/AuthApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#286#287#0" expanded="true" />
+                <element signature="e#367#368#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -243,6 +238,7 @@
         <option value="$PROJECT_DIR$/imservice/src/main/java/im/pojo/MsgBody.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/MsgBody.java" />
         <option value="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java" />
+        <option value="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/AuthApplication.java" />
       </list>
     </option>
   </component>
@@ -265,11 +261,11 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-194" />
-    <option name="y" value="167" />
-    <option name="width" value="1879" />
-    <option name="height" value="894" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="5" />
+    <option name="y" value="40" />
+    <option name="width" value="1109" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -406,7 +402,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1659004266901" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1659004775169" />
     <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -427,7 +423,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.NettyServer">
+  <component name="RunManager" selected="Spring Boot.AuthApplication">
     <configuration name="Client1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.hints.im.client.Client1" />
       <module name="iotim2" />
@@ -467,13 +463,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="authservice" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.hints.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.hints.auth.AuthApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.NettyServer" />
       <item itemvalue="Application.Client1" />
       <item itemvalue="Application.Client2" />
+      <item itemvalue="Spring Boot.AuthApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.AuthApplication" />
         <item itemvalue="Application.NettyServer" />
         <item itemvalue="Application.Client2" />
         <item itemvalue="Application.Client1" />
@@ -498,7 +509,7 @@
       <workItem from="1658910773885" duration="2756000" />
       <workItem from="1658915022543" duration="1383000" />
       <workItem from="1658977523939" duration="2732000" />
-      <workItem from="1659002831553" duration="1411000" />
+      <workItem from="1659002831553" duration="1937000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1657795243273</created>
@@ -521,18 +532,25 @@
       <option name="project" value="LOCAL" />
       <updated>1658915858992</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix():add auth2 module">
+      <created>1659004356032</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1659004356032</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48825000" />
+    <option name="totallyTimeSpent" value="49351000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="32" width="1936" height="1056" extended-state="6" />
+    <frame x="5" y="40" width="1109" height="1038" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Web" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3272921" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18303145" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -543,7 +561,7 @@
       <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3340708" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.34070796" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.7057522" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -576,7 +594,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="fix():add some handler" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix():add some handler" />
+    <MESSAGE value="fix():add auth2 module" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix():add auth2 module" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -829,17 +848,29 @@
     <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/MsgBody.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
-          <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/AuthApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#286#287#0" expanded="true" />
+            <element signature="e#367#368#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+        <state relative-caret-position="382">
+          <caret line="39" column="38" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
