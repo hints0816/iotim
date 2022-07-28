@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="authservice" />
+        <module name="imservice" />
         <module name="iotim" />
-        <module name="iotim2" />
       </profile>
     </annotationProcessing>
   </component>

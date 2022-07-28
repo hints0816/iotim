@@ -2,13 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b0d2b38-af40-4996-aad4-5228bcabf9a5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/ImServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/ImServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/Client1.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/Client2.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/Client3.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/BaseBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/BaseBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/LoginBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/LoginBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/MsgBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/MsgBody.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/ExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/ExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/HttpRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HttpRequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/MessageRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MessageRequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/ProtocolProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/ProtocolProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/hints/im/server/RegisterRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/RegisterRequestHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/imservice/target/" />
+    <ignored path="$PROJECT_DIR$/authservice/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,40 +67,41 @@
     <session id="1636901121">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="2" />
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="1" />
-          <entry key="java" value="37" />
-          <entry key="xml" value="2" />
+          <entry key="java" value="43" />
+          <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="37" />
-          <entry key="XML" value="2" />
+          <entry key="JAVA" value="43" />
+          <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1146" />
+          <entry key="java" value="1173" />
           <entry key="txt" value="28" />
-          <entry key="xml" value="4" />
+          <entry key="xml" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1146" />
+          <entry key="JAVA" value="1173" />
           <entry key="PLAIN_TEXT" value="28" />
-          <entry key="XML" value="4" />
+          <entry key="XML" value="14" />
         </counts>
       </usages-collector>
     </session>
@@ -88,10 +109,59 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/HttpRequestHandler.java">
+        <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HttpRequestHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+            <state relative-caret-position="70">
+              <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imservice/pom.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/authservice/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/SecurityConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1185#1186#0" expanded="true" />
+                <element signature="e#1266#1267#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/MsgBody.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -100,94 +170,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final-sources.jar!/io/netty/channel/SimpleChannelInboundHandler.java">
+        <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="33" column="12" lean-forward="true" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+            <state relative-caret-position="490">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+        <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
+            <state relative-caret-position="966">
               <caret line="83" column="54" selection-start-line="83" selection-start-column="54" selection-end-line="83" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java">
+        <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="69" column="43" lean-forward="true" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="79" column="52" lean-forward="true" selection-start-line="79" selection-start-column="52" selection-end-line="79" selection-end-column="52" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/ExceptionHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final-sources.jar!/io/netty/channel/ChannelDuplexHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="41" column="49" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/Client1.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+            <state relative-caret-position="126">
+              <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -223,7 +230,6 @@
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/server/RegisterRequestHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/BaseBody.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/LoginBody.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/MsgBody.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/Command.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/server/MessageRequestHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java" />
@@ -233,6 +239,10 @@
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/hints/im/server/WebSocketInterceptor.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/SecurityConfig.java" />
+        <option value="$PROJECT_DIR$/imservice/src/main/java/im/pojo/MsgBody.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/hints/im/pojo/MsgBody.java" />
+        <option value="$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java" />
       </list>
     </option>
   </component>
@@ -255,11 +265,11 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="613" />
-    <option name="y" value="41" />
-    <option name="width" value="1306" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-194" />
+    <option name="y" value="167" />
+    <option name="width" value="1879" />
+    <option name="height" value="894" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -267,6 +277,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -277,17 +289,25 @@
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="authservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="authservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="authservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="authservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -295,6 +315,42 @@
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="authservice" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="auth" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -303,6 +359,7 @@
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -312,6 +369,7 @@
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -321,28 +379,38 @@
             <path>
               <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
               <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="imservice" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="im" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="iotim2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="iotim2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1658913790347" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1659004266901" />
     <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="configurable.group.language" />
@@ -428,6 +496,9 @@
       <workItem from="1658712427652" duration="7419000" />
       <workItem from="1658805219980" duration="4816000" />
       <workItem from="1658910773885" duration="2756000" />
+      <workItem from="1658915022543" duration="1383000" />
+      <workItem from="1658977523939" duration="2732000" />
+      <workItem from="1659002831553" duration="1411000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1657795243273</created>
@@ -443,27 +514,37 @@
       <option name="project" value="LOCAL" />
       <updated>1658828988744</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix():add some handler">
+      <created>1658915858992</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1658915858992</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43299000" />
+    <option name="totallyTimeSpent" value="48825000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="613" y="41" width="1306" height="1038" extended-state="0" />
+    <frame x="-8" y="32" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26003212" />
+      <window_info id="Web" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3272921" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Java Enterprise" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.335141" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.5033186" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3340708" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.7057522" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -474,6 +555,7 @@
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.3296837" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32964602" />
+      <window_info anchor="right" id="Bean Validation" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -500,34 +582,28 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java</url>
+          <url>file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClient.java</url>
           <line>68</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java</url>
+          <url>file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java</url>
           <line>26</line>
           <properties />
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java</url>
+          <url>file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java</url>
           <line>22</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java</url>
-          <line>75</line>
+          <url>file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServerHandler.java</url>
+          <line>56</line>
           <properties />
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/hints/im/server/HttpRequestHandler.java</url>
-          <line>32</line>
-          <properties />
-          <option name="timeStamp" value="29" />
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -540,7 +616,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/ImServiceApplication.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/ImServiceApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
@@ -554,7 +630,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/Client3.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client3.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
@@ -563,48 +639,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/WebSocketServerHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/WebSocketProtocolHandler.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServerHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/ProtocolProcessor.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/ProtocolProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
           <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/RegisterRequestHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/RegisterRequestHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/pojo/MsgBody.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/pojo/Command.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/Command.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
           <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MoquetteIdleTimeoutHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="21" column="41" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="41" />
@@ -621,14 +677,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/pojo/BaseBody.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/BaseBody.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/pojo/LoginBody.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/LoginBody.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="12" column="64" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="64" />
@@ -640,65 +696,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/MessageRequestHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/MessageRequestHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/Client2.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/Client1.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/WebSocketInterceptor.java" />
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+        <state relative-caret-position="910">
+          <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2714#2715#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClient.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/NettyClientHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="69" column="43" lean-forward="true" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+        <state relative-caret-position="1050">
+          <caret line="79" column="52" selection-start-line="79" selection-start-column="52" selection-end-line="79" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/client/NettyClientHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="79" column="52" lean-forward="true" selection-start-line="79" selection-start-column="52" selection-end-line="79" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/WebSocketInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="7" lean-forward="true" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HeartBeatRequestHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
@@ -708,7 +742,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/ExceptionHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/ExceptionHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
@@ -720,32 +754,95 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final-sources.jar!/io/netty/channel/ChannelDuplexHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
+        <state relative-caret-position="378">
           <caret line="41" column="49" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/NettyServer.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/client/Client1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
+        <state relative-caret-position="210">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final-sources.jar!/io/netty/channel/SimpleChannelInboundHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="26" column="41" lean-forward="true" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="966">
           <caret line="83" column="54" selection-start-line="83" selection-start-column="54" selection-end-line="83" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/hints/im/server/HttpRequestHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/NettyServerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+        <state relative-caret-position="126">
+          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/server/HttpRequestHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final-sources.jar!/io/netty/channel/SimpleChannelInboundHandler.java">
+    <entry file="file://$PROJECT_DIR$/imservice/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/authservice/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="33" column="12" lean-forward="true" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+        <state relative-caret-position="196">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/SecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1185#1186#0" expanded="true" />
+            <element signature="e#1266#1267#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imservice/src/main/java/org/hints/im/pojo/MsgBody.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/authservice/src/main/java/org/hints/auth/OAuth2AuthorizationServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -766,7 +863,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>No facets are configured</last-edited>
+          <last-edited>Spring</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -801,7 +898,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>iotim2</last-edited>
+          <last-edited>imservice</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
