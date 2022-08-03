@@ -1,0 +1,18 @@
+server:
+   port: 6001
+spring:
+   datasource:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@10.2.25.123/ggrdattest
+      username: greescmdb2
+      password: passwd
+   application:
+      name: auth-server
+   thymeleaf:
+      prefix: classpath:/views/
+      suffix: .html
+      cache: false
+   redis:
+      host: 10.2.24.231
+      database: 12
+      port: 6379
