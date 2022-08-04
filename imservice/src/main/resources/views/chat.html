@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>广播式WebSocket</title>
+    <!--    附件 stomp支持js-->
+    <script src="js/sockjs.min.js"></script>
+    <script src="js/stomp.min.js"></script>
+</head>
+<!--页面加载后 如果原来就有socket对象  就先断开-->
+<body onload="disconnect()">
+<!--检测浏览器是否支持websocket -->
+<noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
+<div>
+    <div>
+        <!-- 创建并注册 websocket  这里注册的是广播【本页面连带发送和接收广播】-->
+        <button id="connect" onclick="connect();">连接</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
+    </div>
+
+    <div id="conversationDiv">
+        <label>输入你的名字</label>
+        <input type="text" id="name"/>
+        <!-- 点击发送后  就能发送私信-->
+        <button id="sendName" onclick="sendName();">发送</button>
+        <p id="response"></p>
+    </div>
+</div>
+<script type="text/javascript">
+    let url = "ws://localhost:9091"
+
+    function init() {
+        ws.onopen = function (evt) {
+            console.log("WebSocket 连接成功!!");
+            console.log(evt);
+
+        };
+    }
+
+
+    //点击连接 时候触发的事件 【这个函数 除了更改自己url 或者添加自己的业务逻辑  一般不用修改 】
+    function connect() {
+        try {
+            ws = new WebSocket(url);
+            init();
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    //断开连接
+    function disconnect() {
+
+    }
+
+    //发送私聊
+    function sendName() {
+    }
+
+    //展示 返回的消息
+    function showResponse(message) {
+    }
+</script>
+</body>
+</html>
