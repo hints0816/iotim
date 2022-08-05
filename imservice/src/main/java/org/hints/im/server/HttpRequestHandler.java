@@ -2,6 +2,8 @@ package org.hints.im.server;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -10,7 +12,10 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
+import org.hints.im.utils.SessionUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +61,24 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         if (handshaker == null) {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
         } else {
+
+            HttpHeaders headers = req.headers();
+            String token = headers.get("Sec-WebSocket-Protocol");
+            Claims claims = null;
+            try {
+                claims = Jwts.parser()
+                        .setSigningKey("internet_plus".getBytes("utf-8"))
+                        .parseClaimsJws(token).getBody();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String user_name = claims.get("user_name").toString();
+
+            SessionUtil.bindChannel(user_name, ctx.channel());
+            if (SessionUtil.hasLogin(ctx.channel())) {
+                System.out.println("该用户已登录");
+            }
+
             handshaker.handshake(ctx.channel(), req);
         }
     }

@@ -12,6 +12,8 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.ResourceLeakDetector;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.util.concurrent.Executors;
@@ -19,8 +21,8 @@ import java.util.concurrent.Executors;
 /**
  * Created by 180686 on 2022/5/9 17:28
  */
-
-public class NettyServer{
+@Component
+public class NettyServer {
 
     private final static String BANNER =
             "welcome!hongkongdoll!";
@@ -40,7 +42,7 @@ public class NettyServer{
         System.out.println(BANNER);
     }
 
-    public static void run() {
+    public void run() {
         instance = new NettyServer();
         // config
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.ADVANCED);
@@ -103,8 +105,4 @@ public class NettyServer{
         }
     }
 
-    public static void main(String[] args) {
-        final int port = 9091;
-        run();
-    }
 }

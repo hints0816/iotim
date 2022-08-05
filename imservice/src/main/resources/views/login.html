@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<div>
+    <div>
+        <form name="loginForm" method="post" action="/oauth/login">
+                <input placeholder="username" type="text" name="username" id="username">
+                <input placeholder="passname" type="password" name="password" id="password">
+        </form>
+        <button id="loginIn">登录</button>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#loginIn').click(function () {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                dataType: 'json',
+                data: {
+                    "username": username,
+                    "password": password,
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+        });
+    })
+</script>
+</body>
+</html>

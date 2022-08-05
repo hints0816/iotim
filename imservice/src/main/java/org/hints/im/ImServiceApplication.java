@@ -1,5 +1,6 @@
 package org.hints.im;
 
+import org.hints.im.server.NettyServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -15,6 +16,9 @@ public class ImServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ImServiceApplication.class, args);
+
+        NettyServer nettyServer = new NettyServer();
+        nettyServer.run();
     }
 
 

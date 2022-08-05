@@ -14,8 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class ViewController {
 
     @GetMapping("/index")
-    public ModelAndView toSetting() {
+    public ModelAndView toIndex() {
         ModelAndView model = new ModelAndView("chat");
+        return model;
+    }
+
+    @GetMapping("/login")
+    public ModelAndView toLogin() {
+        ModelAndView model = new ModelAndView("login");
         return model;
     }
 }
