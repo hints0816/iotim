@@ -38,6 +38,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest)msg);
             log.info("http 握手成功");
+            ctx.channel().writeAndFlush(new TextWebSocketFrame("123213"));
         } else if (msg instanceof WebSocketFrame) {
             try  {
                 handWebsocketFrame(ctx, (WebSocketFrame)msg);
@@ -62,22 +63,22 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
         } else {
 
-            HttpHeaders headers = req.headers();
-            String token = headers.get("Sec-WebSocket-Protocol");
-            Claims claims = null;
-            try {
-                claims = Jwts.parser()
-                        .setSigningKey("internet_plus".getBytes("utf-8"))
-                        .parseClaimsJws(token).getBody();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            String user_name = claims.get("user_name").toString();
-
-            SessionUtil.bindChannel(user_name, ctx.channel());
-            if (SessionUtil.hasLogin(ctx.channel())) {
-                System.out.println("该用户已登录");
-            }
+//            HttpHeaders headers = req.headers();
+//            String token = headers.get("Sec-WebSocket-Protocol");
+//            Claims claims = null;
+//            try {
+//                claims = Jwts.parser()
+//                        .setSigningKey("internet_plus".getBytes("utf-8"))
+//                        .parseClaimsJws(token).getBody();
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//            String user_name = claims.get("user_name").toString();
+//
+//            SessionUtil.bindChannel(user_name, ctx.channel());
+//            if (SessionUtil.hasLogin(ctx.channel())) {
+//                System.out.println("该用户已登录");
+//            }
 
             handshaker.handshake(ctx.channel(), req);
         }
@@ -116,7 +117,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         JSONObject jsonObject = JSONObject.parseObject(content);
         System.err.println("请求参数："+jsonObject);
         Byte type = jsonObject.getByte("type");
-        JSONObject parmas = jsonObject.getJSONObject("params");
 
         ctx.fireChannelRead("123");
     }

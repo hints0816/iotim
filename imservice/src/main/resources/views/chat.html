@@ -28,15 +28,32 @@
 </div>
 <script type="text/javascript">
     let url = "ws://localhost:9091"
-
+    let ws;
     function init() {
         ws.onopen = function (evt) {
             console.log("WebSocket 连接成功!!");
-            console.log(evt);
-
+            let object = {};
+            object.type = 2;
+            object.params = 2;
+            send(JSON.stringify(object));
         };
+
+        ws.onmessage = function (event) {
+            let data = JSON.parse(event.data);
+            console.log(JSON.stringify(data));
+        }
     }
 
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if (ws.readyState === ws.OPEN) {
+            ws.send(message);
+        } else {
+            alert("WebSocket连接没有建立成功！！");
+        }
+    }
 
     //点击连接 时候触发的事件 【这个函数 除了更改自己url 或者添加自己的业务逻辑  一般不用修改 】
     function connect() {
@@ -55,7 +72,7 @@
             token = unescape(allcookies.substring(cookie_pos, cookie_end));
         }
         try {
-            ws = new WebSocket(url, [token]);
+            ws = new WebSocket(url+"/"+token);
             init();
         } catch (e) {
             console.log(e);
