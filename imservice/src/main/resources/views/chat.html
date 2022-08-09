@@ -6,40 +6,106 @@
     <!--    附件 stomp支持js-->
     <script src="js/sockjs.min.js"></script>
     <script src="js/stomp.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 </head>
 <!--页面加载后 如果原来就有socket对象  就先断开-->
-<body onload="disconnect()">
 <!--检测浏览器是否支持websocket -->
 <noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
 <div>
     <div>
         <!-- 创建并注册 websocket  这里注册的是广播【本页面连带发送和接收广播】-->
+        当前登录: <input type="text" id="name"/>
+    </div>
+
+    <div>
         <button id="connect" onclick="connect();">连接</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
+        <button id="disconnect" onclick="disconnect();">断开连接</button>
     </div>
 
     <div id="conversationDiv">
-        <label>输入你的名字</label>
-        <input type="text" id="name"/>
+        <label>用户列表：</label>
         <!-- 点击发送后  就能发送私信-->
-        <button id="sendName" onclick="sendName();">发送</button>
+        <div id = "userlist">
+
+        </div>
         <p id="response"></p>
+    </div>
+
+    <div id="">
+        <input type="text" id="msg"/>
+        <button id="sendName" onclick="sendName();">发送</button>
+    </div>
+
+    <div style="width:250px;height:200px; overflow-y:auto;border:1px solid #333;" id="show">
     </div>
 </div>
 <script type="text/javascript">
-    let url = "ws://localhost:9091"
+    $(document).ready(function () {
+        getInfo();
+        connect();
+
+        userlist();
+
+
+    });
+
+    $(document).on('change', '.toUser', function() {
+        toUser = $(".toUser").checked.value;
+        console.log(toUser);
+    });
+
+    let url = "ws://localhost:9091";
+    let access_token = getCookie();
     let ws;
+    let toUser;
+
+    function getInfo() {
+        $.ajax({
+            url:'../getInfo',
+            dataType:'json',
+            type:'get',
+            data:{},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer "+access_token);
+            },
+            success:function(data){
+                $("#name").val(data.name);
+            },
+        });
+    }
+
+    function userlist() {
+        $.ajax({
+            url:'../userlist',
+            dataType:'json',
+            type:'get',
+            data:{},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer "+access_token);
+            },
+            success:function(data){
+                data.forEach((item, index, data) => {
+                    var str = '<input type="radio" class="toUser" name="toUser" />'+item.user_name;
+                    $("#userlist").html(str);
+                })
+            },
+        });
+    }
+
     function init() {
         ws.onopen = function (evt) {
             console.log("WebSocket 连接成功!!");
             let object = {};
-            object.type = 2;
-            object.params = 2;
+            object.type = 1;
             send(JSON.stringify(object));
         };
 
         ws.onmessage = function (event) {
             let data = JSON.parse(event.data);
+
+            var show=document.getElementById("show");
+            show.innerHTML+=data.params.message+"<br/>";
+
             console.log(JSON.stringify(data));
         }
     }
@@ -57,35 +123,45 @@
 
     //点击连接 时候触发的事件 【这个函数 除了更改自己url 或者添加自己的业务逻辑  一般不用修改 】
     function connect() {
-        var token = "";
-        var cookie_name = "access_token";
-        var allcookies = document.cookie;
-        var cookie_pos = allcookies.indexOf(cookie_name);
-        if (cookie_pos != -1)
-        {
-            cookie_pos += cookie_name.length + 1;
-            var cookie_end = allcookies.indexOf(";", cookie_pos);
-            if (cookie_end == -1)
-            {
-                cookie_end = allcookies.length;
-            }
-            token = unescape(allcookies.substring(cookie_pos, cookie_end));
-        }
         try {
-            ws = new WebSocket(url+"/"+token);
+            ws = new WebSocket(url + "/" + access_token);
             init();
         } catch (e) {
             console.log(e);
         }
     }
 
+    function getCookie() {
+        var token = "";
+        var cookie_name = "access_token";
+        var allcookies = document.cookie;
+        var cookie_pos = allcookies.indexOf(cookie_name);
+        if (cookie_pos != -1) {
+            cookie_pos += cookie_name.length + 1;
+            var cookie_end = allcookies.indexOf(";", cookie_pos);
+            if (cookie_end == -1) {
+                cookie_end = allcookies.length;
+            }
+            token = unescape(allcookies.substring(cookie_pos, cookie_end));
+        }
+        return token
+    }
+    
     //断开连接
     function disconnect() {
-
+        ws.close()
+        document.getElementById("show").innerHTML="";
+        document.getElementById("show").innerHTML+="断开连接<br/>";
+        document.getElementById("msg").value="";
     }
 
     //发送私聊
     function sendName() {
+        let object = {};
+        object.type = 2;
+        object.toUserId = toUser;
+        object.msg = $("#msg").val();
+        send(JSON.stringify(object));
     }
 
     //展示 返回的消息

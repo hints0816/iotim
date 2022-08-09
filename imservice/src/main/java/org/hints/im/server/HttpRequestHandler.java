@@ -13,6 +13,9 @@ import io.netty.util.CharsetUtil;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
+import org.hints.im.pojo.BaseBody;
+import org.hints.im.pojo.LoginBody;
+import org.hints.im.pojo.MsgBody;
 import org.hints.im.utils.SessionUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -38,7 +41,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest)msg);
             log.info("http 握手成功");
-            ctx.channel().writeAndFlush(new TextWebSocketFrame("123213"));
         } else if (msg instanceof WebSocketFrame) {
             try  {
                 handWebsocketFrame(ctx, (WebSocketFrame)msg);
@@ -63,22 +65,21 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
         } else {
 
-//            HttpHeaders headers = req.headers();
-//            String token = headers.get("Sec-WebSocket-Protocol");
-//            Claims claims = null;
-//            try {
-//                claims = Jwts.parser()
-//                        .setSigningKey("internet_plus".getBytes("utf-8"))
-//                        .parseClaimsJws(token).getBody();
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//            String user_name = claims.get("user_name").toString();
-//
-//            SessionUtil.bindChannel(user_name, ctx.channel());
-//            if (SessionUtil.hasLogin(ctx.channel())) {
-//                System.out.println("该用户已登录");
-//            }
+            String token = req.uri().substring(1);
+            Claims claims = null;
+            try {
+                claims = Jwts.parser()
+                        .setSigningKey("internet_plus".getBytes("utf-8"))
+                        .parseClaimsJws(token).getBody();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String user_name = claims.get("user_name").toString();
+
+            SessionUtil.bindChannel(user_name, ctx.channel());
+            if (SessionUtil.hasLogin(ctx.channel())) {
+                System.out.println("该用户已登录");
+            }
 
             handshaker.handshake(ctx.channel(), req);
         }
@@ -117,8 +118,28 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         JSONObject jsonObject = JSONObject.parseObject(content);
         System.err.println("请求参数："+jsonObject);
         Byte type = jsonObject.getByte("type");
+        BaseBody baseBody = null;
+        switch (type) {
+            // 注册user-->channel 映射
+            case 1:
+                LoginBody loginBody = new LoginBody();
+                loginBody.setUser(SessionUtil.getUser(ctx.channel()));
+                baseBody = loginBody;
+                break;
+            // 单聊
+            case 2:
+                MsgBody msgBody = new MsgBody();
+                String toUserId = jsonObject.getString("toUserId");
+                msgBody.setToUserId(toUserId);
+                String msg = jsonObject.getString("msg");
+                msgBody.setMessage(msg);
+                baseBody = msgBody;
+                break;
+            default:
+                break;
+        }
 
-        ctx.fireChannelRead("123");
+        ctx.fireChannelRead(baseBody);
     }
 }
 

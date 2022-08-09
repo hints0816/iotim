@@ -2,6 +2,8 @@ package org.hints.im.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 
 /**
@@ -85,6 +88,7 @@ public class NettyServer {
 
                                     .addLast(HttpRequestHandler.INSTANCE)
                                     .addLast(RegisterRequestHandler.INSTANCE)
+                                    .addLast(MessageRequestHandler.INSTANCE)
                                     .addLast(HeartBeatRequestHandler.INSTANCE)
                                     .addLast(ExceptionHandler.INSTANCE);
                         }
