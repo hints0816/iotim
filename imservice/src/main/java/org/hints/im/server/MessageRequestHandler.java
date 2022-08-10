@@ -32,14 +32,15 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         Channel toUserChannel = SessionUtil.getChannel(msgBody.getToUserId());
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
             message = msgBody.getMessage();
+            String toUser = SessionUtil.getUser(toUserChannel);
+            String fileType = msgBody.getFileType();
+            ByteBuf buf = getByteBuf(ctx, message, toUser, fileType);
+            toUserChannel.writeAndFlush(new TextWebSocketFrame(buf));
         } else {
             message = "当前用户："+msgBody.getToUserId()+"不在线！";
+
             System.err.println(message);
         }
-        String toUser = SessionUtil.getUser(toUserChannel);
-        String fileType = msgBody.getFileType();
-        ByteBuf buf = getByteBuf(ctx, message, toUser, fileType);
-        toUserChannel.writeAndFlush(new TextWebSocketFrame(buf));
     }
 
     public ByteBuf getByteBuf(ChannelHandlerContext ctx, String message, String toUser, String fileType) {

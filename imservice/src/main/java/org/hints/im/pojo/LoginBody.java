@@ -12,15 +12,13 @@ import java.io.Serializable;
 @Data
 public class LoginBody extends BaseBody implements Serializable {
 
+    /**
+     *
+     */
     private String user;
 
-    public String getUser() {
-        return user;
-    }
+    private String fromModule;
 
-    public void setUser(String user) {
-        this.user = user;
-    }
 
     @Override
     public Byte getCommand() {

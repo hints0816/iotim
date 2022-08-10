@@ -12,12 +12,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class ViewController {
 
+    /** 聊天页面
+     *
+     * @return
+     */
     @GetMapping("/index")
     public ModelAndView toIndex() {
         ModelAndView model = new ModelAndView("chat");
         return model;
     }
 
+    /** 登录页面
+     *
+     * @return
+     */
     @GetMapping("/login")
     public ModelAndView toLogin() {
         ModelAndView model = new ModelAndView("login");

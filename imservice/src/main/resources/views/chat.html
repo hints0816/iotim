@@ -50,7 +50,8 @@
     });
 
     $(document).on('change', '.toUser', function() {
-        toUser = $(".toUser").checked.value;
+        toUser = $('input:radio:checked').val();
+        history(toUser);
         console.log(toUser);
     });
 
@@ -58,6 +59,23 @@
     let access_token = getCookie();
     let ws;
     let toUser;
+
+    function history(toUser1) {
+        $.ajax({
+            url:'../history',
+            dataType:'json',
+            type:'get',
+            data:{
+                "fromUsername":toUser1
+            },
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer "+access_token);
+            },
+            success:function(data){
+                console.log(data);
+            }
+        });
+    }
 
     function getInfo() {
         $.ajax({
@@ -71,6 +89,12 @@
             success:function(data){
                 $("#name").val(data.name);
             },
+            error:function (data) {
+                if(data.status == 401){
+                    alert("请登录");
+                    window.location.href = 'http://localhost:8084/login';
+                }
+            }
         });
     }
 
@@ -84,10 +108,13 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer "+access_token);
             },
             success:function(data){
+                var str = "";
                 data.forEach((item, index, data) => {
-                    var str = '<input type="radio" class="toUser" name="toUser" />'+item.user_name;
-                    $("#userlist").html(str);
+                    if($("#name").val() != item.user_name) {
+                        str+= '<input type="radio" class="toUser" name="toUser" value="'+item.user_name+'"/>'+item.user_name;
+                    }
                 })
+                $("#userlist").html(str);
             },
         });
     }
