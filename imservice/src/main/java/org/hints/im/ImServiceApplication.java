@@ -17,8 +17,7 @@ public class ImServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ImServiceApplication.class, args);
 
-        NettyServer nettyServer = new NettyServer();
-        nettyServer.run();
+
     }
 
 

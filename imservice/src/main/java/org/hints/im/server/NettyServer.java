@@ -14,10 +14,14 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.ResourceLeakDetector;
+import org.hints.im.persist.DataBaseStore;
+import org.nutz.dao.Dao;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
@@ -25,14 +29,14 @@ import java.util.concurrent.Executors;
  * Created by 180686 on 2022/5/9 17:28
  */
 @Component
-public class NettyServer {
+public class NettyServer{
 
     private final static String BANNER =
             "welcome!hongkongdoll!";
     private static NettyServer instance;
     private static EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     private static EventLoopGroup workerGroup = new NioEventLoopGroup();
-
+    private ThreadPoolExecutorWrapper dbScheduler;
 
     /*** 资源关闭--在容器销毁是关闭 */
     @PreDestroy
@@ -46,10 +50,13 @@ public class NettyServer {
     }
 
     public void run() {
-        instance = new NettyServer();
         // config
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.ADVANCED);
-        instance.startServer();
+        this.startServer();
+    }
+
+    private DataBaseStore initStore(NettyServer nettyServer) {
+        return new DataBaseStore(nettyServer.dbScheduler);
     }
 
     public void startServer() {
@@ -59,6 +66,8 @@ public class NettyServer {
 
         //3. 初始化线程池
         int threadNum = Runtime.getRuntime().availableProcessors() * 2;
+        dbScheduler = new ThreadPoolExecutorWrapper(Executors.newScheduledThreadPool(threadNum), threadNum, "db");
+        DataBaseStore dataBaseStore = initStore(this);
         //(1).数据库
         //(2).业务
         //(3).回调
@@ -88,7 +97,7 @@ public class NettyServer {
 
                                     .addLast(HttpRequestHandler.INSTANCE)
                                     .addLast(RegisterRequestHandler.INSTANCE)
-                                    .addLast(MessageRequestHandler.INSTANCE)
+                                    .addLast(new MessageRequestHandler(dataBaseStore))
                                     .addLast(HeartBeatRequestHandler.INSTANCE)
                                     .addLast(ExceptionHandler.INSTANCE);
                         }

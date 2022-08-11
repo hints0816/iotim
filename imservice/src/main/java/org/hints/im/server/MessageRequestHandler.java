@@ -7,9 +7,13 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import org.hints.im.persist.DataBaseStore;
 import org.hints.im.pojo.MsgBody;
 import org.hints.im.utils.SessionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 /**
@@ -20,9 +24,10 @@ import java.nio.charset.Charset;
 @ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> {
 
-    public static MessageRequestHandler INSTANCE = new MessageRequestHandler();
+    private DataBaseStore dataBaseStore;
 
-    private MessageRequestHandler() {
+    public MessageRequestHandler(DataBaseStore dataBaseStore) {
+        this.dataBaseStore = dataBaseStore;
     }
 
     @Override
@@ -31,6 +36,10 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         String message = "";
         Channel toUserChannel = SessionUtil.getChannel(msgBody.getToUserId());
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
+            // 用户在线
+            // 1.直接先落到oracle，生产环境处理高并发使用 kafka->mongodb
+            dataBaseStore.persistMessage(null);
+
             message = msgBody.getMessage();
             String toUser = SessionUtil.getUser(toUserChannel);
             String fileType = msgBody.getFileType();
@@ -38,7 +47,6 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
             toUserChannel.writeAndFlush(new TextWebSocketFrame(buf));
         } else {
             message = "当前用户："+msgBody.getToUserId()+"不在线！";
-
             System.err.println(message);
         }
     }
