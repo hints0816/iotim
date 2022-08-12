@@ -12,9 +12,10 @@ import org.nutz.dao.entity.annotation.Table;
 @Table("CHAT_HISTORY")
 public class HistoryDO {
 
+    private String content;
     private Long from_id;
     private Long to_id;
     private Long type;
     private Long time;
-    private Long msg_id;
+    private String msg_id;
 }

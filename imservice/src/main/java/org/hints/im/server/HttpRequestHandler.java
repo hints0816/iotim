@@ -131,6 +131,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
                 MsgBody msgBody = new MsgBody();
                 String toUserId = jsonObject.getString("toUserId");
                 msgBody.setToUserId(toUserId);
+
+                msgBody.setMsgId(jsonObject.getString("msgId"));
                 String msg = jsonObject.getString("msg");
                 msgBody.setMessage(msg);
                 baseBody = msgBody;

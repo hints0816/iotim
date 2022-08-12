@@ -2,6 +2,7 @@ package org.hints.im.persist;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hints.im.pojo.MsgBody;
+import org.hints.im.pojo.entity.HistoryDO;
 import org.hints.im.server.NettyServer;
 import org.hints.im.server.ThreadPoolExecutorWrapper;
 import org.hints.im.utils.SpringUtils;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,9 +34,17 @@ public class DataBaseStore {
     }
 
     public void persistMessage(MsgBody msgBody) {
+        HistoryDO historyDO = new HistoryDO();
+        historyDO.setFrom_id(Long.valueOf(msgBody.getFromUserId()));
+        historyDO.setMsg_id(msgBody.getMsgId());
+        Date date = new Date();
+        historyDO.setTime(date.getTime());
+        historyDO.setContent(msgBody.getMessage());
+        historyDO.setTo_id(Long.valueOf(msgBody.getToUserId()));
+        historyDO.setType(1L);
+
         mScheduler.execute(()-> {
-            List<Record> sys_user = dao.query("sys_user", null);
-            System.out.println(sys_user);
+            HistoryDO insert = dao.insert(historyDO);
         });
     }
 

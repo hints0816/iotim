@@ -10,6 +10,10 @@ import java.io.Serializable;
 
 @Data
 public class MsgBody extends BaseBody implements Serializable {
+    private String msgId;
+
+    private String fromUserId;
+
     private String toUserId;
 
     private String message;
@@ -24,30 +28,6 @@ public class MsgBody extends BaseBody implements Serializable {
         super();
         this.toUserId = toUserId;
         this.message = message;
-    }
-
-    public String getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(String toUserId) {
-        this.toUserId = toUserId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getFileType() {
-        return fileType;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
     }
 
     @Override

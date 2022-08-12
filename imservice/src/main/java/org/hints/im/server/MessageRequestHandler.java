@@ -35,11 +35,13 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         // TODO Auto-generated method stub
         String message = "";
         Channel toUserChannel = SessionUtil.getChannel(msgBody.getToUserId());
+        // 1.直接先落到oracle，生产环境处理高并发使用 kafka->mongodb
+        String fromUser = SessionUtil.getUser(ctx.channel());
+        msgBody.setFromUserId(fromUser);
+        dataBaseStore.persistMessage(msgBody);
+
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
             // 用户在线
-            // 1.直接先落到oracle，生产环境处理高并发使用 kafka->mongodb
-            dataBaseStore.persistMessage(null);
-
             message = msgBody.getMessage();
             String toUser = SessionUtil.getUser(toUserChannel);
             String fileType = msgBody.getFileType();
