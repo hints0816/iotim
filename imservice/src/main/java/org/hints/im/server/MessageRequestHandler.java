@@ -10,7 +10,10 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.hints.im.persist.DataBaseStore;
 import org.hints.im.pojo.MsgBody;
 import org.hints.im.utils.SessionUtil;
+import org.hints.im.utils.SpringUtils;
+import org.nutz.dao.Dao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -24,10 +27,12 @@ import java.nio.charset.Charset;
 @ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> {
 
-    private DataBaseStore dataBaseStore;
+    private KafkaTemplate kafkaTemplate;
 
-    public MessageRequestHandler(DataBaseStore dataBaseStore) {
-        this.dataBaseStore = dataBaseStore;
+    public static MessageRequestHandler INSTANCE = new MessageRequestHandler();
+
+    private MessageRequestHandler() {
+
     }
 
     @Override
@@ -38,7 +43,8 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         // 1.直接先落到oracle，生产环境处理高并发使用 kafka->mongodb
         String fromUser = SessionUtil.getUser(ctx.channel());
         msgBody.setFromUserId(fromUser);
-        dataBaseStore.persistMessage(msgBody);
+        this.kafkaTemplate = SpringUtils.getBean(KafkaTemplate.class);
+        kafkaTemplate.send("test",  JSONObject.toJSONString(msgBody));
 
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
             // 用户在线

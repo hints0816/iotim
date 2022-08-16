@@ -25,7 +25,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/index","/login","/js/**")
+                .antMatchers("/index","/login","/js/**","/send")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
