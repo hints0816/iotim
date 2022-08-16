@@ -47,7 +47,8 @@ public class TestEndPointController {
     @GetMapping("/history")
     public ReturnVo history(Integer fromUsername, Principal principal) {
         String name = principal.getName();
-        List<HistoryDO> query = dao.query(HistoryDO.class, Cnd.where(new Static("((from_id = "+ name +" and to_id = "+ fromUsername +") or (from_id = "+ fromUsername +" and to_id = "+ name +"))")));
+        List<HistoryDO> query = dao.query(HistoryDO.class,
+                Cnd.where(new Static("((from_id = "+ name +" and to_id = "+ fromUsername +") or (from_id = "+ fromUsername +" and to_id = "+ name +"))")).orderBy("time", "asc"));
         return ReturnVo.success(query);
     }
 
