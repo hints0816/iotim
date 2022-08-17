@@ -29,7 +29,11 @@ spring:
     prefix: classpath:/views/
     suffix: .html
     cache: false
-
+minio:
+  url: http://10.2.24.234:9003
+  access-key: admin
+  secret-key: 12345678
+  bucket-name: test
 security:
   oauth2:
     resource:
