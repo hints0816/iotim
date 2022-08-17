@@ -55,9 +55,9 @@ public class NettyServer{
         this.startServer();
     }
 
-    private DataBaseStore initStore(NettyServer nettyServer) {
-        return new DataBaseStore(nettyServer.dbScheduler);
-    }
+//    private DataBaseStore initStore(NettyServer nettyServer) {
+//        return initDataBaseStore(nettyServer.dbScheduler);
+//    }
 
     public void startServer() {
         //1. 初始化数据库-oracle
@@ -65,9 +65,7 @@ public class NettyServer{
         //2. 初始化AES对称加密密钥
 
         //3. 初始化线程池
-        int threadNum = Runtime.getRuntime().availableProcessors() * 2;
-        dbScheduler = new ThreadPoolExecutorWrapper(Executors.newScheduledThreadPool(threadNum), threadNum, "db");
-        DataBaseStore dataBaseStore = initStore(this);
+
         //(1).数据库
         //(2).业务
         //(3).回调
@@ -97,7 +95,8 @@ public class NettyServer{
 
                                     .addLast(HttpRequestHandler.INSTANCE)
                                     .addLast(RegisterRequestHandler.INSTANCE)
-                                    .addLast(new MessageRequestHandler(dataBaseStore))
+                                    .addLast(MessageRequestHandler.INSTANCE)
+                                    .addLast(GroupMessageRequestHandler.INSTANCE)
                                     .addLast(HeartBeatRequestHandler.INSTANCE)
                                     .addLast(ExceptionHandler.INSTANCE);
                         }

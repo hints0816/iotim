@@ -12,7 +12,6 @@ import org.apache.http.util.EntityUtils;
 import org.nutz.dao.entity.Record;
 import org.nutz.lang.util.NutMap;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 

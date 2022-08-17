@@ -32,11 +32,13 @@ public class KafkaConsumer {
 
         MsgBody msgBody = JSONObject.parseObject(value, MsgBody.class);
 
+        log.info("async persistence ...");
+        AsyncManager.me().execute(AsyncFactory.asyncStore(msgBody));
+
         log.info("toMongodb ...");
         mongoOperations.save(msgBody,"message");
 
-        log.info("persistence ...");
-        AsyncManager.me().execute(AsyncFactory.asyncStore(msgBody));
+
 
     }
 
