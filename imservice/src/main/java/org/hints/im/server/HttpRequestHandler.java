@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hints.im.pojo.BaseBody;
+import org.hints.im.pojo.GroupBody;
 import org.hints.im.pojo.LoginBody;
 import org.hints.im.pojo.MsgBody;
 import org.hints.im.utils.SessionUtil;
@@ -120,13 +121,11 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         Byte type = jsonObject.getByte("type");
         BaseBody baseBody = null;
         switch (type) {
-            // 注册user-->channel 映射
             case 1:
                 LoginBody loginBody = new LoginBody();
                 loginBody.setUser(SessionUtil.getUser(ctx.channel()));
                 baseBody = loginBody;
                 break;
-            // 单聊
             case 2:
                 MsgBody msgBody = new MsgBody();
                 String toUserId = jsonObject.getString("toUserId");
@@ -136,6 +135,12 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
                 String msg = jsonObject.getString("msg");
                 msgBody.setMessage(msg);
                 baseBody = msgBody;
+                break;
+            case 3:
+                GroupBody groupBody = new GroupBody();
+                groupBody.setMessage(jsonObject.getString("msg"));
+                groupBody.setToGroupId(jsonObject.getString("groupId"));
+                baseBody = groupBody;
                 break;
             default:
                 break;
