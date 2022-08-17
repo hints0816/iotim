@@ -8,11 +8,41 @@
     <script src="js/stomp.min.js"></script>
     <script src="js/snow.js"></script>
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap-paginator.min.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <!--页面加载后 如果原来就有socket对象  就先断开-->
 <!--检测浏览器是否支持websocket -->
 <noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
 <div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">preview code</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#entity" aria-controls="entity" role="tab" data-toggle="tab">entity</a></li>
+                        <li role="presentation"><a href="#dao" aria-controls="dao" role="tab" data-toggle="tab">dao</a></li>
+                        <li role="presentation"><a href="#service" aria-controls="service" role="tab" data-toggle="tab">service</a></li>
+                        <li role="presentation"><a href="#serviceImpl" aria-controls="serviceImpl" role="tab" data-toggle="tab">serviceImpl</a></li>
+                        <li role="presentation"><a href="#controller" aria-controls="controller" role="tab" data-toggle="tab">controller</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="entity"></div>
+                        <div role="tabpanel" class="tab-pane" id="dao"></div>
+                        <div role="tabpanel" class="tab-pane" id="service"></div>
+                        <div role="tabpanel" class="tab-pane" id="serviceImpl"></div>
+                        <div role="tabpanel" class="tab-pane" id="controller"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div>
         <!-- 创建并注册 websocket  这里注册的是广播【本页面连带发送和接收广播】-->
         当前登录: <input type="text" id="name"/>
@@ -22,7 +52,9 @@
         <button id="connect" onclick="connect();">连接</button>
         <button id="disconnect" onclick="disconnect();">断开连接</button>
     </div>
-
+    <div>
+        <button id="creategroup" onclick="creategroup();" data-toggle="modal" data-target="#myModal">连接</button>
+    </div>
     <div id="conversationDiv">
         <label>用户列表：</label>
         <!-- 点击发送后  就能发送私信-->
@@ -162,6 +194,27 @@
         } else {
             alert("WebSocket连接没有建立成功！！");
         }
+    }
+
+    function creategroup() {
+        $.ajax({
+            url: '../getInfo',
+            dataType: 'json',
+            type: 'get',
+            data: {},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+                $("#name").val(data.name);
+            },
+            error: function (data) {
+                if (data.status == 401) {
+                    alert("请登录");
+                    window.location.href = 'http://localhost:8084/login';
+                }
+            }
+        });
     }
 
     //点击连接 时候触发的事件 【这个函数 除了更改自己url 或者添加自己的业务逻辑  一般不用修改 】
