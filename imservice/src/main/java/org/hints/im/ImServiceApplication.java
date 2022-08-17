@@ -16,8 +16,6 @@ public class ImServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ImServiceApplication.class, args);
-
-
     }
 
 
