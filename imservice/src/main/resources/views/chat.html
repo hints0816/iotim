@@ -11,10 +11,63 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap/js/bootstrap-paginator.min.js"></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/dashboard.css" rel="stylesheet">
+
 </head>
 <!--页面加载后 如果原来就有socket对象  就先断开-->
 <!--检测浏览器是否支持websocket -->
 <noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
+<body>
+<input type="text" id="name" style="display: none"/>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">IM DEMO</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" data-toggle="modal" data-target="#myModal">create group</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active">USER LIST</li>
+            </ul>
+            <ul class="nav nav-sidebar" id="userlist">
+                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Export</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Dashboard</h1>
+            <!--<div>-->
+                <!--<button id="connect" onclick="connect();">连接</button>-->
+                <!--<button id="disconnect" onclick="disconnect();">断开连接</button>-->
+            <!--</div>-->
+
+            <div style="width:100%;height:400px; overflow-y:auto;border:1px solid #333;" id="show">
+
+            </div>
+            <input type="text" onkeydown="sendName(event)" id="msg" name="msg" class="form-control" placeholder="msg">
+            <input type="file" id="exampleInputFile">
+        </div>
+    </div>
+</div>
 <div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -24,53 +77,12 @@
                     <h4 class="modal-title" id="myModalLabel">preview code</h4>
                 </div>
                 <div class="modal-body">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#entity" aria-controls="entity" role="tab" data-toggle="tab">entity</a></li>
-                        <li role="presentation"><a href="#dao" aria-controls="dao" role="tab" data-toggle="tab">dao</a></li>
-                        <li role="presentation"><a href="#service" aria-controls="service" role="tab" data-toggle="tab">service</a></li>
-                        <li role="presentation"><a href="#serviceImpl" aria-controls="serviceImpl" role="tab" data-toggle="tab">serviceImpl</a></li>
-                        <li role="presentation"><a href="#controller" aria-controls="controller" role="tab" data-toggle="tab">controller</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="entity"></div>
-                        <div role="tabpanel" class="tab-pane" id="dao"></div>
-                        <div role="tabpanel" class="tab-pane" id="service"></div>
-                        <div role="tabpanel" class="tab-pane" id="serviceImpl"></div>
-                        <div role="tabpanel" class="tab-pane" id="controller"></div>
-                    </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
-    <div>
-        <!-- 创建并注册 websocket  这里注册的是广播【本页面连带发送和接收广播】-->
-        当前登录: <input type="text" id="name"/>
-    </div>
 
-    <div>
-        <button id="connect" onclick="connect();">连接</button>
-        <button id="disconnect" onclick="disconnect();">断开连接</button>
-    </div>
-    <div>
-        <button id="creategroup" onclick="creategroup();" data-toggle="modal" data-target="#myModal">连接</button>
-    </div>
-    <div id="conversationDiv">
-        <label>用户列表：</label>
-        <!-- 点击发送后  就能发送私信-->
-        <div id="userlist">
-
-        </div>
-        <p id="response"></p>
-    </div>
-
-    <div style="width:250px;height:200px; overflow-y:auto;border:1px solid #333;" id="show">
-
-    </div>
-    <div id="">
-        <input type="text" id="msg"/>
-        <button id="sendName" onclick="sendName();">发送</button>
-    </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -88,6 +100,55 @@
         history(toUser);
         console.log(toUser);
     });
+
+    function selectUser(username,e){
+        $("#show").html("");
+        history(username);
+
+        $("#userlist li").removeClass("active");
+
+        $(e).parent().addClass("active");
+    }
+
+    $(document).on('change', '#exampleInputFile', function () {
+        var files = this.files;
+        console.log(files[0]);
+        var formData = new FormData();
+        formData.append("file", files[0]);
+        $.ajax({
+            method :'POST',
+            url:'upload',
+            dataType:'json',
+            data:formData,
+            processData : false,
+            contentType : false,
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function(data) {
+                if(data.code == 200){
+
+                    console.log(data)
+                    let object = {};
+                    var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
+                    object.msgId = uuid;
+                    object.type = 3;
+                    object.toUserId = toUser;
+                    object.msg = data.msg;
+                    send(JSON.stringify(object));
+
+                    var str = '<div style="text-align:right">' + object.msg +' : ' + $("#name").val()  + '</div>';
+                    $("#show").append(str);
+                }else{
+                    alert();
+                }
+            },
+            error : function(data) {
+                alert();
+            }
+        });
+    });
+
 
     let url = "ws://localhost:9091";
     let access_token = getCookie();
@@ -153,7 +214,7 @@
                 var str = "";
                 data.forEach((item, index, data) => {
                     if ($("#name").val() != item.user_name) {
-                        str += '<input type="radio" class="toUser" name="toUser" value="' + item.user_name + '"/>' + item.user_name;
+                        str += ' <li><a href="javascript:void(0)" onclick="selectUser('+item.user_name+', this)">'+item.user_name+'</a></li>';
                     }
                 })
                 $("#userlist").html(str);
@@ -252,17 +313,20 @@
     }
 
     //发送私聊
-    function sendName() {
-        let object = {};
-        var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
-        object.msgId = uuid;
-        object.type = 2;
-        object.toUserId = toUser;
-        object.msg = $("#msg").val();
-        send(JSON.stringify(object));
+    function sendName(event) {
+        var evt = window.event || e;
+        if (evt.keyCode == 13) {
+            let object = {};
+            var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
+            object.msgId = uuid;
+            object.type = 2;
+            object.toUserId = toUser;
+            object.msg = $("#msg").val();
+            send(JSON.stringify(object));
 
-        var str = '<div style="text-align:right">' + object.msg +' : ' + $("#name").val()  + '</div>';
-        $("#show").append(str);
+            var str = '<div style="text-align:right">' + object.msg +' : ' + $("#name").val()  + '</div>';
+            $("#show").append(str);
+        }
     }
 
     //展示 返回的消息

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,10 +70,11 @@ public class TestEndPointController {
         return ReturnVo.success();
     }
 
-    @GetMapping("/upload")
+    @PostMapping("/upload")
     public ReturnVo upload(MultipartFile file, Principal principal) {
-        String upload = MinIoUtil.upload("im", "gscm", file);
-        return ReturnVo.error();
+        String name = principal.getName();
+        String upload = MinIoUtil.upload("im/"+name, "gscm", file);
+        return ReturnVo.success(upload);
     }
 
 }

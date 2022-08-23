@@ -10,15 +10,15 @@ eureka:
 spring:
   data:
     mongodb:
-      host: 10.2.30.44
-      port: 27017
+      host: 10.2.24.232
+      port: 8017
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@10.2.25.123/ggrdattest
     username: greescmdb2
     password: passwd
   kafka:
-    bootstrap-servers: localhost:9092 # kafka集群信息
+    bootstrap-servers: 10.2.24.236:9092 # kafka集群信息
     consumer:
       group-id: test-consumer-group # 消费者组
       enable-auto-commit: true # 关闭自动提交

@@ -2,6 +2,8 @@ package org.hints.im.pojo.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Description TODO
  * @Author 180686
@@ -15,5 +17,7 @@ public class GroupDTO {
     private String name;
     private Integer type;
     private Long memberNum;
+
+    private List<String> userlist;
 
 }

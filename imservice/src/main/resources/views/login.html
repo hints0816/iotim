@@ -5,16 +5,22 @@
     <title></title>
 </head>
 <body>
-<div>
-    <div>
-        <form name="loginForm" method="post" action="/oauth/login">
-                <input placeholder="username" type="text" name="username" id="username">
-                <input placeholder="passname" type="password" name="password" id="password">
-        </form>
-        <button id="loginIn">登录</button>
-    </div>
+<div class="container">
+    <form class="form-signin" name="loginForm" method="post" action="/oauth/login">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username" class="sr-only">username</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="username" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password"  class="form-control" placeholder="Password" required>
+    </form>
+    <button class="form-signin btn btn-lg btn-primary btn-block" id="loginIn">Sign in</button>
 </div>
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="bootstrap/js/bootstrap-paginator.min.js"></script>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/signin.css" rel="stylesheet">
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#loginIn').click(function () {
