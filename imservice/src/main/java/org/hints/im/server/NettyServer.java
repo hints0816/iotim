@@ -96,6 +96,7 @@ public class NettyServer{
                                     .addLast(HttpRequestHandler.INSTANCE)
                                     .addLast(RegisterRequestHandler.INSTANCE)
                                     .addLast(MessageRequestHandler.INSTANCE)
+                                    .addLast(CreateGroupRequestHandler.INSTANCE)
                                     .addLast(GroupMessageRequestHandler.INSTANCE)
                                     .addLast(HeartBeatRequestHandler.INSTANCE)
                                     .addLast(ExceptionHandler.INSTANCE);

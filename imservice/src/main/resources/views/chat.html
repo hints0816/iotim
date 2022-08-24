@@ -12,6 +12,7 @@
     <script src="bootstrap/js/bootstrap-paginator.min.js"></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-theme.css">
 
 </head>
 <!--页面加载后 如果原来就有socket对象  就先断开-->
@@ -47,10 +48,13 @@
                 <li class="active">USER LIST</li>
             </ul>
             <ul class="nav nav-sidebar" id="userlist">
-                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
+
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active">GROUP LIST</li>
+            </ul>
+            <ul class="nav nav-sidebar" id="grouplist">
+
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -74,10 +78,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">preview code</h4>
+                    <h4 class="modal-title" id="myModalLabel">CREATE GROUP</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="group_name">GROUP_NAME</label>
+                        <input type="text" class="form-control" id="group_name" placeholder="group_name">
+                    </div>
+                    <div class="group_member">
+                        <label>GROUP_MEMBER</label>
 
+                    </div>
+                    <button type="submit" class="btn btn-primary datasourcelink">ok</button>
                 </div>
             </div>
         </div>
@@ -94,6 +106,48 @@
 
     });
 
+    $('#myModal').on('show.bs.modal', function (event) {
+        $.ajax({
+            url: '../userlist',
+            dataType: 'json',
+            type: 'get',
+            data: {},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+                if(data.code == 200){
+                    var str = "";
+                    data.data.users.forEach((item, index, data) => {
+                        if ($("#name").val() != item.user_name) {
+                            str += '<div class="checkbox">' +
+                                '<label>' +
+                                '<input  name="usercheckbox" type="checkbox" value="'+item.user_name+'">' +
+                                item.user_name+
+                                '</label>' +
+                                '</div>';
+                        }
+                    })
+                    $(".group_member").append(str);
+                }
+            },
+        });
+    })
+
+    $(document).on("click",".datasourcelink",function () {
+        var list = [];
+
+        $(":checkbox[name='usercheckbox']:checked").each(function(){
+            list.push($(this).val());
+        });
+
+        let object = {};
+        object.name = $('#group_name').val();
+        object.userlist = list;
+        object.type = 4;
+        send(JSON.stringify(object));
+    });
+
     $(document).on('change', '.toUser', function () {
         toUser = $('input:radio:checked').val();
         $("#show").html("");
@@ -102,6 +156,7 @@
     });
 
     function selectUser(username,e){
+        toUser = username;
         $("#show").html("");
         history(username);
 
@@ -127,8 +182,6 @@
             },
             success: function(data) {
                 if(data.code == 200){
-
-                    console.log(data)
                     let object = {};
                     var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
                     object.msgId = uuid;
@@ -167,6 +220,7 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
+                console.log(data);
                 data.data.forEach((item, index, data) => {
                     if ($("#name").val() == item.from_id) {
                         var str = '<div style="text-align:right">' + item.content +' : ' + item.from_id  + '</div>';
@@ -211,13 +265,20 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
-                var str = "";
-                data.forEach((item, index, data) => {
-                    if ($("#name").val() != item.user_name) {
-                        str += ' <li><a href="javascript:void(0)" onclick="selectUser('+item.user_name+', this)">'+item.user_name+'</a></li>';
-                    }
-                })
-                $("#userlist").html(str);
+                if(data.code == 200) {
+                    var str = "";
+                    data.data.users.forEach((item, index, data) => {
+                        if ($("#name").val() != item.user_name) {
+                            str += ' <li><a href="javascript:void(0)" onclick="selectUser(' + item.user_name + ', this)">' + item.user_name + '</a></li>';
+                        }
+                    })
+                    $("#userlist").html(str);
+                    var str = "";
+                    data.data.groups.forEach((item, index, data) => {
+                        str += ' <li><a href="javascript:void(0)" onclick="selectUser(' + item.groupId + ', this)">' + item.name + '</a></li>';
+                    })
+                    $("#grouplist").html(str);
+                }
             },
         });
     }
@@ -251,7 +312,6 @@
         }
         if (ws.readyState === ws.OPEN) {
             ws.send(message);
-
         } else {
             alert("WebSocket连接没有建立成功！！");
         }
@@ -326,7 +386,9 @@
 
             var str = '<div style="text-align:right">' + object.msg +' : ' + $("#name").val()  + '</div>';
             $("#show").append(str);
+            $('#msg').val("");
         }
+
     }
 
     //展示 返回的消息

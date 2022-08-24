@@ -1,6 +1,7 @@
 package org.hints.im.server;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,14 +14,12 @@ import io.netty.util.CharsetUtil;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
-import org.hints.im.pojo.BaseBody;
-import org.hints.im.pojo.GroupBody;
-import org.hints.im.pojo.LoginBody;
-import org.hints.im.pojo.MsgBody;
+import org.hints.im.pojo.*;
 import org.hints.im.utils.SessionUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -141,6 +140,19 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
                 groupBody.setMessage(jsonObject.getString("msg"));
                 groupBody.setToGroupId(jsonObject.getString("groupId"));
                 baseBody = groupBody;
+                break;
+            case 4:
+                CreateGroupBody createGroupBody = new CreateGroupBody();
+                createGroupBody.setName(jsonObject.getString("name"));
+                createGroupBody.setOwner(Long.valueOf(SessionUtil.getUser(ctx.channel())));
+                JSONArray userlist = jsonObject.getJSONArray("userlist");
+                ArrayList<Long> longs = new ArrayList<>();
+                for (Object o : userlist) {
+                    Long o1 = Long.valueOf(o.toString());
+                    longs.add(o1);
+                }
+                createGroupBody.setUserIdList(longs);
+                baseBody = createGroupBody;
                 break;
             default:
                 break;

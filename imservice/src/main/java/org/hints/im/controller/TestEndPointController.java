@@ -8,8 +8,11 @@ import org.hints.im.utils.MinIoUtil;
 import org.hints.im.utils.SessionUtil;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
+import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
+import org.nutz.dao.sql.Sql;
 import org.nutz.dao.util.cri.Static;
+import org.nutz.lang.util.NutMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,42 +41,39 @@ public class TestEndPointController {
     public OAuth2Authentication getInfo(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
         logger.info(oAuth2Authentication.getUserAuthentication().getAuthorities().toString());
         logger.info(oAuth2Authentication.toString());
-        logger.info("principal.toString()"+principal.toString());
-        logger.info("principal.getName()"+principal.getName());
-        logger.info("authentication:"+authentication.getAuthorities().toString());
+        logger.info("principal.toString()" + principal.toString());
+        logger.info("principal.getName()" + principal.getName());
+        logger.info("authentication:" + authentication.getAuthorities().toString());
         return oAuth2Authentication;
     }
 
     @GetMapping("/userlist")
-    public List<Record> userlist(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
+    public ReturnVo userlist(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
         List<Record> list = dao.query("sys_user", null);
-        return list;
+
+        Sql sql = Sqls.create("SELECT SG.* FROM SYS_GROUP SG, SYS_GROUP_MEMBER SGM WHERE SG.GROUP_ID = SGM.GROUP_ID AND USER_ID = @USER_ID");
+
+        sql.setParam("USER_ID", principal.getName());
+
+        sql.setCallback(Sqls.callback.entities());
+        sql.setEntity(dao.getEntity(GroupDTO.class));
+        List<GroupDTO> groupDTOS = dao.execute(sql).getList(GroupDTO.class);
+
+        return ReturnVo.success(NutMap.NEW().addv("users", list).addv("groups", groupDTOS));
     }
 
     @GetMapping("/history")
     public ReturnVo history(Integer fromUsername, Principal principal) {
         String name = principal.getName();
         List<HistoryDO> query = dao.query(HistoryDO.class,
-                Cnd.where(new Static("((from_id = "+ name +" and to_id = "+ fromUsername +") or (from_id = "+ fromUsername +" and to_id = "+ name +"))")).orderBy("time", "asc"));
+                Cnd.where(new Static("((from_id = " + name + " and to_id = " + fromUsername + ") or (from_id = " + fromUsername + " and to_id = " + name + "))")).orderBy("time", "asc"));
         return ReturnVo.success(query);
-    }
-
-    @GetMapping("/creategroup")
-    public ReturnVo creategroup(GroupDTO groupDTO, Principal principal) {
-        String name = principal.getName();
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        groupDTO.setGroupId(uuid);
-
-        groupDTO.setOwner(name);
-        groupDTO.setType(1);
-
-        return ReturnVo.success();
     }
 
     @PostMapping("/upload")
     public ReturnVo upload(MultipartFile file, Principal principal) {
         String name = principal.getName();
-        String upload = MinIoUtil.upload("im/"+name, "gscm", file);
+        String upload = MinIoUtil.upload("im/" + name, "gscm", file);
         return ReturnVo.success(upload);
     }
 

@@ -1,11 +1,14 @@
 package org.hints.im.persist;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hints.im.pojo.CreateGroupBody;
 import org.hints.im.pojo.MsgBody;
+import org.hints.im.pojo.entity.GroupDTO;
 import org.hints.im.pojo.entity.HistoryDO;
 import org.hints.im.server.NettyServer;
 import org.hints.im.server.ThreadPoolExecutorWrapper;
 import org.hints.im.utils.SpringUtils;
+import org.nutz.dao.Chain;
 import org.nutz.dao.Dao;
 import org.nutz.dao.entity.Record;
 import org.slf4j.Logger;
@@ -17,6 +20,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 
 /**
@@ -49,7 +53,29 @@ public class DataBaseStore {
         historyDO.setType(1L);
 
         dbScheduler.execute(()-> {
-            HistoryDO insert = dao.insert(historyDO);
+            dao.insert(historyDO);
+        });
+    }
+
+    public void persistGroup(CreateGroupBody createGroupBody) {
+        String groupId = UUID.randomUUID().toString().replaceAll("-", "");
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroupId(groupId);
+        groupDTO.setOwner(createGroupBody.getOwner());
+        groupDTO.setName(createGroupBody.getName());
+        groupDTO.setType(2);
+        groupDTO.setMembernum(20L);
+        groupDTO.setUserlist(createGroupBody.getUserIdList());
+        Date date = new Date();
+        groupDTO.setCreatedate(date);
+
+        dbScheduler.execute(()-> {
+            List<Long> userIdList = createGroupBody.getUserIdList();
+            dao.insert(groupDTO);
+            for (Long aLong : userIdList) {
+                dao.insert("sys_group_member", Chain.make("group_id",groupId).add("user_id",aLong).add("adddate",date));
+            }
         });
     }
 

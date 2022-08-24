@@ -40,3 +40,5 @@ security:
       jwt:
         key-uri: http://localhost:6001/oauth/token_key
         key-value: internet_plus
+rocketmq:
+  name-server: 10.24.4.11:9876

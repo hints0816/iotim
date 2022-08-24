@@ -13,7 +13,11 @@ import java.util.List;
 @Data
 public class CreateGroupBody extends BaseBody implements Serializable {
 
-    private List<String> userIdList;
+    private List<Long> userIdList;
+
+    private String name;
+
+    private Long owner;
 
     public CreateGroupBody() {
 

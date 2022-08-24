@@ -10,8 +10,10 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.apache.catalina.manager.util.SessionUtils;
+import org.hints.im.persist.DataBaseStore;
 import org.hints.im.pojo.CreateGroupBody;
 import org.hints.im.utils.SessionUtil;
+import org.hints.im.utils.SpringUtils;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -33,27 +35,32 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
 	}
 	
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, CreateGroupBody createGroupRequestPacket) throws Exception {
-
-
-
-		List<String> userIdList = createGroupRequestPacket.getUserIdList();
+	protected void channelRead0(ChannelHandlerContext ctx, CreateGroupBody createGroupBody) throws Exception {
+		List<Long> userIdList = createGroupBody.getUserIdList();
 		List<String> nameList = new ArrayList<>();
 		ChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());
 		channelGroup.add(ctx.channel());
-		nameList.add(SessionUtil.getUser(ctx.channel()));
-		for (String userId : userIdList) {
-			Channel channel = SessionUtil.getChannel(userId);
-			String user = SessionUtil.getUser(channel);
+		String owner = SessionUtil.getUser(ctx.channel());
+
+		nameList.add(owner);
+		for (Long userId : userIdList) {
+			Channel channel = SessionUtil.getChannel(String.valueOf(userId));
+
 			if (channel != null) {
+                String user = SessionUtil.getUser(channel);
 				channelGroup.add(channel);
 				nameList.add(user);
 			}
 		}
 		String groupId = UUID.randomUUID().toString();
 		// 绑定群Id 和 channelgroup的映射
+		userIdList.add(Long.valueOf(owner));
+		createGroupBody.setUserIdList(userIdList);
 		SessionUtil.bindChannelGroup(groupId, channelGroup);
 		ByteBuf byteBuf = getByteBuf(ctx, groupId, nameList);
+
+        SpringUtils.getBean(DataBaseStore.class).persistGroup(createGroupBody);
+
 		channelGroup.writeAndFlush(new TextWebSocketFrame(byteBuf));
 	}
 	
