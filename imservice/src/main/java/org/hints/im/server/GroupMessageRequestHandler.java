@@ -7,13 +7,22 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.hints.im.pojo.GroupBody;
+import org.hints.im.pojo.entity.GroupDTO;
+import org.hints.im.pojo.entity.GroupHistoryDO;
 import org.hints.im.utils.SessionUtil;
+import org.hints.im.utils.SpringUtils;
+import org.nutz.dao.Cnd;
+import org.nutz.dao.Dao;
+import org.nutz.dao.entity.Record;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +32,10 @@ import java.util.List;
  */
 @Sharable
 public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<GroupBody> {
+
+	private KafkaTemplate kafkaTemplate;
+	private Dao dao;
+
 
 	public static GroupMessageRequestHandler INSTANCE = new GroupMessageRequestHandler();
 	
@@ -37,17 +50,29 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 		String fileType = groupBody.getFileType();
 		ChannelGroup channelGroup = SessionUtil.getChannelGroup(groupId);
 		List<String> nameList = new ArrayList<>();
+
 		for (Channel channel : channelGroup) {
-			String user = SessionUtil.getUser(channel);
+			String user = SessionUtil.getUser(channel).getUserName();
 			nameList.add(user);
 		}
-		if (channelGroup != null) {
-			String user = SessionUtil.getUser(ctx.channel());
-			ByteBuf byteBuf = getByteBuf(ctx, groupId, groupBody.getMessage(), user, fileType, nameList);
-			channelGroup.remove(ctx.channel());
-			channelGroup.writeAndFlush(new TextWebSocketFrame(byteBuf));
-			channelGroup.add(ctx.channel());
-		}
+		String user = SessionUtil.getUser(ctx.channel()).getUserName();
+		ByteBuf byteBuf = getByteBuf(ctx, groupId, groupBody.getMessage(), user, fileType, nameList);
+		channelGroup.remove(ctx.channel());
+		channelGroup.writeAndFlush(new TextWebSocketFrame(byteBuf));
+
+		GroupHistoryDO groupHistoryDO = new GroupHistoryDO();
+		groupHistoryDO.setGroupId(groupId);
+		groupHistoryDO.setFromId(Long.valueOf(user));
+		groupHistoryDO.setType(1L);
+		groupHistoryDO.setTime(new Date().getTime());
+		groupHistoryDO.setMsgId(groupBody.getMsgId());
+		groupHistoryDO.setContent(groupBody.getMessage());
+
+
+		this.kafkaTemplate = SpringUtils.getBean(KafkaTemplate.class);
+		kafkaTemplate.send("group",  JSONObject.toJSONString(groupHistoryDO));
+
+		channelGroup.add(ctx.channel());
 	}
 	
 	public ByteBuf getByteBuf(ChannelHandlerContext ctx, String groupId, String message,

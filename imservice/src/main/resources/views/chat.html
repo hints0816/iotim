@@ -20,64 +20,98 @@
 <noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
 <body>
 <input type="text" id="name" style="display: none"/>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">IM DEMO</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#myModal">create group</a></li>
-            </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
-        </div>
+<!--<nav class="navbar navbar-fixed-top" style="background-color: #e6e6e6">-->
+    <!--<div class="container-fluid">-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"-->
+                    <!--aria-expanded="false" aria-controls="navbar">-->
+                <!--<span class="sr-only">Toggle navigation</span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand" href="#">IM DEMO</a>-->
+        <!--</div>-->
+        <!--<div id="navbar" class="navbar-collapse collapse">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li><a href="#" data-toggle="modal" data-target="#myModal"><span class="iconfont">&#xe741;</span></a></li>-->
+            <!--</ul>-->
+            <!--<form class="navbar-form navbar-right">-->
+                <!--<input type="text" class="form-control" placeholder="Search...">-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</nav>-->
+<div class="container-fluid" style="display:flex;
+        justify-content: space-between;padding-left: 0px;padding-right: 0px;height: 100%;">
+    <div class="left-menu" style="width:65px;height: 100%;border-right-color: #e6e6e6;border-right-style: inset;">
+        <ul class="nav nav-stacked">
+            <!-- 侧边栏选项 -->
+            <li role="presentation" class="active">
+                <a href="#" data-toggle="collapse" data-target="#list" id="myhead" style="display:flex;align-items:center;justify-content:center;padding: 5px">
+
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#" onclick="showFriends();"><span class="iconfont">&#xe7b2;</span></a>
+            </li>
+            <li role="presentation">
+                <a href="#" data-toggle="modal" data-target="#myModal"><span class="iconfont">&#xe742;</span></a>
+            </li>
+        </ul>
+        <ul class="nav nav-stacked" style="position: absolute;bottom: 0px;">
+            <!-- 侧边栏选项 -->
+            <li role="presentation" class="active">
+                <a href="#" data-toggle="collapse" data-target="#list"><span class="iconfont">&#xe6ef;</span></a>
+            </li>
+        </ul>
     </div>
-</nav>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active">USER LIST</li>
-            </ul>
-            <ul class="nav nav-sidebar" id="userlist">
+    <div class="left-menu" style="width:230px;height: 100%;border-right-color: #e6e6e6;border-right-style: inset;">
+        <!-- 侧边栏标签页 -->
+        <ul class="nav nav-stacked">
+            <!-- 侧边栏选项 -->
+            <li role="presentation">
+                <!-- 选项控制data-target对应的显隐 -->
+                <!-- 隐藏的详细菜单 -->
+                <ul id="userlist" class="collapse in" style="padding-left: 0px">
 
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li class="active">GROUP LIST</li>
-            </ul>
-            <ul class="nav nav-sidebar" id="grouplist">
+                </ul>
+            </li>
+        </ul>
 
-            </ul>
+        <ul class="nav nav-stacked" style="position: absolute;bottom: 0px;">
+            <!-- 侧边栏选项 -->
+            <li role="presentation">
+
+            </li>
+        </ul>
+    </div>
+    <div class="right-content" style="width:80%;height: 100%;">
+        <h3 class="page-header" style="margin:10px 0px;" id="usergroup">
+
+        </h3>
+
+        <div style="width:100%;height:400px; overflow-y:auto;border:1px solid #333;" id="show">
+
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Dashboard</h1>
-            <!--<div>-->
-                <!--<button id="connect" onclick="connect();">连接</button>-->
-                <!--<button id="disconnect" onclick="disconnect();">断开连接</button>-->
-            <!--</div>-->
+        <input type="text" onkeydown="sendName(event)" id="msg" name="msg" class="form-control" placeholder="msg">
+        <input type="file" id="exampleInputFile">
+        <button type="button" id="senden">发起竞价</button>
+    </div>
 
-            <div style="width:100%;height:400px; overflow-y:auto;border:1px solid #333;" id="show">
+    <div class="right-content" style="width:230px;height: 100%;">
+        <ul class="nav nav-stacked" id="member" style="padding: 5px">
 
-            </div>
-            <input type="text" onkeydown="sendName(event)" id="msg" name="msg" class="form-control" placeholder="msg">
-            <input type="file" id="exampleInputFile">
-        </div>
+        </ul>
     </div>
 </div>
 <div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">CREATE GROUP</h4>
                 </div>
                 <div class="modal-body">
@@ -116,28 +150,27 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
-                if(data.code == 200){
+                if (data.code == 200) {
                     var str = "";
+
                     data.data.users.forEach((item, index, data) => {
-                        if ($("#name").val() != item.user_name) {
-                            str += '<div class="checkbox">' +
-                                '<label>' +
-                                '<input  name="usercheckbox" type="checkbox" value="'+item.user_name+'">' +
-                                item.user_name+
-                                '</label>' +
-                                '</div>';
-                        }
+                        str += '<div class="checkbox">' +
+                            '<label>' +
+                            '<input  name="usercheckbox" type="checkbox" value="' + item.user_name + '">' +
+                            item.nick_name +
+                            '</label>' +
+                            '</div>';
                     })
-                    $(".group_member").append(str);
+                    $(".group_member").html(str);
                 }
             },
         });
     })
 
-    $(document).on("click",".datasourcelink",function () {
+    $(document).on("click", ".datasourcelink", function () {
         var list = [];
 
-        $(":checkbox[name='usercheckbox']:checked").each(function(){
+        $(":checkbox[name='usercheckbox']:checked").each(function () {
             list.push($(this).val());
         });
 
@@ -152,36 +185,82 @@
         toUser = $('input:radio:checked').val();
         $("#show").html("");
         history(toUser);
-        console.log(toUser);
     });
 
-    function selectUser(username,e){
+    function selectChat(type,username,nickname, e) {
+        if(type == 1){
+            selectGroup(username, nickname, e)
+        }else{
+            selectUser(username,nickname, e)
+        }
+    }
+
+    function selectUser(username,nickname, e) {
         toUser = username;
         $("#show").html("");
-        history(username);
+        userhistory(username);
+        this.type = 2;
+        $("#userlist li").removeClass("active");
+        $(e).addClass("active");
 
+        $("#usergroup").html(nickname+'<a href="#" style=""><span class="iconfont">&#xe76c;</span></a>');
+    }
+
+    function selectGroup(groupid, groupname, e) {
+        toGroup = groupid;
+        $("#show").html("");
+        grouphistory(groupid);
+        this.type = 3;
         $("#userlist li").removeClass("active");
 
-        $(e).parent().addClass("active");
+        $(e).addClass("active");s
+
+        $("#usergroup").html(groupname+'<a href="#" style=""><span class="iconfont">&#xe76c;</span></a>');
+    }
+
+    function showFriends(){
+        $.ajax({
+            url: '../showfriends',
+            dataType: 'json',
+            type: 'get',
+            data: {},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    var str = "";
+                    data.data.users.forEach((item, index, data) => {
+                        str += '<li onclick="selectChat(2,\'' + item.userName + '\',\'' + item.nickName + '\', this)" style="display: flex;padding: 5px"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="...">' +
+                            '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;">' +
+                            '<a style="font-size: 15px" href="javascript:void(0)">' + item.nickName + '</a>' +
+                            '</div></li>';
+                    })
+                    $("#userlist").html(str);
+
+                    $("#myhead").html('<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
+
+                }
+            },
+        });
     }
 
     $(document).on('change', '#exampleInputFile', function () {
         var files = this.files;
-        console.log(files[0]);
         var formData = new FormData();
         formData.append("file", files[0]);
         $.ajax({
-            method :'POST',
-            url:'upload',
-            dataType:'json',
-            data:formData,
-            processData : false,
-            contentType : false,
+            method: 'POST',
+            url: 'upload',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
             beforeSend: function (XMLHttpRequest) {
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
-            success: function(data) {
-                if(data.code == 200){
+            success: function (data) {
+                if (data.code == 200) {
                     let object = {};
                     var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
                     object.msgId = uuid;
@@ -190,13 +269,13 @@
                     object.msg = data.msg;
                     send(JSON.stringify(object));
 
-                    var str = '<div style="text-align:right">' + object.msg +' : ' + $("#name").val()  + '</div>';
+                    var str = '<div style="text-align:right">' + object.msg + ' : ' + $("#name").val() + '</div>';
                     $("#show").append(str);
-                }else{
+                } else {
                     alert();
                 }
             },
-            error : function(data) {
+            error: function (data) {
                 alert();
             }
         });
@@ -207,8 +286,12 @@
     let access_token = getCookie();
     let ws;
     let toUser;
+    let myNickName;
+    let myAvater;
+    let toGroup;
+    let type;
 
-    function history(toUser1) {
+    function userhistory(toUser1) {
         $.ajax({
             url: '../history',
             dataType: 'json',
@@ -220,15 +303,51 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
-                console.log(data);
+                $("#member").html("");
                 data.data.forEach((item, index, data) => {
                     if ($("#name").val() == item.from_id) {
-                        var str = '<div style="text-align:right">' + item.content +' : ' + item.from_id  + '</div>';
+                        var str = '<div style="text-align:right;margin: 3px;"><span>' + item.content + ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                         $("#show").append(str);
                     } else {
-                        var str = '<div style="text-align:left">' + item.to_id +' : ' + item.content  + '</div>';
+                        var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"><span>' + item.nick_name + ' : ' + item.content + '</span></div>';
                         $("#show").append(str);
                     }
+                })
+            }
+        });
+    }
+
+    function grouphistory(toGroup) {
+        $.ajax({
+            url: '../message/history',
+            dataType: 'json',
+            type: 'get',
+            data: {
+                "groupId": toGroup
+            },
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+                data.data.history.forEach((item, index, data) => {
+                    if ($("#name").val() == item.from_id) {
+                        var str = '<div style="text-align:right;margin: 3px;">' + item.content + ' : ' + item.nick_name + '<img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        $("#show").append(str);
+                    } else {
+                        var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;">' + item.nick_name + ' : ' + item.content + '</div>';
+                        $("#show").append(str);
+                    }
+                })
+                $("#member").html('<li style="display: flex"><input type="text" class="form-control" placeholder="Search..."></li>');
+                $("#member").append('<li style="display: flex">MANAGER</li>');
+                data.data.group.forEach((item, index, data) => {
+                    var str = '<li style="display: flex"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
+                    $("#member").append(str);
+                })
+                $("#member").append('<li style="display: flex">MEMBERS</li>');
+                data.data.members.forEach((item, index, data) => {
+                    var str = '<li style="display: flex"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
+                    $("#member").append(str);
                 })
             }
         });
@@ -244,7 +363,9 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
-                $("#name").val(data.name);
+                $("#name").val(data.userName);
+                myNickName = data.nickName;
+                myAvater = data.avater;
             },
             error: function (data) {
                 if (data.status == 401) {
@@ -265,19 +386,19 @@
                 XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
             },
             success: function (data) {
-                if(data.code == 200) {
+                if (data.code == 200) {
                     var str = "";
                     data.data.users.forEach((item, index, data) => {
-                        if ($("#name").val() != item.user_name) {
-                            str += ' <li><a href="javascript:void(0)" onclick="selectUser(' + item.user_name + ', this)">' + item.user_name + '</a></li>';
-                        }
+                        str += ' <li onclick="selectChat('+item.msgtype+',\'' + item.target + '\',\'' + item.name + '\', this)" style="display: flex;padding: 5px"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="...">' +
+                            '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;">' +
+                            '<a style="font-size: 15px" href="javascript:void(0)">' + item.name + '</a>' +
+                            '<div style="font-size: 10px">' + item.content + '</div>' +
+                            '</div></li>';
                     })
                     $("#userlist").html(str);
-                    var str = "";
-                    data.data.groups.forEach((item, index, data) => {
-                        str += ' <li><a href="javascript:void(0)" onclick="selectUser(' + item.groupId + ', this)">' + item.name + '</a></li>';
-                    })
-                    $("#grouplist").html(str);
+
+                    $("#myhead").html('<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
+
                 }
             },
         });
@@ -296,11 +417,18 @@
             let data = JSON.parse(event.data);
 
             var show = document.getElementById("show");
-            if(data.status == 200){
-                if(data.type == 1){
+            if (data.status == 200) {
+                if (data.type == 1) {
                     show.innerHTML += data.params.message + "<br/>";
+                } else if (data.type == 2) {
+                    show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+ data.params.avater+'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.nickName + ' : ' + data.params.message + "</div><br/>";
+                    var chatlist = document.getElementById('show');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                } else if (data.type == 4){
+                    $('#myModal').modal('toggle');
+                    userlist();
                 }else{
-                    show.innerHTML += toUser+ ' : '+data.params.message + "<br/>";
+                    show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="\'+ data.params.avater+\'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.fromUser + ' : ' + data.params.message + "<br/>";
                 }
             }
         }
@@ -376,17 +504,40 @@
     function sendName(event) {
         var evt = window.event || e;
         if (evt.keyCode == 13) {
-            let object = {};
-            var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
-            object.msgId = uuid;
-            object.type = 2;
-            object.toUserId = toUser;
-            object.msg = $("#msg").val();
-            send(JSON.stringify(object));
 
-            var str = '<div style="text-align:right">' + object.msg +' : ' + $("#name").val()  + '</div>';
-            $("#show").append(str);
-            $('#msg').val("");
+            if (this.type == 2) {
+                let object = {};
+                var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
+                object.msgId = uuid;
+                object.type = this.type;
+                object.toUserId = toUser;
+                object.msg = $("#msg").val();
+                send(JSON.stringify(object));
+
+                var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                $("#show").append(str);
+
+                var chatlist = document.getElementById('show');
+                chatlist.scrollTop = chatlist.scrollHeight;
+
+                $('#msg').val("");
+            } else {
+                let object = {};
+                var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
+                object.groupId = toGroup;
+                object.msgId = uuid;
+                object.type = this.type;
+                object.msg = $("#msg").val();
+                send(JSON.stringify(object));
+
+                var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                $("#show").append(str);
+
+                var chatlist = document.getElementById('show');
+                chatlist.scrollTop = chatlist.scrollHeight;
+
+                $('#msg').val("");
+            }
         }
 
     }

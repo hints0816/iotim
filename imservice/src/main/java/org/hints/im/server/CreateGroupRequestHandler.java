@@ -40,14 +40,14 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
 		List<String> nameList = new ArrayList<>();
 		ChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());
 		channelGroup.add(ctx.channel());
-		String owner = SessionUtil.getUser(ctx.channel());
+		String owner = SessionUtil.getUser(ctx.channel()).getUserName();
 
 		nameList.add(owner);
 		for (Long userId : userIdList) {
 			Channel channel = SessionUtil.getChannel(String.valueOf(userId));
 
 			if (channel != null) {
-                String user = SessionUtil.getUser(channel);
+                String user = SessionUtil.getUser(channel).getUserName();
 				channelGroup.add(channel);
 				nameList.add(user);
 			}
@@ -59,7 +59,7 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
 		SessionUtil.bindChannelGroup(groupId, channelGroup);
 		ByteBuf byteBuf = getByteBuf(ctx, groupId, nameList);
 
-        SpringUtils.getBean(DataBaseStore.class).persistGroup(createGroupBody);
+        SpringUtils.getBean(DataBaseStore.class).createGroup(createGroupBody);
 
 		channelGroup.writeAndFlush(new TextWebSocketFrame(byteBuf));
 	}

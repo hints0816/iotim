@@ -1,6 +1,5 @@
 package org.hints.im.server;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
@@ -8,19 +7,22 @@ import io.jsonwebtoken.Jwts;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hints.im.pojo.*;
 import org.hints.im.utils.SessionUtil;
+import org.hints.im.utils.SpringUtils;
+import org.nutz.dao.Cnd;
+import org.nutz.dao.Dao;
+import org.nutz.dao.entity.Record;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +37,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
     public static HttpRequestHandler INSTANCE = new HttpRequestHandler();
 
     private WebSocketServerHandshaker handshaker;
+
+    private Dao dao;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -76,9 +80,26 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
             }
             String user_name = claims.get("user_name").toString();
 
-            SessionUtil.bindChannel(user_name, ctx.channel());
+            this.dao = SpringUtils.getBean(Dao.class);
+            User user = this.dao.fetch(User.class, Cnd.where("user_name", "=", user_name));
+
+            SessionUtil.bindChannel(user, ctx.channel());
             if (SessionUtil.hasLogin(ctx.channel())) {
                 System.out.println("该用户已登录");
+            }
+
+
+            List<Record> groupDto = this.dao.query("sys_group_member", Cnd.where("user_id", "=", user_name));
+            for (Record record : groupDto) {
+                String group_id = record.getString("group_id");
+                ChannelGroup channelGroup = SessionUtil.getChannelGroup(group_id);
+                if(channelGroup == null) {
+                    channelGroup = new DefaultChannelGroup(ctx.executor());
+                    channelGroup.add(ctx.channel());
+                    SessionUtil.bindChannelGroup(group_id, channelGroup);
+                }else{
+                    channelGroup.add(ctx.channel());
+                }
             }
 
             handshaker.handshake(ctx.channel(), req);
@@ -122,7 +143,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         switch (type) {
             case 1:
                 LoginBody loginBody = new LoginBody();
-                loginBody.setUser(SessionUtil.getUser(ctx.channel()));
+                loginBody.setUser(SessionUtil.getUser(ctx.channel()).getUserName());
                 baseBody = loginBody;
                 break;
             case 2:
@@ -138,13 +159,14 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
             case 3:
                 GroupBody groupBody = new GroupBody();
                 groupBody.setMessage(jsonObject.getString("msg"));
+                groupBody.setMsgId(jsonObject.getString("msgId"));
                 groupBody.setToGroupId(jsonObject.getString("groupId"));
                 baseBody = groupBody;
                 break;
             case 4:
                 CreateGroupBody createGroupBody = new CreateGroupBody();
                 createGroupBody.setName(jsonObject.getString("name"));
-                createGroupBody.setOwner(Long.valueOf(SessionUtil.getUser(ctx.channel())));
+                createGroupBody.setOwner(Long.valueOf(SessionUtil.getUser(ctx.channel()).getUserName()));
                 JSONArray userlist = jsonObject.getJSONArray("userlist");
                 ArrayList<Long> longs = new ArrayList<>();
                 for (Object o : userlist) {

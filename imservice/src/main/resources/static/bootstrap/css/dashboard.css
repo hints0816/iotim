@@ -4,9 +4,12 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+  height: 100%;
 }
 
+html {
+  height: 100%;
+}
 
 /*
  * Global add-ons
@@ -49,23 +52,22 @@ body {
   }
 }
 
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
+#userlist > li:hover {
+  background-color: #86faf8;
+  cursor: pointer;
 }
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
+#userlist > .active{
   color: #fff;
-  background-color: #428bca;
+  background-color: #41b2ca;
 }
-
+#member > li:hover {
+  background-color: #86faf8;
+  cursor: pointer;
+}
+#member > .active{
+  color: #fff;
+  background-color: #41b2ca;
+}
 
 /*
  * Main content
@@ -102,4 +104,18 @@ body {
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
+}
+
+
+@font-face {
+  font-family: 'iconfont';
+  src: url('../fonts/iconfont.ttf?t=1661930615505') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 30px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

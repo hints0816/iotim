@@ -2,6 +2,7 @@ package org.hints.im.utils;
 
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
+import org.hints.im.pojo.User;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,14 +23,14 @@ public class SessionUtil {
      */
     private static Map<String, ChannelGroup> groupIdChannelGroupMap = new ConcurrentHashMap<>();
 
-    public static void bindChannel(String username, Channel channel) {
-        userIdChannelMap.put(username, channel);
-        channel.attr(Attributes.SESSION).set(username);
+    public static void bindChannel(User user, Channel channel) {
+        userIdChannelMap.put(user.getUserName(), channel);
+        channel.attr(Attributes.SESSION).set(user);
     }
 
     public static void unbind(Channel channel) {
         if (hasLogin(channel)) {
-            userIdChannelMap.remove(getUser(channel));
+            userIdChannelMap.remove(getUser(channel).getUserName());
             channel.attr(Attributes.SESSION).set(null);
         }
     }
@@ -38,7 +39,7 @@ public class SessionUtil {
         return channel.hasAttr(Attributes.SESSION);
     }
 
-    public static String getUser(Channel channel) {
+    public static User getUser(Channel channel) {
         return channel.attr(Attributes.SESSION).get();
     }
 

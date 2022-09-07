@@ -33,7 +33,7 @@ public class RegisterRequestHandler extends SimpleChannelInboundHandler<LoginBod
     protected void channelRead0(ChannelHandlerContext ctx, LoginBody loginBody) throws Exception {
 
         ByteBuf byteBuf = ctx.alloc().buffer();
-        String fromUser = SessionUtil.getUser(ctx.channel());
+        String fromUser = SessionUtil.getUser(ctx.channel()).getUserName();
         JSONObject data = new JSONObject();
         data.put("type", 1);
         data.put("status", 200);

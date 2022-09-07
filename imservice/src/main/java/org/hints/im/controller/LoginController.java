@@ -48,6 +48,10 @@ public class LoginController {
         return result;
     }
 
+    public static void main(String[] args) {
+        System.out.println(1);
+    }
+
     public static NutMap doGet(String url) {
         NutMap result = NutMap.NEW();
         Cookie resCookie = null;

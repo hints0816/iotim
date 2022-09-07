@@ -14,6 +14,8 @@ public class GroupBody extends BaseBody implements Serializable {
 
     private String toGroupId;
 
+    private String msgId;
+
     private String message;
 
     private String fileType;

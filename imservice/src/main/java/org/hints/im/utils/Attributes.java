@@ -1,6 +1,7 @@
 package org.hints.im.utils;
 
 import io.netty.util.AttributeKey;
+import org.hints.im.pojo.User;
 
 /**
  * @Description TODO
@@ -8,5 +9,5 @@ import io.netty.util.AttributeKey;
  * @Date 2022/8/5 17:29
  */
 public interface Attributes {
-    AttributeKey<String> SESSION = AttributeKey.newInstance("session");
+    AttributeKey<User> SESSION = AttributeKey.newInstance("session");
 }

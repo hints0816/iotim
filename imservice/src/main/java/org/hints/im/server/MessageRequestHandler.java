@@ -9,6 +9,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.hints.im.persist.DataBaseStore;
 import org.hints.im.pojo.MsgBody;
+import org.hints.im.pojo.User;
 import org.hints.im.utils.SessionUtil;
 import org.hints.im.utils.SpringUtils;
 import org.nutz.dao.Dao;
@@ -41,7 +42,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         String message = "";
         Channel toUserChannel = SessionUtil.getChannel(msgBody.getToUserId());
         // 1.直接先落到oracle，生产环境处理高并发使用 kafka->mongodb
-        String fromUser = SessionUtil.getUser(ctx.channel());
+        String fromUser = SessionUtil.getUser(ctx.channel()).getUserName();
         msgBody.setFromUserId(fromUser);
         this.kafkaTemplate = SpringUtils.getBean(KafkaTemplate.class);
         kafkaTemplate.send("test",  JSONObject.toJSONString(msgBody));
@@ -49,7 +50,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
             // 用户在线
             message = msgBody.getMessage();
-            String toUser = SessionUtil.getUser(toUserChannel);
+            User toUser = SessionUtil.getUser(toUserChannel);
             String fileType = msgBody.getFileType();
             ByteBuf buf = getByteBuf(ctx, message, toUser, fileType);
             toUserChannel.writeAndFlush(new TextWebSocketFrame(buf));
@@ -59,17 +60,19 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         }
     }
 
-    public ByteBuf getByteBuf(ChannelHandlerContext ctx, String message, String toUser, String fileType) {
+    public ByteBuf getByteBuf(ChannelHandlerContext ctx, String message, User toUser, String fileType) {
         ByteBuf byteBuf = ctx.alloc().buffer();
-        String fromUser = SessionUtil.getUser(ctx.channel());
+        User fromUser = SessionUtil.getUser(ctx.channel());
         JSONObject data = new JSONObject();
         data.put("type", 2);
         data.put("status", 200);
         JSONObject params = new JSONObject();
         params.put("message", message);
         params.put("fileType", fileType);
-        params.put("fromUser", fromUser);
-        params.put("toUser", toUser);
+        params.put("fromUser", fromUser.getUserName());
+        params.put("nickName", fromUser.getNickName());
+        params.put("avater", fromUser.getAvater());
+        params.put("toUser", toUser.getUserName());
         data.put("params", params);
         byte []bytes = data.toJSONString().getBytes(Charset.forName("utf-8"));
         byteBuf.writeBytes(bytes);

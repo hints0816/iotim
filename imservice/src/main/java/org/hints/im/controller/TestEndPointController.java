@@ -2,6 +2,7 @@ package org.hints.im.controller;
 
 import io.netty.channel.Channel;
 import org.hints.im.pojo.ReturnVo;
+import org.hints.im.pojo.User;
 import org.hints.im.pojo.entity.GroupDTO;
 import org.hints.im.pojo.entity.HistoryDO;
 import org.hints.im.utils.MinIoUtil;
@@ -38,36 +39,69 @@ public class TestEndPointController {
     private Dao dao;
 
     @GetMapping("/getInfo")
-    public OAuth2Authentication getInfo(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
+    public Object getInfo(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
         logger.info(oAuth2Authentication.getUserAuthentication().getAuthorities().toString());
         logger.info(oAuth2Authentication.toString());
-        logger.info("principal.toString()" + principal.toString());
-        logger.info("principal.getName()" + principal.getName());
-        logger.info("authentication:" + authentication.getAuthorities().toString());
-        return oAuth2Authentication;
+
+        User user_name = dao.fetch(User.class, Cnd.where("user_name", "=", principal.getName()));
+
+        return user_name;
     }
 
     @GetMapping("/userlist")
     public ReturnVo userlist(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
-        List<Record> list = dao.query("sys_user", null);
 
-        Sql sql = Sqls.create("SELECT SG.* FROM SYS_GROUP SG, SYS_GROUP_MEMBER SGM WHERE SG.GROUP_ID = SGM.GROUP_ID AND USER_ID = @USER_ID");
+        Sql sql = Sqls.create("SELECT * FROM (\n" +
+                "SELECT T1.*,T2.NAME,T2.IMG AS AVATER,'1' AS MSGTYPE FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,GROUP_ID AS TARGET FROM (  \n" +
+                "    SELECT ROW_NUMBER() OVER(PARTITION BY GROUP_ID ORDER BY TIME DESC) RN,         \n" +
+                "           T.*         \n" +
+                "      FROM (SELECT * FROM CHAT_GROUP_HISTORY WHERE GROUP_ID IN (SELECT GROUP_ID FROM SYS_GROUP_MEMBER WHERE USER_ID = @USER_ID)) T\n" +
+                ") WHERE RN = 1) T1, SYS_GROUP T2 WHERE T1.TARGET = T2.GROUP_ID UNION ALL SELECT T1.*,T2.NICK_NAME AS NAME,T2.AVATER,'2' AS MSGTYPE FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,TO_CHAR(DECODE(FROM_ID,@USER_ID,TO_ID,FROM_ID)) AS TARGET FROM (  \n" +
+                "    SELECT ROW_NUMBER() OVER(PARTITION BY FID ORDER BY TIME DESC) RN,         \n" +
+                "           T.*         \n" +
+                "      FROM (SELECT T1.*,T2.FID FROM CHAT_HISTORY T1, CHAT_FRIEND T2 WHERE ((T1.FROM_ID = T2.FROM_ID AND T1.TO_ID = T2.TO_ID)\n" +
+                "       OR (T1.FROM_ID = T2.TO_ID AND T1.TO_ID = T2.FROM_ID)) AND (T2.FROM_ID = @USER_ID OR T2.TO_ID = @USER_ID)) T\n" +
+                ") WHERE RN = 1) T1, SYS_USER T2 WHERE T1.TARGET = T2.USER_NAME ) ORDER BY TIME DESC");
 
         sql.setParam("USER_ID", principal.getName());
 
         sql.setCallback(Sqls.callback.entities());
-        sql.setEntity(dao.getEntity(GroupDTO.class));
-        List<GroupDTO> groupDTOS = dao.execute(sql).getList(GroupDTO.class);
+        sql.setEntity(dao.getEntity(Record.class));
+        List<Record> list = dao.execute(sql).getList(Record.class);
 
-        return ReturnVo.success(NutMap.NEW().addv("users", list).addv("groups", groupDTOS));
+        return ReturnVo.success(NutMap.NEW().addv("users", list));
+    }
+
+    @GetMapping("/showfriends")
+    public ReturnVo showfriends(Principal principal) {
+
+        Sql sql = Sqls.create("SELECT T1.* FROM SYS_USER T1," +
+                "(SELECT TO_CHAR(DECODE(FROM_ID,@USERNAME,TO_ID,FROM_ID)) AS TARGET " +
+                "FROM CHAT_FRIEND WHERE (FROM_ID = @USERNAME OR TO_ID = @USERNAME)) T2 WHERE T1.USER_NAME = T2.TARGET");
+
+        sql.setParam("USERNAME", principal.getName());
+
+        sql.setCallback(Sqls.callback.entities());
+        sql.setEntity(dao.getEntity(User.class));
+        List<User> list = dao.execute(sql).getList(User.class);
+
+        return ReturnVo.success(NutMap.NEW().addv("users", list));
     }
 
     @GetMapping("/history")
     public ReturnVo history(Integer fromUsername, Principal principal) {
         String name = principal.getName();
-        List<HistoryDO> query = dao.query(HistoryDO.class,
-                Cnd.where(new Static("((from_id = " + name + " and to_id = " + fromUsername + ") or (from_id = " + fromUsername + " and to_id = " + name + "))")).orderBy("time", "asc"));
-        return ReturnVo.success(query);
+        Sql sql = Sqls.create("SELECT T1.*,T2.NICK_NAME,T2.AVATER FROM CHAT_HISTORY T1, SYS_USER T2 WHERE " +
+                "T1.FROM_ID = T2.USER_NAME " +
+                "AND ((FROM_ID = @NAME AND TO_ID = @FROMUSERNAME) OR (FROM_ID = @FROMUSERNAME AND TO_ID = @NAME)) ORDER BY TIME ASC");
+
+        sql.setParam("NAME", name);
+        sql.setParam("FROMUSERNAME", fromUsername);
+        sql.setCallback(Sqls.callback.entities());
+        sql.setEntity(dao.getEntity(Record.class));
+        List<Record> list = dao.execute(sql).getList(Record.class);
+
+        return ReturnVo.success(list);
     }
 
     @PostMapping("/upload")

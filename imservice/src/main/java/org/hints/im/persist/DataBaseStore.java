@@ -2,8 +2,10 @@ package org.hints.im.persist;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hints.im.pojo.CreateGroupBody;
+import org.hints.im.pojo.GroupBody;
 import org.hints.im.pojo.MsgBody;
 import org.hints.im.pojo.entity.GroupDTO;
+import org.hints.im.pojo.entity.GroupHistoryDO;
 import org.hints.im.pojo.entity.HistoryDO;
 import org.hints.im.server.NettyServer;
 import org.hints.im.server.ThreadPoolExecutorWrapper;
@@ -57,7 +59,7 @@ public class DataBaseStore {
         });
     }
 
-    public void persistGroup(CreateGroupBody createGroupBody) {
+    public void createGroup(CreateGroupBody createGroupBody) {
         String groupId = UUID.randomUUID().toString().replaceAll("-", "");
 
         GroupDTO groupDTO = new GroupDTO();
@@ -76,6 +78,13 @@ public class DataBaseStore {
             for (Long aLong : userIdList) {
                 dao.insert("sys_group_member", Chain.make("group_id",groupId).add("user_id",aLong).add("adddate",date));
             }
+        });
+    }
+
+    public void persistGroup(GroupHistoryDO groupHistoryDO) {
+
+        dbScheduler.execute(()-> {
+            dao.insert(groupHistoryDO);
         });
     }
 
