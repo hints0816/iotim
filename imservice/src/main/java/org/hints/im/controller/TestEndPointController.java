@@ -72,6 +72,26 @@ public class TestEndPointController {
         return ReturnVo.success(NutMap.NEW().addv("users", list));
     }
 
+    @GetMapping("/channellist")
+    public ReturnVo channellist(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
+
+        Sql sql = Sqls.create("SELECT * FROM (\n" +
+                "SELECT T1.*,T2.NAME,T2.IMG AS AVATER,'1' AS MSGTYPE FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,GROUP_ID AS TARGET FROM (  \n" +
+                "    SELECT ROW_NUMBER() OVER(PARTITION BY GROUP_ID ORDER BY TIME DESC) RN,         \n" +
+                "           T.*         \n" +
+                "      FROM (SELECT * FROM CHAT_GROUP_HISTORY WHERE GROUP_ID IN (SELECT GROUP_ID FROM SYS_GROUP_MEMBER WHERE USER_ID = @USER_ID)) T\n" +
+                ") WHERE RN = 1) T1, SYS_GROUP T2 WHERE T1.TARGET = T2.GROUP_ID) ORDER BY TIME DESC");
+
+        sql.setParam("USER_ID", principal.getName());
+
+        sql.setCallback(Sqls.callback.entities());
+        sql.setEntity(dao.getEntity(Record.class));
+        List<Record> list = dao.execute(sql).getList(Record.class);
+
+        return ReturnVo.success(NutMap.NEW().addv("users", list));
+    }
+
+
     @GetMapping("/showfriends")
     public ReturnVo showfriends(Principal principal) {
 

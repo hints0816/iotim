@@ -45,16 +45,18 @@
 <div class="container-fluid" style="display:flex;
         justify-content: space-between;padding-left: 0px;padding-right: 0px;height: 100%;">
     <div class="left-menu" style="width:65px;height: 100%;border-right-color: #e6e6e6;border-right-style: inset;">
-        <ul class="nav nav-stacked">
+        <ul class="nav nav-stacked" id="navleft">
             <!-- 侧边栏选项 -->
-            <li role="presentation" class="active">
-                <a href="#" data-toggle="collapse" data-target="#list" id="myhead" style="display:flex;align-items:center;justify-content:center;padding: 5px">
-
+            <li role="presentation">
+                <a href="#" onclick="clickMessage(this)" data-toggle="collapse" data-target="#list">
+                    <span class="iconfont">&#xe7b3;</span>
                 </a>
             </li>
             <li role="presentation">
-                <a href="#" onclick="showFriends();"><span class="iconfont">&#xe7b2;</span></a>
+                <a href="#" onclick="showFriends(this);"><span class="iconfont">&#xe7b2;</span></a>
             </li>
+        </ul>
+        <ul class="nav nav-stacked">
             <li role="presentation">
                 <a href="#" data-toggle="modal" data-target="#myModal"><span class="iconfont">&#xe742;</span></a>
             </li>
@@ -137,7 +139,7 @@
 
         userlist();
 
-
+        channellist();
     });
 
     $('#myModal').on('show.bs.modal', function (event) {
@@ -193,6 +195,13 @@
         }else{
             selectUser(username,nickname, e)
         }
+
+    }
+
+    function clickMessage(e) {
+        userlist();
+        $("#navleft li").removeClass("active");
+        $(e).parent().addClass("active")
     }
 
     function selectUser(username,nickname, e) {
@@ -203,22 +212,25 @@
         $("#userlist li").removeClass("active");
         $(e).addClass("active");
 
-        $("#usergroup").html(nickname+'<a href="#" style=""><span class="iconfont">&#xe76c;</span></a>');
+        $("#usergroup").html(nickname+'<a href="#" style=""><span class="iconfont">&#xe78e;</span></a>');
     }
 
     function selectGroup(groupid, groupname, e) {
         toGroup = groupid;
         $("#show").html("");
+        $("#redpoint-" + groupid).css("display", "none");
         grouphistory(groupid);
         this.type = 3;
         $("#userlist li").removeClass("active");
 
-        $(e).addClass("active");s
+        $(e).addClass("active");
 
-        $("#usergroup").html(groupname+'<a href="#" style=""><span class="iconfont">&#xe76c;</span></a>');
+        $("#usergroup").html(groupname+'<a href="#" style=""><span class="iconfont">&#xe78e;</span></a>');
+
+        viewChannel(groupid);
     }
 
-    function showFriends(){
+    function showFriends(e){
         $.ajax({
             url: '../showfriends',
             dataType: 'json',
@@ -239,7 +251,8 @@
                     $("#userlist").html(str);
 
                     $("#myhead").html('<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
-
+                    $("#navleft li").removeClass("active");
+                    $(e).parent().addClass("active")
                 }
             },
         });
@@ -337,6 +350,8 @@
                         var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;">' + item.nick_name + ' : ' + item.content + '</div>';
                         $("#show").append(str);
                     }
+                    var chatlist1 = document.getElementById('show');
+                    chatlist1.scrollTop = chatlist1.scrollHeight;
                 })
                 $("#member").html('<li style="display: flex"><input type="text" class="form-control" placeholder="Search..."></li>');
                 $("#member").append('<li style="display: flex">MANAGER</li>');
@@ -404,8 +419,67 @@
         });
     }
 
-    function init() {
+    function channellist() {
+        $.ajax({
+            url: '../channellist',
+            dataType: 'json',
+            type: 'get',
+            data: {},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    var str = "";
+                    data.data.users.forEach((item, index, data) => {
+                        str += '<li role="presentation">\n' +
+                            '<a href="#" style="padding: 10px 8px;" onclick="selectGroup(\''+item.target+'\',\''+item.name+'\',this);">' +
+                            '<img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..."><i style="display: none" id="redpoint-'+item.target+'" class="toolbar-msg-count"></i>' +
+                            '</a>' +
+                            '</li>';
+                    })
+                    $("#navleft").html($("#navleft").html()+str);
+                }
+            },
+        });
+    }
 
+    function viewChannel(groupId) {
+        $.ajax({
+            url: '../channel/info/'+groupId,
+            dataType: 'json',
+            type: 'get',
+            data: {},
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    var str = "";
+                    str += '<li onclick="" style="display: flex;padding: 5px"><img class="media-object" src="'+data.data.img+'" height="45" width="45" alt="...">' +
+                        '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;">' +
+                        '<a style="font-size: 15px" href="javascript:void(0)">' + data.data.name + '</a>' +
+                        '<div style="font-size: 10px"> </div>' +
+                        '</div></li>';
+                    $("#userlist").html(str);
+
+
+                }
+            },
+        });
+    }
+
+    function sendHeartBeat(){
+        setTimeout(
+            function(){
+                let object = {};
+                object.type = 11;
+                send(JSON.stringify(object));
+            },30000
+        );
+    }
+
+    function init() {
         ws.onopen = function (evt) {
             console.log("WebSocket 连接成功!!");
             let object = {};
@@ -427,11 +501,21 @@
                 } else if (data.type == 4){
                     $('#myModal').modal('toggle');
                     userlist();
+                }else if (data.type == 12){
+                    sendHeartBeat();
                 }else{
-                    show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="\'+ data.params.avater+\'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.fromUser + ' : ' + data.params.message + "<br/>";
+                    updateRedPoint(data.params.groupId);
+                    show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+ data.params.avater+'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.fromUser + ' : ' + data.params.message + "<br/>";
                 }
             }
         }
+
+        sendHeartBeat();
+    }
+
+    function updateRedPoint(groupId) {
+        console.log(groupId);
+        $("#redpoint-" + groupId).css("display", "block");
     }
 
     function send(message) {
@@ -519,6 +603,7 @@
 
                 var chatlist = document.getElementById('show');
                 chatlist.scrollTop = chatlist.scrollHeight;
+
 
                 $('#msg').val("");
             } else {

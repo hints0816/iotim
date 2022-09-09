@@ -34,6 +34,9 @@ public class GroupDTO {
     @Column(hump = true)
     private Date createdate;
 
+    @Column(hump = true)
+    private String img;
+
     private List<Long> userlist;
 
 }

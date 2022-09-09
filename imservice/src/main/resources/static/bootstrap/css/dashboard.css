@@ -69,6 +69,24 @@ html {
   background-color: #41b2ca;
 }
 
+#navleft > .active{
+  color: #fff;
+  background-color: #eee;
+}
+
+.toolbar-msg-count{
+  right: 46px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background: #fc5531;
+  border-radius: 8px;
+  color: #fff;
+  position: absolute;
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+}
 /*
  * Main content
  */
