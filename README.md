@@ -4,8 +4,6 @@ web-im demo
 
 ![图片](https://user-images.githubusercontent.com/44020055/190129526-f002a97e-1f38-4813-accf-73fd8d6ecb29.png)
 
-![图片](https://user-images.githubusercontent.com/44020055/184276403-75cac86b-c8eb-45e5-8b7c-29cc120a669b.png)
-
 - netty
 - spring-web
 - spring-security
