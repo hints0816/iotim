@@ -30,4 +30,7 @@ public class GroupHistoryDO {
 
     @Column(hump = true)
     private String msgId;
+
+    @Column(hump = true)
+    private String fileType;
 }

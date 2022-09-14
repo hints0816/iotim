@@ -24,8 +24,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.crypto.Data;
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -127,8 +132,29 @@ public class TestEndPointController {
     @PostMapping("/upload")
     public ReturnVo upload(MultipartFile file, Principal principal) {
         String name = principal.getName();
+        /*String savePath = System.getProperty("user.dir") + "\\" + "imservice\\src\\main\\resources\\static\\img";
+        // 保存文件的文件夹
+        File folder = new File(savePath);
+        String originalFilename = file.getOriginalFilename();
+        String substring = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        String filename = String.valueOf(System.currentTimeMillis())+substring;
+        try {
+            file.transferTo(new File(folder,filename));
+        } catch (IOException e){
+            logger.error(e.getMessage(), e);
+        }*/
+
         String upload = MinIoUtil.upload("im/" + name, "gscm", file);
         return ReturnVo.success(upload);
     }
+
+    //TODO 非图床
+    @PostMapping("/download")
+    public void download(String name, HttpServletResponse response) {
+        MinIoUtil.download("gscm", "im/" + name, response);
+    }
+
+
 
 }

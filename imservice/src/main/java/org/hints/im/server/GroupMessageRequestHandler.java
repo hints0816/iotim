@@ -64,10 +64,10 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 		groupHistoryDO.setGroupId(groupId);
 		groupHistoryDO.setFromId(Long.valueOf(user));
 		groupHistoryDO.setType(1L);
-		groupHistoryDO.setTime(new Date().getTime());
+		groupHistoryDO.setTime(System.currentTimeMillis());
 		groupHistoryDO.setMsgId(groupBody.getMsgId());
 		groupHistoryDO.setContent(groupBody.getMessage());
-
+		groupHistoryDO.setFileType(groupBody.getFileType());
 
 		this.kafkaTemplate = SpringUtils.getBean(KafkaTemplate.class);
 		kafkaTemplate.send("group",  JSONObject.toJSONString(groupHistoryDO));

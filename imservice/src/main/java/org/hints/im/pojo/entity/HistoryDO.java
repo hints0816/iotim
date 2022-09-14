@@ -18,4 +18,5 @@ public class HistoryDO {
     private Long type;
     private Long time;
     private String msg_id;
+    private String file_type;
 }

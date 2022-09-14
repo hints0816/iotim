@@ -155,6 +155,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
                 msgBody.setMsgId(jsonObject.getString("msgId"));
                 String msg = jsonObject.getString("msg");
                 msgBody.setMessage(msg);
+
+                msgBody.setFileType(jsonObject.getString("fileType"));
                 baseBody = msgBody;
                 break;
             case 3:
@@ -162,6 +164,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
                 groupBody.setMessage(jsonObject.getString("msg"));
                 groupBody.setMsgId(jsonObject.getString("msgId"));
                 groupBody.setToGroupId(jsonObject.getString("groupId"));
+                groupBody.setFileType(jsonObject.getString("fileType"));
                 baseBody = groupBody;
                 break;
             case 4:

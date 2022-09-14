@@ -53,6 +53,7 @@ public class DataBaseStore {
         historyDO.setContent(msgBody.getMessage());
         historyDO.setTo_id(Long.valueOf(msgBody.getToUserId()));
         historyDO.setType(1L);
+        historyDO.setFile_type(msgBody.getFileType());
 
         dbScheduler.execute(()-> {
             dao.insert(historyDO);
@@ -82,7 +83,6 @@ public class DataBaseStore {
     }
 
     public void persistGroup(GroupHistoryDO groupHistoryDO) {
-
         dbScheduler.execute(()-> {
             dao.insert(groupHistoryDO);
         });
