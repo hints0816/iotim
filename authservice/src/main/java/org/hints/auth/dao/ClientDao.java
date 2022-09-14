@@ -23,14 +23,14 @@ public class ClientDao {
     }
 
     public List<Client> queryClient(Client client) {
-        Cnd cnd = Cnd.from(dao,client);
+        Cnd cnd = Cnd.from(dao, client);
         List<Client> query = dao.query(Client.class, cnd);
         return query;
     }
 
     public int insertClient(Client client) {
         Client insert = dao.insert(client);
-        return insert!=null?1:0;
+        return insert != null ? 1 : 0;
     }
 
     public int deleteClient(String clientId) {

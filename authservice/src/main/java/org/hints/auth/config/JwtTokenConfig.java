@@ -9,9 +9,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
-// @Configuration用于定义配置类，
-// 可替换xml配置文件，被注解的类内部包含有一个或多个被@Bean注解的方法，
-// 这些方法将会被AnnotationConfigApplicationContext或AnnotationConfigWebApplicationContext类进行扫描，
 public class JwtTokenConfig {
 
     @Bean

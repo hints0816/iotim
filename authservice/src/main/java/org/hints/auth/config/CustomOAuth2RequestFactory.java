@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Created by 180686 on 2021/4/14 15:49
+ * Created by hints on 2021/4/14 15:49
  */
 
 @Component
@@ -30,9 +30,9 @@ public class CustomOAuth2RequestFactory extends DefaultOAuth2RequestFactory {
 
     @Override
     public AuthorizationRequest createAuthorizationRequest(Map<String, String> authorizationParameters) {
-        String clientId = (String)authorizationParameters.get("client_id");
-        String state = (String)authorizationParameters.get("state");
-        String redirectUri = (String)authorizationParameters.get("redirect_uri");
+        String clientId = authorizationParameters.get("client_id");
+        String state = authorizationParameters.get("state");
+        String redirectUri = authorizationParameters.get("redirect_uri");
         Set<String> responseTypes = OAuth2Utils.parseParameterList((String)authorizationParameters.get("response_type"));
         Set<String> scopes = this.extractScopes(authorizationParameters, clientId);
         AuthorizationRequest request = new AuthorizationRequest(authorizationParameters, Collections.<String, String>emptyMap(), clientId, scopes, (Set)null, (Collection)null, false, state, redirectUri, responseTypes);
