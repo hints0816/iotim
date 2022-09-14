@@ -9,3 +9,15 @@ web-im demo
 - netty
 - spring-web
 - spring-security
+
+
+### Object Storage
+##### minio
+###### minio server(window)
+> set MINIO_ROOT_USER=admin
+  set MINIO_ROOT_PASSWORD=12345678
+  minio.exe server --console-address :9000 --address :9003 E:/Minio_Data
+
+###### minio client(window)
+> mc.exe config host add minio http://localhost:9003 minio 12345678
+  mc policy set public minio/gscm/img

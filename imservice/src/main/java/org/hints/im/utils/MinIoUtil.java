@@ -1,7 +1,7 @@
 package org.hints.im.utils;
 
 /**
- * Created by 180686 on 2021/10/19 19:16
+ * Created by hints on 2021/10/19 19:16
  */
 
 import io.minio.*;
@@ -120,7 +120,7 @@ public class MinIoUtil {
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(fileName)
-                    .stream(inputStream, file.getSize(), -1)
+                    .stream(inputStream, file.getSize(), -1).contentType(file.getContentType())
                     .build());
             return fileName;
         } catch (Exception e) {

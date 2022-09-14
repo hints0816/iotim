@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 @Configuration
-@EnableResourceServer //这是一台资源服务器
+@EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)//开启方法级别保护
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 

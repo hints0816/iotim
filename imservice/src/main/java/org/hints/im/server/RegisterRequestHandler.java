@@ -7,8 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.manager.util.SessionUtils;
-import org.hints.im.pojo.BaseBody;
 import org.hints.im.pojo.LoginBody;
 import org.hints.im.utils.SessionUtil;
 
@@ -16,7 +14,7 @@ import java.nio.charset.Charset;
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/7/25 9:58
  */
 @ChannelHandler.Sharable

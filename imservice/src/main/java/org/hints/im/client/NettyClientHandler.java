@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Created by 180686 on 2022/5/9 17:29
+ * Created by hints on 2022/5/9 17:29
  */
 @ChannelHandler.Sharable
 public class NettyClientHandler extends SimpleChannelInboundHandler {

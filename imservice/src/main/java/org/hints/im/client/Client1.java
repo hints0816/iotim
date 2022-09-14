@@ -3,7 +3,7 @@ package org.hints.im.client;
 import java.util.Scanner;
 
 /**
- * Created by 180686 on 2022/5/9 18:10
+ * Created by hints on 2022/5/9 18:10
  */
 
 public class Client1 {

@@ -22,7 +22,7 @@ import java.util.Optional;
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/8/5 12:36
  */
 @RestController
@@ -46,10 +46,6 @@ public class LoginController {
         } else {
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(1);
     }
 
     public static NutMap doGet(String url) {

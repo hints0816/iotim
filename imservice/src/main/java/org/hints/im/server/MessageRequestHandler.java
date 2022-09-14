@@ -7,22 +7,17 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.hints.im.persist.DataBaseStore;
 import org.hints.im.pojo.MsgBody;
 import org.hints.im.pojo.User;
 import org.hints.im.utils.SessionUtil;
 import org.hints.im.utils.SpringUtils;
-import org.nutz.dao.Dao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/7/26 12:45
  */
 @ChannelHandler.Sharable

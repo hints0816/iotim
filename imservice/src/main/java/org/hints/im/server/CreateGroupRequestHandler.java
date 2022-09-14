@@ -9,7 +9,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.apache.catalina.manager.util.SessionUtils;
 import org.hints.im.persist.DataBaseStore;
 import org.hints.im.pojo.CreateGroupBody;
 import org.hints.im.utils.SessionUtil;

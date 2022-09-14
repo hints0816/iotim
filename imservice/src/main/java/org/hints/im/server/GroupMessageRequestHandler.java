@@ -7,22 +7,17 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.hints.im.pojo.GroupBody;
-import org.hints.im.pojo.entity.GroupDTO;
 import org.hints.im.pojo.entity.GroupHistoryDO;
 import org.hints.im.utils.SessionUtil;
 import org.hints.im.utils.SpringUtils;
-import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
-import org.nutz.dao.entity.Record;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**

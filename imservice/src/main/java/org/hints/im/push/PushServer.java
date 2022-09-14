@@ -2,7 +2,7 @@ package org.hints.im.push;
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/8/11 8:59
  *
  * 推送:离线推送等

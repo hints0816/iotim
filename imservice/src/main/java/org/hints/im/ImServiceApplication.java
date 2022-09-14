@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/7/7 9:04
  */
 @EnableResourceServer

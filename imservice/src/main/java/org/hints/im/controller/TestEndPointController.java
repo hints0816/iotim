@@ -1,18 +1,13 @@
 package org.hints.im.controller;
 
-import io.netty.channel.Channel;
 import org.hints.im.pojo.ReturnVo;
 import org.hints.im.pojo.User;
-import org.hints.im.pojo.entity.GroupDTO;
-import org.hints.im.pojo.entity.HistoryDO;
 import org.hints.im.utils.MinIoUtil;
-import org.hints.im.utils.SessionUtil;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Sql;
-import org.nutz.dao.util.cri.Static;
 import org.nutz.lang.util.NutMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,16 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 public class TestEndPointController {
@@ -132,29 +120,16 @@ public class TestEndPointController {
     @PostMapping("/upload")
     public ReturnVo upload(MultipartFile file, Principal principal) {
         String name = principal.getName();
-        /*String savePath = System.getProperty("user.dir") + "\\" + "imservice\\src\\main\\resources\\static\\img";
-        // 保存文件的文件夹
-        File folder = new File(savePath);
-        String originalFilename = file.getOriginalFilename();
-        String substring = originalFilename.substring(originalFilename.lastIndexOf("."));
 
-        String filename = String.valueOf(System.currentTimeMillis())+substring;
-        try {
-            file.transferTo(new File(folder,filename));
-        } catch (IOException e){
-            logger.error(e.getMessage(), e);
-        }*/
-
-        String upload = MinIoUtil.upload("im/" + name, "gscm", file);
+        String upload = MinIoUtil.upload("img", "gscm", file);
         return ReturnVo.success(upload);
     }
 
     //TODO 非图床
     @PostMapping("/download")
     public void download(String name, HttpServletResponse response) {
-        MinIoUtil.download("gscm", "im/" + name, response);
+        MinIoUtil.download("gscm", "img/" + name, response);
     }
-
 
 
 }

@@ -233,7 +233,7 @@ function userhistory(toUser1) {
                 var str = "";
                 if ($("#name").val() == item.from_id) {
                     if(item.file_type == 1){
-                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" src="img/'+item.content+'" height="45" width="45" alt="...">'+ ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.content+'" height="45" width="45" alt="...">'+ ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }else{
                         str = '<div style="text-align:right;margin: 3px;"><span>' + item.content + ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }

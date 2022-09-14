@@ -2,7 +2,7 @@ package org.hints.im.handler;
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/8/11 10:01
  */
 abstract public class IMHandler<T> {

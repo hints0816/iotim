@@ -2,7 +2,7 @@ package org.hints.im.pojo;
 
 /**
  * @Description TODO
- * @Author 180686
+ * @Author hints
  * @Date 2022/7/26 12:49
  */
 public interface Command {

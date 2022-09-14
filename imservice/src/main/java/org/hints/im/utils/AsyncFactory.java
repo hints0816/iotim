@@ -1,7 +1,6 @@
 package org.hints.im.utils;
 
 import org.hints.im.persist.DataBaseStore;
-import org.hints.im.pojo.GroupBody;
 import org.hints.im.pojo.MsgBody;
 import org.hints.im.pojo.entity.GroupHistoryDO;
 
