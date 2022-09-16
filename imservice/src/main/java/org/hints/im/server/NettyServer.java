@@ -59,6 +59,7 @@ public class NettyServer{
         //(2).业务
         //(3).回调
 
+        ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.ADVANCED);
         try {
             // 创建启动类
             ServerBootstrap boot = new ServerBootstrap();

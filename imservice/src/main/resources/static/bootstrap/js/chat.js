@@ -27,7 +27,7 @@ $(document).ready(function () {
 });
 
 $('#myModal').on('show.bs.modal', function (event) {
-    $.ajax({
+    /*$.ajax({
         url: '../userlist',
         dataType: 'json',
         type: 'get',
@@ -50,22 +50,22 @@ $('#myModal').on('show.bs.modal', function (event) {
                 $(".group_member").html(str);
             }
         },
-    });
+    });*/
 })
 
 $(document).on("click", ".datasourcelink", function () {
     var list = [];
 
-    $(":checkbox[name='usercheckbox']:checked").each(function () {
-        list.push($(this).val());
-    });
-
     let object = {};
     object.name = $('#group_name').val();
     object.userlist = list;
+    object.avater = newGroupAvater;
     object.type = 4;
     send(JSON.stringify(object));
 });
+
+
+
 
 $(document).on('change', '.toUser', function () {
     toUser = $('input:radio:checked').val();
@@ -134,13 +134,42 @@ function showFriends(e){
                 })
                 $("#userlist").html(str);
 
-                $("#myhead").html('<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
+                $("#myhead").html('<img class="media-object" src="http://10.2.24.234:9003/gscm/'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
                 $("#navleft li").removeClass("active");
                 $(e).parent().addClass("active")
             }
         },
     });
 }
+
+$(document).on('change', '#groupimg', function () {
+    var files = this.files;
+    var formData = new FormData();
+    formData.append("file", files[0]);
+    $.ajax({
+        method: 'POST',
+        url: 'upload',
+        dataType: 'json',
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+        },
+        success: function (data) {
+            if (data.code == 200) {
+                var str = '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+data.msg+'" height="100" width="100" alt="...">';
+                $("#groupavater").html(str);
+                newGroupAvater = data.msg;
+            } else {
+                alert();
+            }
+        },
+        error: function (data) {
+            alert();
+        }
+    });
+});
 
 $(document).on('change', '#exampleInputFile', function () {
     var files = this.files;
@@ -170,7 +199,8 @@ $(document).on('change', '#exampleInputFile', function () {
                     console.log(object);
                     send(JSON.stringify(object));
 
-                    var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                    var str = '<div style="text-align:right;margin: 3px;">' +
+                        '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/' + object.msg + '" height="20%" width="20%" alt="..."> : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     $("#show").append(str);
 
                     var chatlist = document.getElementById('show');
@@ -188,7 +218,8 @@ $(document).on('change', '#exampleInputFile', function () {
                     object.msg = data.msg;
                     send(JSON.stringify(object));
 
-                    var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                    var str = '<div style="text-align:right;margin: 3px;">' +
+                        '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/' + object.msg + '" height="20%" width="20%" alt="..."> : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     $("#show").append(str);
 
                     var chatlist = document.getElementById('show');
@@ -213,6 +244,7 @@ let ws;
 let toUser;
 let myNickName;
 let myAvater;
+let newGroupAvater;
 let toGroup;
 let type;
 
@@ -233,13 +265,13 @@ function userhistory(toUser1) {
                 var str = "";
                 if ($("#name").val() == item.from_id) {
                     if(item.file_type == 1){
-                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.content+'" height="45" width="45" alt="...">'+ ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/'+item.content+'" height="20%" width="20%" alt="...">'+ ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }else{
-                        str = '<div style="text-align:right;margin: 3px;"><span>' + item.content + ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        str = '<div style="text-align:right;margin: 3px;"><span>' + item.content + ' : ' + item.nick_name + '</span><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }
                     $("#show").append(str);
                 } else {
-                    str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"><span>' + item.nick_name + ' : ' + item.content + '</span></div>';
+                    str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"><span>' + item.nick_name + ' : ' + item.content + '</span></div>';
                     $("#show").append(str);
                 }
             })
@@ -261,10 +293,10 @@ function grouphistory(toGroup) {
         success: function (data) {
             data.data.history.forEach((item, index, data) => {
                 if ($("#name").val() == item.from_id) {
-                    var str = '<div style="text-align:right;margin: 3px;">' + item.content + ' : ' + item.nick_name + '<img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                    var str = '<div style="text-align:right;margin: 3px;">' + item.content + ' : ' + item.nick_name + '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     $("#show").append(str);
                 } else {
-                    var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;">' + item.nick_name + ' : ' + item.content + '</div>';
+                    var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;">' + item.nick_name + ' : ' + item.content + '</div>';
                     $("#show").append(str);
                 }
                 var chatlist1 = document.getElementById('show');
@@ -273,12 +305,12 @@ function grouphistory(toGroup) {
             $("#member").html('<li style="display: flex"><input type="text" class="form-control" placeholder="Search..."></li>');
             $("#member").append('<li style="display: flex">MANAGER</li>');
             data.data.group.forEach((item, index, data) => {
-                var str = '<li style="display: flex"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
+                var str = '<li style="display: flex"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
                 $("#member").append(str);
             })
             $("#member").append('<li style="display: flex">MEMBERS</li>');
             data.data.members.forEach((item, index, data) => {
-                var str = '<li style="display: flex"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
+                var str = '<li style="display: flex"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
                 $("#member").append(str);
             })
         }
@@ -321,7 +353,7 @@ function userlist() {
             if (data.code == 200) {
                 var str = "";
                 data.data.users.forEach((item, index, data) => {
-                    str += ' <li onclick="selectChat('+item.msgtype+',\'' + item.target + '\',\'' + item.name + '\', this)" style="display: flex;padding: 5px"><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="...">' +
+                    str += ' <li onclick="selectChat('+item.msgtype+',\'' + item.target + '\',\'' + item.name + '\', this)" style="display: flex;padding: 5px"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="...">' +
                         '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;">' +
                         '<a style="font-size: 15px" href="javascript:void(0)">' + item.name + '</a>' +
                         '<div style="font-size: 10px">' + item.content + '</div>' +
@@ -329,7 +361,7 @@ function userlist() {
                 })
                 $("#userlist").html(str);
 
-                $("#myhead").html('<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
+                $("#myhead").html('<img class="media-object" src="http://10.2.24.234:9003/gscm/'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;">');
 
             }
         },
@@ -349,9 +381,9 @@ function channellist() {
             if (data.code == 200) {
                 var str = "";
                 data.data.users.forEach((item, index, data) => {
-                    str += '<li role="presentation">\n' +
+                    str += '<li role="presentation">' +
                         '<a href="#" style="padding: 10px 8px;" onclick="selectGroup(\''+item.target+'\',\''+item.name+'\',this);">' +
-                        '<img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..."><i style="display: none" id="redpoint-'+item.target+'" class="toolbar-msg-count"></i>' +
+                        '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..."><i style="display: none" id="redpoint-'+item.target+'" class="toolbar-msg-count"></i>' +
                         '</a>' +
                         '</li>';
                 })
@@ -373,14 +405,18 @@ function viewChannel(groupId) {
         success: function (data) {
             if (data.code == 200) {
                 var str = "";
-                str += '<li onclick="" style="display: flex;padding: 5px"><img class="media-object" src="'+data.data.img+'" height="45" width="45" alt="...">' +
-                    '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;">' +
+                str += '<li onclick="" style="display: flex;padding: 5px;justify-content: space-between;"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+data.data.img+'" height="45" width="45" alt="...">' +
+                    '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;display: flex;justify-content: space-between;width:100%;">' +
                     '<a style="font-size: 15px" href="javascript:void(0)">' + data.data.name + '</a>' +
-                    '<div style="font-size: 10px"> </div>' +
+                    ' <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<span class="iconfont">&#xe748;</span>' +
+                    '  </a>' +
+                    '  <ul class="dropdown-menu">' +
+                    '    <li><a href="#" onclick="$(\'#invitefriend\').modal(\'toggle\');">INVITE FRIENDS</a></li>' +
+                    '    <li><a href="#" onclick="$(\'#modifyGroupName\').modal(\'toggle\');">MODIFY CHANNEL NICKNAME</a></li>' +
+                    '  </ul>' +
                     '</div></li>';
                 $("#userlist").html(str);
-
-
             }
         },
     });
@@ -412,17 +448,18 @@ function init() {
             if (data.type == 1) {
                 show.innerHTML += data.params.message + "<br/>";
             } else if (data.type == 2) {
-                show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+ data.params.avater+'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.nickName + ' : ' + data.params.message + "</div><br/>";
+                show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+ data.params.avater+'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.nickName + ' : ' + data.params.message + "</div><br/>";
                 var chatlist = document.getElementById('show');
                 chatlist.scrollTop = chatlist.scrollHeight;
             } else if (data.type == 4){
                 $('#myModal').modal('toggle');
+                channellist();
                 userlist();
             }else if (data.type == 12){
                 sendHeartBeat();
             }else{
                 if(toGroup == data.params.groupId){
-                    show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="'+ data.params.avater+'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.fromUser + ' : ' + data.params.message + "<br/>";
+                    show.innerHTML += '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+ data.params.avater+'" height="45" width="45" alt="..." style="display: inline-block;">'+data.params.fromUser + ' : ' + data.params.message + "<br/>";
                 }else{
                     updateRedPoint(data.params.groupId);
                 }
@@ -519,7 +556,7 @@ function sendName(event) {
             object.msg = $("#msg").val();
             send(JSON.stringify(object));
 
-            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
             $("#show").append(str);
 
             var chatlist = document.getElementById('show');
@@ -536,7 +573,7 @@ function sendName(event) {
             object.msg = $("#msg").val();
             send(JSON.stringify(object));
 
-            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+ myAvater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
             $("#show").append(str);
 
             var chatlist = document.getElementById('show');

@@ -171,6 +171,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
                 CreateGroupBody createGroupBody = new CreateGroupBody();
                 createGroupBody.setName(jsonObject.getString("name"));
                 createGroupBody.setOwner(Long.valueOf(SessionUtil.getUser(ctx.channel()).getUserName()));
+                createGroupBody.setAvater(jsonObject.getString("avater"));
                 JSONArray userlist = jsonObject.getJSONArray("userlist");
                 ArrayList<Long> longs = new ArrayList<>();
                 for (Object o : userlist) {

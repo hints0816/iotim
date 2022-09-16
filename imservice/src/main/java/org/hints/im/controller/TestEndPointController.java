@@ -61,7 +61,11 @@ public class TestEndPointController {
         sql.setCallback(Sqls.callback.entities());
         sql.setEntity(dao.getEntity(Record.class));
         List<Record> list = dao.execute(sql).getList(Record.class);
-
+        for (Record record : list) {
+            if("2".equals(record.getString("msgtype"))){
+                record.set("content","[ picture ]");
+            }
+        }
         return ReturnVo.success(NutMap.NEW().addv("users", list));
     }
 

@@ -17,6 +17,8 @@ public class CreateGroupBody extends BaseBody implements Serializable {
 
     private String name;
 
+    private String avater;
+
     private Long owner;
 
     public CreateGroupBody() {

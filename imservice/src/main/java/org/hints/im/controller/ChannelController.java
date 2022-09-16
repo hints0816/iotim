@@ -2,13 +2,13 @@ package org.hints.im.controller;
 
 import org.hints.im.pojo.ReturnVo;
 import org.hints.im.pojo.entity.GroupDTO;
+import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.nio.channels.Channel;
 
 /**
  * @Description TODO
@@ -25,9 +25,15 @@ public class ChannelController {
 
     @GetMapping("/info/{groupId}")
     public ReturnVo info(@PathVariable String groupId) {
-
         GroupDTO groupInfo = dao.fetch(GroupDTO.class, Cnd.where("group_id", "=", groupId));
-
         return ReturnVo.success(groupInfo);
     }
+
+    @PostMapping("/updatename")
+    public ReturnVo updateName(GroupDTO groupDTO) {
+        int update = dao.update(GroupDTO.class, Chain.make("name", groupDTO.getName()),
+                Cnd.where("group_id", "=", groupDTO.getGroupId()));
+        return update>0?ReturnVo.success():ReturnVo.error();
+    }
+
 }

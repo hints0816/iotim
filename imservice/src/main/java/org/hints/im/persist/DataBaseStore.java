@@ -7,6 +7,7 @@ import org.hints.im.pojo.entity.GroupDTO;
 import org.hints.im.pojo.entity.GroupHistoryDO;
 import org.hints.im.pojo.entity.HistoryDO;
 import org.hints.im.server.ThreadPoolExecutorWrapper;
+import org.hints.im.utils.SnowUtils;
 import org.nutz.dao.Chain;
 import org.nutz.dao.Dao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,14 +60,26 @@ public class DataBaseStore {
         groupDTO.setGroupId(groupId);
         groupDTO.setOwner(createGroupBody.getOwner());
         groupDTO.setName(createGroupBody.getName());
+        groupDTO.setImg(createGroupBody.getAvater());
         groupDTO.setType(2);
         groupDTO.setMembernum(20L);
         groupDTO.setUserlist(createGroupBody.getUserIdList());
         Date date = new Date();
         groupDTO.setCreatedate(date);
 
+
+
         dbScheduler.execute(()-> {
             List<Long> userIdList = createGroupBody.getUserIdList();
+            GroupHistoryDO groupHistoryDO = new GroupHistoryDO();
+            groupHistoryDO.setMsgId(String.valueOf(SnowUtils.nextId()));
+            groupHistoryDO.setTime(System.currentTimeMillis());
+            groupHistoryDO.setType(3L);
+            groupHistoryDO.setFromId(000L);
+            groupHistoryDO.setGroupId(groupId);
+            groupHistoryDO.setContent("welcome to "+ createGroupBody.getName());
+            dao.insert(groupHistoryDO);
+
             dao.insert(groupDTO);
             for (Long aLong : userIdList) {
                 dao.insert("sys_group_member", Chain.make("group_id",groupId).add("user_id",aLong).add("adddate",date));

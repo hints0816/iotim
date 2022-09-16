@@ -109,7 +109,7 @@
 </div>
 <div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f">
+        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f;width: 300px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -121,8 +121,9 @@
                         <label for="group_name">GROUP_NAME</label>
                         <input type="text" class="form-control" id="group_name" placeholder="group_name">
                     </div>
-                    <div class="group_member">
-                        <label>GROUP_MEMBER</label>
+                    <input type="file" id="groupimg" style="display: none;">
+                    <input type="button" id="fileButton"class="btn btn-primary" value="浏览" onclick="$('#groupimg').click();" />
+                    <div id="groupavater" style="display:flex;justify-content: center;">
 
                     </div>
                     <button type="submit" class="btn btn-primary datasourcelink">ok</button>
@@ -130,8 +131,44 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="invitefriend" tabindex="-1" role="dialog" aria-labelledby="inviteFriendLabel">
+        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f;width: 500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="inviteFriendLabel"> INVITE FRIENDS TO JOIN </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="inviteFriendName" placeholder="group_name">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modifyGroupName" tabindex="-1" role="dialog" aria-labelledby="modifyGroupNameLabel">
+        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f;width: 500px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modifyGroupNameLabel"> MODIFY GROUP NICKNAME </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="groupNickName" placeholder="group_name">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary modifyGroupName">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="bootstrap/js/chat.js"></script>
+<script src="bootstrap/js/group.js"></script>
 </body>
 </html>
