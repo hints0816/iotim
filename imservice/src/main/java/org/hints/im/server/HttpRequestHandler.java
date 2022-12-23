@@ -137,7 +137,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         ByteBuf bytebuf = textWebSocketFrame.content();
         String content = bytebuf.toString(Charset.forName("utf-8"));
         JSONObject jsonObject = JSONObject.parseObject(content);
-        System.err.println("请求参数："+jsonObject);
         Byte type = jsonObject.getByte("type");
         BaseBody baseBody = null;
         switch (type) {

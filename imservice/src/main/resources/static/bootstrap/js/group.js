@@ -73,7 +73,17 @@ function grouphistory(toGroup) {
                 if ($("#name").val() == item.from_id) {
                     var str = "";
                     if(item.file_type == 1) {
-                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/'+item.content+'" height="20%" width="20%" alt="...">'+ ' : ' + item.nick_name + '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        str = '<div style="text-align:right;margin: 3px;">' +
+                            '<span>' +
+                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/'+item.content+'" height="20%" width="20%" alt="...">'+ ' : ' +
+                            item.nick_name +
+                            '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                    }else if(item.file_type == 2) {
+                        str = '<div style="text-align:right;margin: 3px;">' +
+                            '<span>' +
+                            '<a href="http://10.2.24.234:9003/gscm/'+item.content+'" class="btn btn-primary">download</a>'+ ' : ' +
+                            item.nick_name +
+                            '</span><img class="media-object" src="'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }else{
                         str = '<div style="text-align:right;margin: 3px;">' + item.content + ' : ' + item.nick_name + '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }

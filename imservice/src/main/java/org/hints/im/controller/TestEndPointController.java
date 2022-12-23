@@ -2,6 +2,7 @@ package org.hints.im.controller;
 
 import org.hints.im.pojo.ReturnVo;
 import org.hints.im.pojo.User;
+import org.hints.im.utils.FileContentTypeUtils;
 import org.hints.im.utils.MinIoUtil;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
@@ -45,11 +46,11 @@ public class TestEndPointController {
     public ReturnVo userlist(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
 
         Sql sql = Sqls.create("SELECT * FROM (\n" +
-                "SELECT T1.*,T2.NAME,T2.IMG AS AVATER,'1' AS MSGTYPE FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,GROUP_ID AS TARGET FROM (  \n" +
+                "SELECT T1.*,T2.NAME,T2.IMG AS AVATER,'1' AS MSGTYPE, NICK_NAME AS FROM_NAME FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,GROUP_ID AS TARGET,FILE_TYPE FROM (  \n" +
                 "    SELECT ROW_NUMBER() OVER(PARTITION BY GROUP_ID ORDER BY TIME DESC) RN,         \n" +
                 "           T.*         \n" +
                 "      FROM (SELECT * FROM CHAT_GROUP_HISTORY WHERE GROUP_ID IN (SELECT GROUP_ID FROM SYS_GROUP_MEMBER WHERE USER_ID = @USER_ID)) T\n" +
-                ") WHERE RN = 1) T1, SYS_GROUP T2 WHERE T1.TARGET = T2.GROUP_ID UNION ALL SELECT T1.*,T2.NICK_NAME AS NAME,T2.AVATER,'2' AS MSGTYPE FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,TO_CHAR(DECODE(FROM_ID,@USER_ID,TO_ID,FROM_ID)) AS TARGET FROM (  \n" +
+                ") WHERE RN = 1) T1, SYS_GROUP T2, SYS_USER T3 WHERE T1.TARGET = T2.GROUP_ID AND T1.FROM_ID = T3.USER_NAME UNION ALL SELECT T1.*,T2.NICK_NAME AS NAME,T2.AVATER,'2' AS MSGTYPE, '' AS FROM_NAME FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,TO_CHAR(DECODE(FROM_ID,@USER_ID,TO_ID,FROM_ID)) AS TARGET,FILE_TYPE FROM (  \n" +
                 "    SELECT ROW_NUMBER() OVER(PARTITION BY FID ORDER BY TIME DESC) RN,         \n" +
                 "           T.*         \n" +
                 "      FROM (SELECT T1.*,T2.FID FROM CHAT_HISTORY T1, CHAT_FRIEND T2 WHERE ((T1.FROM_ID = T2.FROM_ID AND T1.TO_ID = T2.TO_ID)\n" +
@@ -62,8 +63,12 @@ public class TestEndPointController {
         sql.setEntity(dao.getEntity(Record.class));
         List<Record> list = dao.execute(sql).getList(Record.class);
         for (Record record : list) {
-            if("2".equals(record.getString("msgtype"))){
-                record.set("content","[ picture ]");
+            String content ="";
+            if(record.getInt("MSGTYPE") == 1){
+                content+= record.getString("FROM_NAME")+" : ";
+            }
+            if("1".equals(record.getString("file_type"))){
+                record.set("content", content+"[ picture ]");
             }
         }
         return ReturnVo.success(NutMap.NEW().addv("users", list));
@@ -123,9 +128,12 @@ public class TestEndPointController {
 
     @PostMapping("/upload")
     public ReturnVo upload(MultipartFile file, Principal principal) {
-        String name = principal.getName();
-
-        String upload = MinIoUtil.upload("img", "gscm", file);
+        String upload = "";
+        if(file.getContentType().startsWith("image")){
+            upload = MinIoUtil.upload("img", "gscm", file);
+        }else{
+            upload = MinIoUtil.upload("file", "gscm", file);
+        }
         return ReturnVo.success(upload);
     }
 
