@@ -94,8 +94,34 @@ function grouphistory(toGroup) {
                         '    font-weight: 800;">' + item.content + '</div>';
                     $("#show").append(str);
                 }else {
-                    var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+'" height="45" width="45" alt="..." style="display: inline-block;">' + item.nick_name + ' : ' + item.content + '</div>';
-                    $("#show").append(str);
+                    if(item.file_type == 1) {
+                        var str = '<div style="text-align:left;margin: 3px;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+
+                            '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            item.nick_name +
+                            ' : ' +
+                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/'+item.content+'" height="20%" width="20%" alt="...">' +
+                            '</div>';
+                        $("#show").append(str);
+                    }else if(item.file_type == 2) {
+                        var str = '<div style="text-align:left;margin: 3px;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+
+                            '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            item.nick_name +
+                            ' : ' +
+                            '<a href="http://10.2.24.234:9003/gscm/'+item.content+'" class="btn btn-primary">download</a>' +
+                            '</div>';
+                        $("#show").append(str);
+                    }else{
+                        var str = '<div style="text-align:left;margin: 3px;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/'+item.avater+
+                            '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            item.nick_name +
+                            ' : ' +
+                            item.content +
+                            '</div>';
+                        $("#show").append(str);
+                    }
                 }
                 var chatlist1 = document.getElementById('show');
                 chatlist1.scrollTop = chatlist1.scrollHeight;

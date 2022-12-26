@@ -9,6 +9,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.hints.im.pojo.GroupBody;
+import org.hints.im.pojo.User;
 import org.hints.im.pojo.entity.GroupHistoryDO;
 import org.hints.im.utils.SessionUtil;
 import org.hints.im.utils.SpringUtils;
@@ -50,14 +51,14 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 			String user = SessionUtil.getUser(channel).getUserName();
 			nameList.add(user);
 		}
-		String user = SessionUtil.getUser(ctx.channel()).getUserName();
+		User user = SessionUtil.getUser(ctx.channel());
 		ByteBuf byteBuf = getByteBuf(ctx, groupId, groupBody.getMessage(), user, fileType, nameList);
 		channelGroup.remove(ctx.channel());
 		channelGroup.writeAndFlush(new TextWebSocketFrame(byteBuf));
 
 		GroupHistoryDO groupHistoryDO = new GroupHistoryDO();
 		groupHistoryDO.setGroupId(groupId);
-		groupHistoryDO.setFromId(Long.valueOf(user));
+		groupHistoryDO.setFromId(Long.valueOf(user.getUserName()));
 		groupHistoryDO.setType(1L);
 		groupHistoryDO.setTime(System.currentTimeMillis());
 		groupHistoryDO.setMsgId(groupBody.getMsgId());
@@ -71,7 +72,7 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 	}
 	
 	public ByteBuf getByteBuf(ChannelHandlerContext ctx, String groupId, String message,
-                              String fromUser, String fileType, List<String> nameList) {
+							  User fromUser, String fileType, List<String> nameList) {
 		ByteBuf byteBuf = ctx.alloc().buffer();
 		JSONObject data = new JSONObject();
 		data.put("type", 10);
@@ -79,7 +80,9 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 		JSONObject params = new JSONObject();
 		params.put("message", message);
 		params.put("fileType", fileType);
-		params.put("fromUser", fromUser);
+		params.put("fromUser", fromUser.getUserName());
+		params.put("nickName", fromUser.getNickName());
+		params.put("avater", fromUser.getAvater());
 		params.put("groupId", groupId);
 		Collections.reverse(nameList);
 		params.put("nameList", nameList);

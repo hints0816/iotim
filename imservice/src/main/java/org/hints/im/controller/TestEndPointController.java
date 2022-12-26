@@ -129,12 +129,17 @@ public class TestEndPointController {
     @PostMapping("/upload")
     public ReturnVo upload(MultipartFile file, Principal principal) {
         String upload = "";
+        Integer fileType = 1;
+        String fileName = file.getOriginalFilename();
         if(file.getContentType().startsWith("image")){
             upload = MinIoUtil.upload("img", "gscm", file);
+            fileType = 1;
         }else{
             upload = MinIoUtil.upload("file", "gscm", file);
+            fileType = 2;
         }
-        return ReturnVo.success(upload);
+        NutMap addv = NutMap.NEW().addv("fileType", fileType).addv("key", upload).addv("fileName", fileName);
+        return ReturnVo.success(addv);
     }
 
     //TODO 非图床
