@@ -74,6 +74,34 @@ public class TestEndPointController {
         return ReturnVo.success(NutMap.NEW().addv("users", list));
     }
 
+    @GetMapping("/user-chats")
+    public ReturnVo userChats(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
+
+        Sql sql = Sqls.create("SELECT * FROM (\n" +
+                "SELECT T1.*,T2.NICK_NAME AS NAME,T2.AVATER,'2' AS MSGTYPE, '' AS FROM_NAME FROM (SELECT FROM_ID,TYPE,TIME,CONTENT,TO_CHAR(DECODE(FROM_ID,@USER_ID,TO_ID,FROM_ID)) AS TARGET,FILE_TYPE FROM (  \n" +
+                "    SELECT ROW_NUMBER() OVER(PARTITION BY FID ORDER BY TIME DESC) RN,         \n" +
+                "           T.*         \n" +
+                "      FROM (SELECT T1.*,T2.FID FROM CHAT_HISTORY T1, CHAT_FRIEND T2 WHERE ((T1.FROM_ID = T2.FROM_ID AND T1.TO_ID = T2.TO_ID)\n" +
+                "       OR (T1.FROM_ID = T2.TO_ID AND T1.TO_ID = T2.FROM_ID)) AND (T2.FROM_ID = @USER_ID OR T2.TO_ID = @USER_ID)) T\n" +
+                ") WHERE RN = 1) T1, SYS_USER T2 WHERE T1.TARGET = T2.USER_NAME ) ORDER BY TIME DESC");
+
+        sql.setParam("USER_ID", principal.getName());
+
+        sql.setCallback(Sqls.callback.entities());
+        sql.setEntity(dao.getEntity(Record.class));
+        List<Record> list = dao.execute(sql).getList(Record.class);
+        for (Record record : list) {
+            String content ="";
+            if(record.getInt("MSGTYPE") == 1){
+                content+= record.getString("FROM_NAME")+" : ";
+            }
+            if("1".equals(record.getString("file_type"))){
+                record.set("content", content+"[ picture ]");
+            }
+        }
+        return ReturnVo.success(NutMap.NEW().addv("users", list));
+    }
+
     @GetMapping("/channellist")
     public ReturnVo channellist(OAuth2Authentication oAuth2Authentication, Principal principal, Authentication authentication) {
 

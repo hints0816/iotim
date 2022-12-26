@@ -20,30 +20,17 @@
 <noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
 <body>
 <input type="text" id="name" style="display: none"/>
-<!--<nav class="navbar navbar-fixed-top" style="background-color: #e6e6e6">-->
-    <!--<div class="container-fluid">-->
-        <!--<div class="navbar-header">-->
-            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"-->
-                    <!--aria-expanded="false" aria-controls="navbar">-->
-                <!--<span class="sr-only">Toggle navigation</span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-            <!--</button>-->
-            <!--<a class="navbar-brand" href="#">IM DEMO</a>-->
-        <!--</div>-->
-        <!--<div id="navbar" class="navbar-collapse collapse">-->
-            <!--<ul class="nav navbar-nav navbar-right">-->
-                <!--<li><a href="#" data-toggle="modal" data-target="#myModal"><span class="iconfont">&#xe741;</span></a></li>-->
-            <!--</ul>-->
-            <!--<form class="navbar-form navbar-right">-->
-                <!--<input type="text" class="form-control" placeholder="Search...">-->
-            <!--</form>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</nav>-->
 <div class="container-fluid" style="display:flex;
         justify-content: space-between;padding-left: 0px;padding-right: 0px;height: 100%;">
+    <div>
+        <ul id="channelSetting" class="dropdown-menu">
+            <li><a href="#">Invited</a></li>
+            <li><a href="#">Notify Setting</a></li>
+            <li><a href="#">Private Setting</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#" onclick="leftChannel()">LeftChannel</a></li>
+        </ul>
+    </div>
     <div class="left-menu" style="width:65px;height: 100%;border-right-color: #e6e6e6;border-right-style: inset;">
         <ul class="nav nav-stacked" id="navleft">
             <!-- 侧边栏选项 -->
@@ -56,6 +43,7 @@
                 <a href="#" onclick="showFriends(this);"><span class="iconfont">&#xe7b2;</span></a>
             </li>
         </ul>
+
         <ul class="nav nav-stacked">
             <li role="presentation">
                 <a href="#" data-toggle="modal" data-target="#myModal"><span class="iconfont">&#xe742;</span></a>
@@ -68,10 +56,18 @@
             </li>
         </ul>
     </div>
+
     <div class="left-menu" style="width:230px;height: 100%;border-right-color: #e6e6e6;border-right-style: inset;">
         <!-- 侧边栏标签页 -->
         <ul class="nav nav-stacked">
             <!-- 侧边栏选项 -->
+            <!--friend-->
+            <!--<li role="presentation">-->
+                <!--<ul class="collapse in" style="padding-left: 0px">-->
+                    <!--<li role="presentation">all</li>-->
+                    <!--<li role="presentation">request</li>-->
+                <!--</ul>-->
+            <!--</li>-->
             <li role="presentation">
                 <!-- 选项控制data-target对应的显隐 -->
                 <!-- 隐藏的详细菜单 -->
@@ -174,5 +170,6 @@
 </div>
 <script src="bootstrap/js/chat.js"></script>
 <script src="bootstrap/js/group.js"></script>
+<script src="bootstrap/js/event.js"></script>
 </body>
 </html>

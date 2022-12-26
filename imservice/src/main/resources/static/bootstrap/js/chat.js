@@ -97,20 +97,6 @@ function selectUser(username, nickname, e) {
     $("#usergroup").html(nickname + '<a href="#" style=""><span class="iconfont">&#xe78e;</span></a>');
 }
 
-function selectGroup(groupid, groupname, e) {
-    toGroup = groupid;
-    $("#show").html("");
-    $("#redpoint-" + groupid).css("display", "none");
-    grouphistory(groupid);
-    type = 3;
-    $("#userlist li").removeClass("active");
-
-    $(e).addClass("active");
-
-    $("#usergroup").html(groupname + '<a href="#" style=""><span class="iconfont">&#xe78e;</span></a>');
-
-    viewChannel(groupid);
-}
 
 function showFriends(e) {
     $.ajax({
@@ -303,43 +289,7 @@ function userhistory(toUser1) {
     });
 }
 
-function grouphistory(toGroup) {
-    $.ajax({
-        url: '../message/history',
-        dataType: 'json',
-        type: 'get',
-        data: {
-            "groupId": toGroup
-        },
-        beforeSend: function (XMLHttpRequest) {
-            XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
-        },
-        success: function (data) {
-            data.data.history.forEach((item, index, data) => {
-                if ($("#name").val() == item.from_id) {
-                    var str = '<div style="text-align:right;margin: 3px;">' + item.content + ' : ' + item.nick_name + '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
-                    $("#show").append(str);
-                } else {
-                    var str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' + item.nick_name + ' : ' + item.content + '</div>';
-                    $("#show").append(str);
-                }
-                var chatlist1 = document.getElementById('show');
-                chatlist1.scrollTop = chatlist1.scrollHeight;
-            })
-            $("#member").html('<li style="display: flex"><input type="text" class="form-control" placeholder="Search..."></li>');
-            $("#member").append('<li style="display: flex">MANAGER</li>');
-            data.data.group.forEach((item, index, data) => {
-                var str = '<li style="display: flex"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
-                $("#member").append(str);
-            })
-            $("#member").append('<li style="display: flex">MEMBERS</li>');
-            data.data.members.forEach((item, index, data) => {
-                var str = '<li style="display: flex"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
-                $("#member").append(str);
-            })
-        }
-    });
-}
+
 
 function getInfo() {
     $.ajax({
@@ -366,7 +316,7 @@ function getInfo() {
 
 function userlist() {
     $.ajax({
-        url: '../userlist',
+        url: '../user-chats',
         dataType: 'json',
         type: 'get',
         data: {},
@@ -407,7 +357,7 @@ function channellist() {
                 data.data.users.forEach((item, index, data) => {
                     str += '<li role="presentation">' +
                         '<a href="#" style="padding: 10px 8px;" onclick="selectGroup(\'' + item.target + '\',\'' + item.name + '\',this);">' +
-                        '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><i style="display: none" id="redpoint-' + item.target + '" class="toolbar-msg-count"></i>' +
+                        '<img class="media-object" id="group_'+item.target+'" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><i style="display: none" id="redpoint-' + item.target + '" class="toolbar-msg-count"></i>' +
                         '</a>' +
                         '</li>';
                 })
@@ -415,6 +365,10 @@ function channellist() {
             }
         },
     });
+}
+
+function leftChannel() {
+    console.log("left channel:"+channelSettingID)
 }
 
 function viewChannel(groupId) {
