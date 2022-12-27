@@ -304,6 +304,11 @@ function getInfo() {
             $("#name").val(data.userName);
             myNickName = data.nickName;
             myAvater = data.avater;
+            var str =
+                '<a href="#" style="padding: 10px 8px;" onclick="$(\'#userInfoSetting\').modal(\'toggle\');">' +
+                '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + myAvater + '" height="45" width="45" alt="...">' +
+                '</a>';
+            $("#user").html(str);
         },
         error: function (data) {
             if (data.status == 401) {
@@ -556,6 +561,25 @@ function getCookie() {
         token = unescape(allcookies.substring(cookie_pos, cookie_end));
     }
     return token
+}
+
+
+//设置cookie
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+// 删除cookie
+function clearCookie(name) {
+    setCookie(name, "", -1);
+}
+
+function logout() {
+    clearCookie('access_token');
+    window.location.href = 'http://localhost:8084/login';
 }
 
 //断开连接

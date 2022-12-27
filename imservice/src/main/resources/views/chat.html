@@ -51,10 +51,48 @@
         </ul>
         <ul class="nav nav-stacked" style="position: absolute;bottom: 0px;">
             <!-- 侧边栏选项 -->
-            <li role="presentation" class="active">
-                <a href="#" data-toggle="collapse" data-target="#list"><span class="iconfont">&#xe6ef;</span></a>
+            <li role="presentation" class="active" id="user">
+
             </li>
         </ul>
+    </div>
+
+    <div class="modal fade" id="userInfoSetting" tabindex="-1" role="dialog" aria-labelledby="userInfoSettingLabel">
+        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f;width: 90%;height: 90%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="userInfoSettingLabel">Setting</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2">
+                                <ul class="nav nav-sidebar">
+                                    <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                                    <li><a href="#">Reports</a></li>
+                                    <li><a href="#">Analytics</a></li>
+                                    <li><a href="#">Export</a></li>
+                                </ul>
+                                <ul class="nav nav-sidebar">
+                                    <li><a href="">Nav item</a></li>
+                                    <li><a href="">Nav item again</a></li>
+                                    <li><a href="">One more nav</a></li>
+                                    <li><a href="">Another nav item</a></li>
+                                    <li><a href="">More navigation</a></li>
+                                </ul>
+                                <ul class="nav nav-sidebar">
+                                    <li><a href="">Nav item again</a></li>
+                                    <li><a href="">One more nav</a></li>
+                                    <li><a href="#" onclick="logout()">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="left-menu" style="width:230px;height: 100%;border-right-color: #e6e6e6;border-right-style: inset;">
