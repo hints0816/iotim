@@ -85,22 +85,47 @@ var EventUtil = {
 };
 
 EventUtil.addHandler(window , "load" , function(event){
-    var div = document.getElementById("navleft");
+    var div = document.getElementById("channellist");
     EventUtil.addHandler(div , "contextmenu" , function(event){
 
         event = EventUtil.getEvent(event);
         EventUtil.preventDefault(event);
 
-        showRightSetting(event);
+        showChannelSetting(event);
     });
 
+    var div2 = document.getElementsByClassName("manager");
+    EventUtil.addHandler(div2 , "contextmenu" , function(event){
+
+        event = EventUtil.getEvent(event);
+        EventUtil.preventDefault(event);
+
+        showMemberSetting(event);
+    });
     EventUtil.addHandler(document , "click" , function(event){
         document.getElementById("channelSetting").style.display = "none";
+        document.getElementById("memberSetting").style.display = "none";
     });
 });
 
 function f1(pageSize) {
-    console.log(pageSize)
+    var scrolldiv = document.getElementById("show");
+    if(scrolldiv.scrollHeight > scrolldiv.clientHeight) {
+        setTimeout(function(){
+            //设置滚动条到最底部
+            scrolldiv.scrollTop = scrolldiv.scrollHeight;
+        },0);
+    }
+    EventUtil.addHandler(scrolldiv , "scroll" , function(event){
+        const scrollTop = scrolldiv.scrollTop;
+        console.log("EventUtil:"+scrollTop);
+        if(scrollTop < 50){
+            refreshScroll();
+        }
+    });
+}
+
+function f2(pageSize) {
     var scrolldiv = document.getElementById("show");
     if(scrolldiv.scrollHeight > scrolldiv.clientHeight) {
         setTimeout(function(){
@@ -118,12 +143,20 @@ function f1(pageSize) {
 }
 
 var channelSettingID = "";
-function showRightSetting(event) {
+function showChannelSetting(event) {
     if(event.target.id!=""){
         $("#channelSetting").css("top", event.clientY);
         $("#channelSetting").css("left", event.clientX);
         $("#channelSetting").css("display", "block");
         channelSettingID = event.target.id.split("_")[1];
+    }
+}
+
+function showMemberSetting(event) {
+    if(event.target.id!=""){
+        $("#memberSetting").css("top", event.clientY);
+        $("#memberSetting").css("left", event.clientX);
+        $("#memberSetting").css("display", "block");
     }
 }
 

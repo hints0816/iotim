@@ -148,7 +148,7 @@ function grouphistory() {
             $("#member").html('<li style="display: flex"><input type="text" class="form-control" placeholder="Search..."></li>');
             $("#member").append('<li style="display: flex">MANAGER</li>');
             data.data.group.forEach((item, index, data) => {
-                var str = '<li style="display: flex"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
+                var str = '<li class="manager" style="display: flex"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><span>' + item.nick_name + '</span></li>';
                 $("#member").append(str);
             })
             $("#member").append('<li style="display: flex">MEMBERS</li>');
@@ -161,6 +161,7 @@ function grouphistory() {
                 isTop = true;
             }
             f1(pageNum);
+            f2();
         }
     });
 }

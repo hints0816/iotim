@@ -366,14 +366,29 @@ function channellist() {
                         '</a>' +
                         '</li>';
                 })
-                $("#navleft").html($("#navleft").html() + str);
+                $("#channellist").html(str);
             }
         },
     });
 }
 
 function leftChannel() {
-    console.log("left channel:"+channelSettingID)
+
+    $.ajax({
+        url: '../channel/leftchannel/' + channelSettingID,
+        dataType: 'json',
+        type: 'get',
+        data: {},
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+        },
+        success: function (data) {
+            if (data.code == 200) {
+                channellist();
+                commonUtil.message("success");
+            }
+        },
+    });
 }
 
 function viewChannel(groupId) {

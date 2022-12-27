@@ -1,9 +1,12 @@
 package org.hints.im.controller;
 
+import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
 import org.hints.im.pojo.ReturnVo;
 import org.hints.im.pojo.User;
 import org.hints.im.utils.FileContentTypeUtils;
 import org.hints.im.utils.MinIoUtil;
+import org.hints.im.utils.SessionUtil;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
