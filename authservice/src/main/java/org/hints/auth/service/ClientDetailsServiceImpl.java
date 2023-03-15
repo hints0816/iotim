@@ -3,7 +3,8 @@ package org.hints.auth.service;
 import lombok.Data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hints.auth.dao.ClientDao;
+import org.hints.auth.mapper.ClientMapper;
+import org.hints.auth.mapper.UserMapper;
 import org.hints.auth.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,7 +26,10 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
     private static final Logger log = LogManager.getLogger(ClientDetailsServiceImpl.class);
 
     @Autowired
-    ClientDao clientDao;
+    private UserMapper userMapper;
+
+    @Autowired
+    private ClientMapper clientMapper;
 
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -65,10 +69,10 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
     }
 
     private BaseClientDetails getBaseClientDetails(String clientId) {
-        Client client = clientDao.findByClientId(clientId);
+        Client client = clientMapper.findByClientId(clientId);
         BaseClientDetails baseClientDetails = new BaseClientDetails();
         if (client != null) {
-            baseClientDetails.setClientId(client.getClient_id());
+            baseClientDetails.setClientId(client.getClientId());
             baseClientDetails.setClientSecret(client.getClientSecret());
             baseClientDetails.setAuthorizedGrantTypes(Arrays.asList(client.getAuthorizedGrantTypes().split(",")));
             baseClientDetails.setAccessTokenValiditySeconds(client.getAccessTokenValiditySeconds().intValue());

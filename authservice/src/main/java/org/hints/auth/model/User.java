@@ -1,10 +1,6 @@
 package org.hints.auth.model;
 
 import lombok.Data;
-import org.nutz.dao.entity.annotation.Id;
-import org.nutz.dao.entity.annotation.ManyMany;
-import org.nutz.dao.entity.annotation.Name;
-import org.nutz.dao.entity.annotation.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,18 +10,15 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Table("sys_user")
 public class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
-    /** 用户ID */
-    @Id
-    private Long user_id;
+
+    private Long userId;
     /** 用户账号 */
-    @Name
-    private String user_name;
+    private String userName;
     /** 用户昵称 */
-    private String nick_name;
+    private String nickName;
     /** 用户邮箱 */
     private String email;
     /** 手机号码 */
@@ -41,26 +34,27 @@ public class User implements UserDetails, Serializable {
     /** 帐号状态（0正常 1停用） */
     private String status;
     /** 删除标志（0代表存在 2代表删除） */
-    private String del_flag;
+    private String delFlag;
     /** 最后登录IP */
-    private String login_ip;
+    private String loginIp;
     /** 最后登录时间 */
-    private Date login_date;
+    private Date loginDate;
     /** 角色对象 */
     private List<Role> roles;
     /** 角色组 */
-    private Long[] role_ids;
+    private Long[] roleIds;
     /** 岗位组 */
-    private Long[] post_ids;
+    private Long[] postIds;
 
-    @ManyMany(target = Role.class,
-            relation = "sys_user_role",
-            from = "user_id",
-            to = "role_id")
     private List<Role> utype;
 
     public User() {
     }
+
+    public User(Long userId) {
+        this.userId = userId;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,7 +68,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return user_name;
+        return userName;
     }
 
     @Override

@@ -16,3 +16,6 @@ spring:
       host: 10.2.24.231
       database: 12
       port: 6379
+mybatis-plus:
+   type-aliases-package: org.hints.auth.model
+   mapper-locations: classpath:/mapper/*.xml
