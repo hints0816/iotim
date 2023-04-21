@@ -102,13 +102,17 @@
         <h3 class="page-header" style="margin:10px 0px;" id="usergroup">
 
         </h3>
+        <div style="width:100%;height:80%; border:1px solid #333;" id="cav">
+            <div style="width:100%;height:0%; overflow-y:auto;border:1px solid #333;" id="game">
+                <button type="button" onclick="$('#gameProperties').modal('toggle');">gameProperties</button>
+            </div>
+            <div style="width:100%;height:100%; overflow-y:auto;border:1px solid #333;" id="show">
 
-        <div style="width:100%;height:400px; overflow-y:auto;border:1px solid #333;" id="show">
-
+            </div>
         </div>
         <input type="text" onkeydown="sendName(event)" id="msg" name="msg" class="form-control" placeholder="msg">
         <input type="file" id="exampleInputFile">
-        <button type="button" id="senden">发起竞价</button>
+        <button type="button" id="openWolf" onclick="openWolf();">WOLF</button>
     </div>
 
     <div class="right-content" style="width:230px;height: 100%;">
@@ -118,6 +122,55 @@
     </div>
 </div>
 <div>
+    <div class="modal fade" id="gameProperties" tabindex="-1" role="dialog" aria-labelledby="gamePropertiesLabel">
+        <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f;width: 300px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gamePropertiesLabel">gameProperties</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        TOTAL  :
+                        <select id="total">
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+                    <div>
+                        CIVILIAN  :
+                    <select id="civilian">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    </div>
+                    <div>
+                        WOLF  :
+                        <select id="wolf">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" id="prophet"> PROPHET
+                            <input type="checkbox" id="treaters"> TREATERS
+                            <input type="checkbox" id="bandit"> BANDIT
+                            <input type="checkbox" id="insomnia"> INSOMNIA
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="properties()">ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg" role="document" style="color: #0f0f0f;width: 300px">
             <div class="modal-content">
@@ -220,6 +273,7 @@
 </div>
 </div>
 <script src="bootstrap/js/chat.js"></script>
+<script src="bootstrap/js/game.js"></script>
 <script src="bootstrap/js/group.js"></script>
 <script src="bootstrap/js/event.js"></script>
 <script src="bootstrap/js/common.js"></script>

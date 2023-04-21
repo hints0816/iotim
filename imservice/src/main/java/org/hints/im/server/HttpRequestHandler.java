@@ -140,8 +140,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<Object> {
         Byte type = jsonObject.getByte("type");
         BaseBody baseBody = null;
         switch (type) {
-            /*login initing*/
             case 1:
+                /* login initing */
                 LoginBody loginBody = new LoginBody();
                 loginBody.setUser(SessionUtil.getUser(ctx.channel()).getUserName());
                 baseBody = loginBody;

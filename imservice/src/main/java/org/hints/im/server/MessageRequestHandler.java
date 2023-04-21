@@ -11,7 +11,7 @@ import org.hints.im.pojo.MsgBody;
 import org.hints.im.pojo.User;
 import org.hints.im.utils.SessionUtil;
 import org.hints.im.utils.SpringUtils;
-import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.kafka.core.KafkaTemplate;
 
 import java.nio.charset.Charset;
 
@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
 @ChannelHandler.Sharable
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> {
 
-    private KafkaTemplate kafkaTemplate;
+//    private KafkaTemplate kafkaTemplate;
 
     public static MessageRequestHandler INSTANCE = new MessageRequestHandler();
 
@@ -39,8 +39,8 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MsgBody> 
         // 1.直接先落到oracle，生产环境处理高并发使用 kafka->mongodb
         String fromUser = SessionUtil.getUser(ctx.channel()).getUserName();
         msgBody.setFromUserId(fromUser);
-        this.kafkaTemplate = SpringUtils.getBean(KafkaTemplate.class);
-        kafkaTemplate.send("test",  JSONObject.toJSONString(msgBody));
+//        this.kafkaTemplate = SpringUtils.getBean(KafkaTemplate.class);
+//        kafkaTemplate.send("test",  JSONObject.toJSONString(msgBody));
 
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
             // 用户在线

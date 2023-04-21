@@ -17,12 +17,12 @@ spring:
     url: jdbc:oracle:thin:@10.2.25.123/ggrdattest
     username: greescmdb2
     password: passwd
-  kafka:
-    bootstrap-servers: 10.2.24.236:9092 # kafka集群信息
-    consumer:
-      group-id: test-consumer-group # 消费者组
-      enable-auto-commit: true # 关闭自动提交
-      auto-commit-interval: 3000
+#  kafka:
+#    bootstrap-servers: 10.2.24.236:9092 # kafka集群信息
+#    consumer:
+#      group-id: test-consumer-group # 消费者组
+#      enable-auto-commit: true # 关闭自动提交
+#      auto-commit-interval: 3000
   application:
     name: resource-server
   thymeleaf:
@@ -30,7 +30,7 @@ spring:
     suffix: .html
     cache: false
 minio:
-  url: http://10.2.24.234:9003
+  url: http://10.2.24.234:9004
   access-key: admin
   secret-key: 12345678
   bucket-name: test

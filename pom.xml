@@ -12,6 +12,7 @@
     <modules>
         <module>imservice</module>
         <module>authservice</module>
+        <module>gameservice</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

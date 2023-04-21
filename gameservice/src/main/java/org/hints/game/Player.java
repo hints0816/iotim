@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class Player {
 
+    private Long id;
+
     private String name;
 
     private Card origanCard;
@@ -17,5 +19,9 @@ public class Player {
     private int index;
 
     private String avater;
+
+    private Boolean isReady;
+
+    private Lobby lobby;
 
 }

@@ -2,6 +2,7 @@ package org.hints.im.utils;
 
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
+import org.hints.game.Lobby;
 import org.hints.im.pojo.User;
 
 import java.util.Map;
@@ -17,6 +18,11 @@ public class SessionUtil {
      * userID 映射 连接channel
      */
     private static Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
+
+    /**
+     * groupId --->
+     */
+    private static Map<String, Lobby> groupIdLobbyMap = new ConcurrentHashMap<>();
 
     /**
      * groupId ---> channelgroup 群聊ID和群聊ChannelGroup映射
@@ -58,5 +64,14 @@ public class SessionUtil {
     public static ChannelGroup getChannelGroup(String groupId) {
         return groupIdChannelGroupMap.get(groupId);
     }
+
+    public static void bindLobby(String groupId, Lobby lobby) {
+        groupIdLobbyMap.put(groupId, lobby);
+    }
+
+    public static Lobby getLobby(String groupId) {
+        return groupIdLobbyMap.get(groupId);
+    }
+
 }
 
