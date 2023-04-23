@@ -104,10 +104,20 @@
         </h3>
         <div style="width:100%;height:80%; border:1px solid #333;" id="cav">
             <div style="width:100%;height:0%; overflow-y:auto;border:1px solid #333;" id="game">
-                <button type="button" onclick="$('#gameProperties').modal('toggle');">gameProperties</button>
+                <button type="button" onclick="">gameProperties</button>
+                <div style="height:80%;">
+                    <div style="float: left;" id="gameCavLeft">
+
+                    </div>
+                    <div style="float: right;" id="gameCavRight">
+
+                    </div>
+                </div>
+                <div id="gameCavMe" style="text-align:center;height:20%;">
+                    <img class="media-object" src="http://10.2.24.234:9003/gscm" height="45" width="45" alt="..." style="display: inline-block;">
+                </div>
             </div>
             <div style="width:100%;height:100%; overflow-y:auto;border:1px solid #333;" id="show">
-
             </div>
         </div>
         <input type="text" onkeydown="sendName(event)" id="msg" name="msg" class="form-control" placeholder="msg">

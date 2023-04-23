@@ -56,21 +56,19 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
         }
         User user = SessionUtil.getUser(ctx.channel());
 
-        if("90".equals(fileType)){
-            // 创建房间
-            Lobby lobby = new Lobby();
-            lobby.setGroupId(groupId);
-            SessionUtil.bindLobby(groupId, lobby);
+        Lobby lobby = SessionUtil.getLobby(groupId);
+
+        if("80".equals(fileType)){
+            // 坐下
+            Player player = new Player();
+            player.setId(user.getUserId());
+            player.setName(user.getUserName());
+            player.setAvater(user.getAvater());
+            lobby.setPlayer(player, 0);
         }
 
 
-        /*// 坐下
-        Player player = new Player();
-        player.setId(user.getUserId());
-        player.setName(user.getUserName());
-        lobby.setPlayer(player, 0);
-
-        // 准备
+        /*// 准备
         lobby.ready(user.getUserId());
 
         // 检查是否可以开始

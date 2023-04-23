@@ -1,15 +1,17 @@
 package org.hints.im.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import org.hints.game.GamePropertis;
 import org.hints.game.Lobby;
+import org.hints.game.Player;
 import org.hints.im.pojo.ReturnVo;
 import org.hints.im.utils.SessionUtil;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.acl.LastOwnerException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description TODO
@@ -21,19 +23,31 @@ import java.util.HashMap;
 public class GameController {
 
     @PostMapping("/properties")
-    public ReturnVo properties(@RequestBody HashMap<String, Object> properties) {
-        String groupid = properties.get("groupid").toString();
-        Lobby lobby = SessionUtil.getLobby(groupid);
-        if (lobby == null) {
-            return ReturnVo.error("CAN'T FIND GAME LOBBY");
-        }
-        Object o = properties.get("role");
-        HashMap o1 = (HashMap) o;
+    public ReturnVo setProperties(@RequestBody JSONObject properties) {
+        String groupId = properties.get("groupid").toString();
+        Lobby lobby = new Lobby();
+        lobby.setGroupId(groupId);
+        JSONObject obj = properties.getJSONObject("role");
+        HashMap<String, Integer> stringIntegerMap = JSONObject.parseObject(obj.toJSONString(), new TypeReference<HashMap<String, Integer>>() {});
         GamePropertis propertis = new GamePropertis();
-        propertis.setPropertisMap(o1);
+        propertis.setPropertisMap(stringIntegerMap);
         lobby.setGamePropertis(propertis);
 
-        SessionUtil.bindLobby(groupid, lobby);
+        int total = Integer.valueOf(properties.get("total").toString());
+        Player[] players = new Player[total];
+        lobby.setPlayers(players);
+
+        lobby.initCards();
+        SessionUtil.bindLobby(groupId, lobby);
+
         return ReturnVo.success();
+    }
+
+    @GetMapping("/lobby/{groupid}")
+    public ReturnVo getInfo(@PathVariable(value = "groupid") String groupId) {
+        Lobby lobby = SessionUtil.getLobby(groupId);
+        lobby.getPlayerCards();
+
+        return ReturnVo.success(lobby.getPlayers());
     }
 }

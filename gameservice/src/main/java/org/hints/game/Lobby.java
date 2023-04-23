@@ -32,8 +32,9 @@ public class Lobby {
         HashMap<String, Integer> propertisMap = gamePropertis.getPropertisMap();
 
         int i = 0;
+
         for (String s : propertisMap.keySet()) {
-            Integer integer = propertisMap.get(s);
+            int integer = Integer.parseInt(propertisMap.get(s).toString());
             Card card1 = new Card();
             card1.setCardName(s);
             for (int j = 0; j < integer; j++) {
