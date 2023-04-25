@@ -2,13 +2,23 @@ package org.hints.im.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import org.checkerframework.checker.units.qual.A;
 import org.hints.game.GamePropertis;
 import org.hints.game.Lobby;
 import org.hints.game.Player;
 import org.hints.im.pojo.ReturnVo;
+import org.hints.im.pojo.User;
 import org.hints.im.utils.SessionUtil;
+import org.nutz.dao.Cnd;
+import org.nutz.dao.Dao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.security.acl.LastOwnerException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +32,11 @@ import java.util.Map;
 @RequestMapping(value = "/game")
 public class GameController {
 
+    @Autowired
+    private Dao dao;
+
     @PostMapping("/properties")
-    public ReturnVo setProperties(@RequestBody JSONObject properties) {
+    public ReturnVo setProperties(@RequestBody JSONObject properties, Principal principal) {
         String groupId = properties.get("groupid").toString();
         Lobby lobby = new Lobby();
         lobby.setGroupId(groupId);
@@ -35,6 +48,14 @@ public class GameController {
 
         int total = Integer.valueOf(properties.get("total").toString());
         Player[] players = new Player[total];
+
+        User user = dao.fetch(User.class, Cnd.where("user_name", "=", principal.getName()));
+        Player player = new Player();
+        player.setId(user.getUserId());
+        player.setName(user.getUserName());
+        player.setAvater(user.getAvater());
+        player.setIsOwner(true);
+        players[0] = player;
         lobby.setPlayers(players);
 
         lobby.initCards();
@@ -44,10 +65,21 @@ public class GameController {
     }
 
     @GetMapping("/lobby/{groupid}")
-    public ReturnVo getInfo(@PathVariable(value = "groupid") String groupId) {
+    public ReturnVo getInfo(@PathVariable(value = "groupid") String groupId, Principal principal) {
         Lobby lobby = SessionUtil.getLobby(groupId);
         lobby.getPlayerCards();
-
-        return ReturnVo.success(lobby.getPlayers());
+        HashMap<String, Object> map = new HashMap<>();
+        Player[] players = lobby.getPlayers();
+        map.put("players", players);
+        map.put("isOwner",false);
+        for (int i = 0; i < players.length; i++) {
+            Player player = players[i];
+            if (player!=null&&player.getName().equals(principal.getName())) {
+                if(player.getIsOwner()){
+                    map.put("isOwner",true);
+                }
+            }
+        }
+        return ReturnVo.success(map);
     }
 }

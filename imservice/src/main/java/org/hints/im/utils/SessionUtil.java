@@ -73,5 +73,9 @@ public class SessionUtil {
         return groupIdLobbyMap.get(groupId);
     }
 
+    public static void dropLobby(String groupId) {
+        groupIdLobbyMap.remove(groupId);
+    }
+
 }
 

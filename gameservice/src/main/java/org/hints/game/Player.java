@@ -14,6 +14,8 @@ public class Player {
 
     private String name;
 
+    private Boolean isOwner = false;
+
     private Card origanCard;
 
     private int index;

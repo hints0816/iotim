@@ -119,7 +119,7 @@ function showFriends(e) {
                 })
                 $("#userlist").html(str);
 
-                $("#myhead").html('<img class="media-object" src="http://10.2.24.234:9003/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;">');
+                $("#myhead").html('<img class="media-object" src="http://10.2.24.234:9004/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;">');
                 $("#navleft li").removeClass("active");
                 $(e).parent().addClass("active")
             }
@@ -143,7 +143,7 @@ $(document).on('change', '#groupimg', function () {
         },
         success: function (data) {
             if (data.code == 200) {
-                var str = '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.data.key + '" height="100" width="100" alt="...">';
+                var str = '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.data.key + '" height="100" width="100" alt="...">';
                 $("#groupavater").html(str);
                 newGroupAvater = data.data.key;
             } else {
@@ -186,11 +186,11 @@ $(document).on('change', '#exampleInputFile', function () {
                     var str = "";
                     if (object.fileType == 1) {
                         str = '<div style="text-align:right;margin: 3px;">' +
-                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/' + object.msg + '" height="20%" width="20%" alt="..."> : ' + myNickName + '<img class="media-object" src="' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9004/gscm/' + object.msg + '" height="20%" width="20%" alt="..."> : ' + myNickName + '<img class="media-object" src="' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     } else if (object.fileType == 2) {
                         str = '<div style="text-align:right;margin: 3px;">' +
                             '<span>' +
-                            '<a href="http://10.2.24.234:9003/gscm/' + data.data.key + '" class="btn btn-primary">download</a>' + ' : ' +
+                            '<a href="http://10.2.24.234:9004/gscm/' + data.data.key + '" class="btn btn-primary">download</a>' + ' : ' +
                             myNickName +
                             '</span><img class="media-object" src="' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }
@@ -216,11 +216,11 @@ $(document).on('change', '#exampleInputFile', function () {
                     var str = "";
                     if (object.fileType == 1) {
                         str = '<div style="text-align:right;margin: 3px;">' +
-                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/' + object.msg + '" height="20%" width="20%" alt="..."> : ' + myNickName + '<img class="media-object" src="' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9004/gscm/' + object.msg + '" height="20%" width="20%" alt="..."> : ' + myNickName + '<img class="media-object" src="' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     } else if (object.fileType == 2) {
                         str = '<div style="text-align:right;margin: 3px;">' +
                             '<span>' +
-                            '<a href="http://10.2.24.234:9003/gscm/' + data.data.key + '" class="btn btn-primary">download</a>' + ' : ' +
+                            '<a href="http://10.2.24.234:9004/gscm/' + data.data.key + '" class="btn btn-primary">download</a>' + ' : ' +
                             myNickName +
                             '</span><img class="media-object" src="' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }
@@ -269,20 +269,20 @@ function userhistory(toUser1) {
                 var str = "";
                 if ($("#name").val() == item.from_id) {
                     if (item.file_type == 1) {
-                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/' + item.content + '" height="20%" width="20%" alt="...">' + ' : ' + item.nick_name + '</span><img class="media-object" src="' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        str = '<div style="text-align:right;margin: 3px;"><span><img class="media-object" style="display: inline-block" src="http://10.2.24.234:9004/gscm/' + item.content + '" height="20%" width="20%" alt="...">' + ' : ' + item.nick_name + '</span><img class="media-object" src="' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     } else if (item.file_type == 2) {
                         str = '<div style="text-align:right;margin: 3px;">' +
                             '<span>' +
-                            '<a href="http://10.2.24.234:9003/gscm/' + item.content + '" class="btn btn-primary">download</a>' + ' : ' + item.nick_name +
+                            '<a href="http://10.2.24.234:9004/gscm/' + item.content + '" class="btn btn-primary">download</a>' + ' : ' + item.nick_name +
                             '</span>' +
                             '<img class="media-object" src="' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                             '</div>';
                     } else {
-                        str = '<div style="text-align:right;margin: 3px;"><span>' + item.content + ' : ' + item.nick_name + '</span><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+                        str = '<div style="text-align:right;margin: 3px;"><span>' + item.content + ' : ' + item.nick_name + '</span><img class="media-object" src="http://10.2.24.234:9004/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
                     }
                     $("#show").append(str);
                 } else {
-                    str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"><span>' + item.nick_name + ' : ' + item.content + '</span></div>';
+                    str = '<div style="text-align:left;margin: 3px;"><img class="media-object" src="http://10.2.24.234:9004/gscm/' + item.avater + '" height="45" width="45" alt="..." style="display: inline-block;"><span>' + item.nick_name + ' : ' + item.content + '</span></div>';
                     $("#show").append(str);
                 }
             })
@@ -307,7 +307,7 @@ function getInfo() {
             myAvater = data.avater;
             var str =
                 '<a href="#" style="padding: 10px 8px;" onclick="$(\'#userInfoSetting\').modal(\'toggle\');">' +
-                '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + myAvater + '" height="45" width="45" alt="...">' +
+                '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + myAvater + '" height="45" width="45" alt="...">' +
                 '</a>';
             $("#user").html(str);
         },
@@ -333,7 +333,7 @@ function userlist() {
             if (data.code == 200) {
                 var str = "";
                 data.data.users.forEach((item, index, data) => {
-                    str += ' <li onclick="selectChat(' + item.msgtype + ',\'' + item.target + '\',\'' + item.name + '\', this)" style="display: flex;padding: 5px"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="...">' +
+                    str += ' <li onclick="selectChat(' + item.msgtype + ',\'' + item.target + '\',\'' + item.name + '\', this)" style="display: flex;padding: 5px"><img class="media-object" src="http://10.2.24.234:9004/gscm/' + item.avater + '" height="45" width="45" alt="...">' +
                         '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;">' +
                         '<a style="font-size: 15px" href="javascript:void(0)">' + item.name + '</a>' +
                         '<div style="font-size: 10px">' + item.content + '</div>' +
@@ -341,7 +341,7 @@ function userlist() {
                 })
                 $("#userlist").html(str);
 
-                $("#myhead").html('<img class="media-object" src="http://10.2.24.234:9003/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;">');
+                $("#myhead").html('<img class="media-object" src="http://10.2.24.234:9004/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;">');
 
             }
         },
@@ -363,7 +363,7 @@ function channellist() {
                 data.data.users.forEach((item, index, data) => {
                     str += '<li role="presentation">' +
                         '<a href="#" style="padding: 10px 8px;" onclick="selectGroup(\'' + item.target + '\',\'' + item.name + '\',this);">' +
-                        '<img class="media-object" id="group_'+item.target+'" src="http://10.2.24.234:9003/gscm/' + item.avater + '" height="45" width="45" alt="..."><i style="display: none" id="redpoint-' + item.target + '" class="toolbar-msg-count"></i>' +
+                        '<img class="media-object" id="group_'+item.target+'" src="http://10.2.24.234:9004/gscm/' + item.avater + '" height="45" width="45" alt="..."><i style="display: none" id="redpoint-' + item.target + '" class="toolbar-msg-count"></i>' +
                         '</a>' +
                         '</li>';
                 })
@@ -404,7 +404,7 @@ function viewChannel(groupId) {
         success: function (data) {
             if (data.code == 200) {
                 var str = "";
-                str += '<li onclick="" style="display: flex;padding: 5px;justify-content: space-between;"><img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.data.img + '" height="45" width="45" alt="...">' +
+                str += '<li onclick="" style="display: flex;padding: 5px;justify-content: space-between;"><img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.data.img + '" height="45" width="45" alt="...">' +
                     '<div style=" height:45px;vertical-align:middle;font-size:15px;margin-left: 8px;display: flex;justify-content: space-between;width:100%;">' +
                     '<a style="font-size: 15px" href="javascript:void(0)">' + data.data.name + '</a>' +
                     ' <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
@@ -457,17 +457,17 @@ function init() {
                 // 私聊
                 if(data.params.fileType == 1){
                     show.innerHTML += '<div style="text-align:left;margin: 3px;">' +
-                        '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                        '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                         data.params.nickName +
-                        ' : ' + '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/'+data.params.message+'" height="20%" width="20%" alt="...">' + "</div><br/>";
+                        ' : ' + '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9004/gscm/'+data.params.message+'" height="20%" width="20%" alt="...">' + "</div><br/>";
                 }else if(data.params.fileType == 2){
                     show.innerHTML += '<div style="text-align:left;margin: 3px;">' +
-                        '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                        '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                         data.params.nickName +
-                        ' : ' + '<a href="http://10.2.24.234:9003/gscm/'+data.params.message+'" class="btn btn-primary">download</a>' + "</div><br/>";
+                        ' : ' + '<a href="http://10.2.24.234:9004/gscm/'+data.params.message+'" class="btn btn-primary">download</a>' + "</div><br/>";
                 }else{
                     show.innerHTML += '<div style="text-align:left;margin: 3px;">' +
-                        '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                        '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                         data.params.nickName +
                         ' : ' + data.params.message + "</div><br/>";
                 }
@@ -486,25 +486,28 @@ function init() {
                     if(data.params.fileType == 1){
                         show.innerHTML +=
                             '<div style="text-align:left;margin: 3px;">' +
-                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                             data.params.fromUser +
                             ' : ' +
-                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9003/gscm/'+data.params.message+'" height="20%" width="20%" alt="...">' +
+                            '<img class="media-object" style="display: inline-block" src="http://10.2.24.234:9004/gscm/'+data.params.message+'" height="20%" width="20%" alt="...">' +
                             "<br/>";
                     }else if(data.params.fileType == 2){
                         show.innerHTML +=
                             '<div style="text-align:left;margin: 3px;">' +
-                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                             data.params.fromUser +
                             ' : ' +
-                            '<a href="http://10.2.24.234:9003/gscm/'+c+'" class="btn btn-primary">download</a>' +
+                            '<a href="http://10.2.24.234:9004/gscm/'+data.params.message+'" class="btn btn-primary">download</a>' +
                             "<br/>";
-                    }else if(data.params.fileType == 80){
+                    }else if(data.params.fileType == 80 ||data.params.fileType == 81){
+                        if(data.params.fileType == 81){
+                            alert(data.params.fromUser+"退出房间");
+                        }
                         openGame(toGroup);
                     }else if(data.params.fileType == 90){
                         show.innerHTML +=
                             '<div style="text-align:left;margin: 3px;">' +
-                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                             data.params.fromUser +
                             ' : ' +
                             '<a href="#" onclick="openGame(\''+toGroup+'\')">enter game</a>' +
@@ -512,7 +515,7 @@ function init() {
                     }else{
                         show.innerHTML +=
                             '<div style="text-align:left;margin: 3px;">' +
-                            '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
+                            '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + data.params.avater + '" height="45" width="45" alt="..." style="display: inline-block;">' +
                             data.params.fromUser +
                             ' : ' +
                             data.params.message +
@@ -636,7 +639,7 @@ function sendName(event) {
             object.msg = $("#msg").val();
             send(JSON.stringify(object));
 
-            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
             $("#show").append(str);
 
             var chatlist = document.getElementById('show');
@@ -653,7 +656,7 @@ function sendName(event) {
             object.msg = $("#msg").val();
             send(JSON.stringify(object));
 
-            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="http://10.2.24.234:9003/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
+            var str = '<div style="text-align:right;margin: 3px;">' + object.msg + ' : ' + myNickName + '<img class="media-object" src="http://10.2.24.234:9004/gscm/' + myAvater + '" height="45" width="45" alt="..." style="display: inline-block;"></div>';
             $("#show").append(str);
 
             var chatlist = document.getElementById('show');

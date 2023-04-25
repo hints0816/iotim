@@ -24,10 +24,10 @@ public class Lobby {
 
     private GamePropertis gamePropertis;
 
-    public void initCards(){
+    public void initCards() {
         GamePropertis gamePropertis = this.gamePropertis;
 
-        this.cards = new Card[players.length+3];
+        this.cards = new Card[players.length + 3];
 
         HashMap<String, Integer> propertisMap = gamePropertis.getPropertisMap();
 
@@ -44,7 +44,7 @@ public class Lobby {
         }
     }
 
-    public void init(){
+    public void init() {
         initCards();
         for (int i = cards.length - 1; i > 0; i--) {
             //随机数生成器，范围[0, i]
@@ -55,24 +55,41 @@ public class Lobby {
         }
 
         List<Card> cardList = Arrays.asList(this.cards);
-        cardList = cardList.subList(0, cardList.size()-3);
+        cardList = cardList.subList(0, cardList.size() - 3);
         playerCards = cardList.toArray(new Card[cardList.size()]);
 
-        cardList = cardList.subList(cardList.size()-3, cardList.size());
+        cardList = cardList.subList(cardList.size() - 3, cardList.size());
         remaindCards = cardList.toArray(new Card[cardList.size()]);
     }
 
-    public Card pickUp(int i){
+    public Card pickUp(int i) {
         Card playerCard = playerCards[i];
         playerCard.setIsPicked(true);
         return playerCard;
     }
 
     public void setPlayer(Player player, int i) {
-        synchronized(this) {
+        synchronized (this) {
             if (players[i] == null) {
+                for (int i1 = 0; i1 < players.length; i1++) {
+                    if (players[i1] != null) {
+                        if (players[i1].getId().equals(player.getId())) {
+                            players[i1] = null;
+                        }
+                    }
+                }
                 players[i] = player;
                 players[i].setIsReady(false);
+            }
+        }
+    }
+
+    public void offPlayer(Player player) {
+        for (int i1 = 0; i1 < players.length; i1++) {
+            if (players[i1] != null) {
+                if (players[i1].getId().equals(player.getId())) {
+                    players[i1] = null;
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.Synchronized;
 import org.hints.game.*;
 import org.hints.im.pojo.GroupBody;
 import org.hints.im.pojo.User;
@@ -58,13 +59,31 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 
         Lobby lobby = SessionUtil.getLobby(groupId);
 
+
         if("80".equals(fileType)){
             // 坐下
             Player player = new Player();
             player.setId(user.getUserId());
             player.setName(user.getUserName());
             player.setAvater(user.getAvater());
-            lobby.setPlayer(player, 0);
+            lobby.setPlayer(player, Integer.parseInt(groupBody.getMessage()));
+        }
+        if("81".equals(fileType)){
+            // 离开房间
+            synchronized (this){
+                Player player = new Player();
+                player.setId(user.getUserId());
+                lobby.offPlayer(player);
+                boolean flag = false;
+                for (int i = 0; i < lobby.getPlayers().length; i++) {
+                    if (lobby.getPlayers()[i] !=null) {
+                        flag = true;
+                    }
+                }
+                if(!flag){
+                    SessionUtil.dropLobby(groupId);
+                }
+            }
         }
 
 

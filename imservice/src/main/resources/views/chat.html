@@ -12,13 +12,13 @@
     <script src="bootstrap/js/bootstrap-paginator.min.js"></script>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/css/dashboard.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap-theme.css">
-
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css">
 </head>
 <!--页面加载后 如果原来就有socket对象  就先断开-->
 <!--检测浏览器是否支持websocket -->
 <noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
 <body>
+<div class="alert alert-danger show">这是一个失败提示！</div>
 <input type="text" id="name" style="display: none"/>
 <div class="container-fluid" style="display:flex;
         justify-content: space-between;padding-left: 0px;padding-right: 0px;height: 100%;">
@@ -98,13 +98,13 @@
             </li>
         </ul>
     </div>
+
     <div class="right-content" style="width:80%;height: 100%;">
         <h3 class="page-header" style="margin:10px 0px;" id="usergroup">
 
         </h3>
         <div style="width:100%;height:80%; border:1px solid #333;" id="cav">
             <div style="width:100%;height:0%; overflow-y:auto;border:1px solid #333;" id="game">
-                <button type="button" onclick="">gameProperties</button>
                 <div style="height:80%;">
                     <div style="float: left;" id="gameCavLeft">
 
@@ -113,8 +113,11 @@
 
                     </div>
                 </div>
-                <div id="gameCavMe" style="text-align:center;height:20%;">
-                    <img class="media-object" src="http://10.2.24.234:9003/gscm" height="45" width="45" alt="..." style="display: inline-block;">
+                <div id="gameCavMe" style="text-align:center;height:10%;display: none;">
+                    <button type="button" onclick="">start</button>
+                </div>
+                <div style="text-align:center;height:10%;">
+                    <button type="button" onclick="exitGame()">exit</button>
                 </div>
             </div>
             <div style="width:100%;height:100%; overflow-y:auto;border:1px solid #333;" id="show">
