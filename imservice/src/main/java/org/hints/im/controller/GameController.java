@@ -67,16 +67,21 @@ public class GameController {
     @GetMapping("/lobby/{groupid}")
     public ReturnVo getInfo(@PathVariable(value = "groupid") String groupId, Principal principal) {
         Lobby lobby = SessionUtil.getLobby(groupId);
+        if(lobby == null){
+            return ReturnVo.error("Room Is Not Exist!");
+        }
         lobby.getPlayerCards();
         HashMap<String, Object> map = new HashMap<>();
         Player[] players = lobby.getPlayers();
         map.put("players", players);
         map.put("isOwner",false);
+        map.put("cardNum",lobby.getCards().length);
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
             if (player!=null&&player.getName().equals(principal.getName())) {
                 if(player.getIsOwner()){
                     map.put("isOwner",true);
+                    break;
                 }
             }
         }

@@ -77,7 +77,10 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
                 boolean flag = false;
                 for (int i = 0; i < lobby.getPlayers().length; i++) {
                     if (lobby.getPlayers()[i] !=null) {
+                        // 房间存在玩家，不关闭，玩家继承owner
+                        lobby.getPlayers()[i].setIsOwner(true);
                         flag = true;
+                        break;
                     }
                 }
                 if(!flag){
@@ -88,23 +91,23 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 
 
         /*// 准备
-        lobby.ready(user.getUserId());
-
-        // 检查是否可以开始
-        lobby = SessionUtil.getLobby(groupId);
-        boolean fullPlayer = lobby.isFullPlayer();
-        if (!fullPlayer) {
-            // 是否满员
-            boolean isFullReady = lobby.isFullReady();
-            if (!isFullReady) {
-                // 是否都准备
-
+        lobby.ready(user.getUserId());*/
+        if("82".equals(fileType)) {
+            // 检查是否可以开始
+            boolean fullPlayer = lobby.isFullPlayer();
+            if (!fullPlayer) {
+                // 是否满员
+                // boolean isFullReady = lobby.isFullReady();
+            }else{
                 // 初始化 洗牌
                 lobby.init();
             }
+        }
 
-
-        }*/
+        if("83".equals(fileType)) {
+            // pick card
+            lobby.pickUp(Integer.parseInt(groupBody.getMessage()));
+        }
 
 
         ByteBuf byteBuf = getByteBuf(ctx, groupId, groupBody.getMessage(), user, fileType, nameList);

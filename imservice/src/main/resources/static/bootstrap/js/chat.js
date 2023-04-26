@@ -503,7 +503,16 @@ function init() {
                         if(data.params.fileType == 81){
                             alert(data.params.fromUser+"退出房间");
                         }
+                        if(data.params.fileType == 80){
+                            alert(data.params.fromUser+"进入房间");
+                        }
                         openGame(toGroup);
+                    }else if(data.params.fileType == 82){
+                        console.log(1);
+                        showingCard();
+                    }else if(data.params.fileType == 82){
+                        console.log(1);
+                        showingCard();
                     }else if(data.params.fileType == 90){
                         show.innerHTML +=
                             '<div style="text-align:left;margin: 3px;">' +

@@ -90,7 +90,7 @@ function openGame(groupId) {
                 $("#game").css("height","50%");
                 $("#show").css("height","50%");
             } else {
-                alert();
+                alert(data.msg);
             }
         },
         error: function (data) {
@@ -128,6 +128,55 @@ function exitGame(){
     // 刚发送，是否考虑同步
     $("#gameCavLeft").html("");
     $("#gameCavRight").html("");
+    $("#gameCavMe").css("display","none");
+
     $("#game").css("height","0%");
     $("#show").css("height","100%");
+}
+
+function startGame(){
+    let object = {};
+    var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
+    object.groupId = toGroup;
+    object.msgId = uuid;
+    object.type = type;
+    object.msg = "";
+    object.fileType = "82";
+    send(JSON.stringify(object));
+}
+
+function showingCard(){
+    console.log(222);
+    $.ajax({
+        type: 'GET',
+        url: '../game/lobby/'+toGroup,
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
+        },
+        success: function (data) {
+            if (data.code == 200) {
+                var cardNum = data.data.cardNum;
+                for (var i = 0; i < cardNum; i++) {
+                    $("#gameCav").append('<a href="#" onclick="pickCard('+i+')" class="col-xs-4 card"></a>');
+                }
+            } else {
+                alert(data.msg);
+            }
+        },
+        error: function (data) {
+            alert();
+        }
+    });
+}
+
+
+function pickCard(index){
+    let object = {};
+    var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
+    object.groupId = toGroup;
+    object.msgId = uuid;
+    object.type = type;
+    object.msg = index;
+    object.fileType = "83";
+    send(JSON.stringify(object));
 }
