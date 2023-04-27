@@ -87,6 +87,18 @@ function openGame(groupId) {
                     $("#gameCavMe").css("display","block");
                 }
 
+                if(data.data.stage == 1){
+                    $("#gameCav").html("");
+                    var cardNum = data.data.cardNum;
+                    for (var i = 0; i < cardNum; i++) {
+                        if(data.data.cards[i].isPicked){
+                            $("#gameCav").append('<a href="#" style="background-color:#fd7fff" id="card-'+i+'" onclick="pickCard('+i+')" class="col-xs-4 card"></a>');
+                        }else{
+                            $("#gameCav").append('<a href="#" id="card-'+i+'" onclick="pickCard('+i+')" class="col-xs-4 card"></a>');
+                        }
+                    }
+                }
+
                 $("#game").css("height","50%");
                 $("#show").css("height","50%");
             } else {
@@ -145,31 +157,6 @@ function startGame(){
     send(JSON.stringify(object));
 }
 
-function showingCard(){
-    console.log(222);
-    $.ajax({
-        type: 'GET',
-        url: '../game/lobby/'+toGroup,
-        beforeSend: function (XMLHttpRequest) {
-            XMLHttpRequest.setRequestHeader("Authorization", "Bearer " + access_token);
-        },
-        success: function (data) {
-            if (data.code == 200) {
-                var cardNum = data.data.cardNum;
-                for (var i = 0; i < cardNum; i++) {
-                    $("#gameCav").append('<a href="#" onclick="pickCard('+i+')" class="col-xs-4 card"></a>');
-                }
-            } else {
-                alert(data.msg);
-            }
-        },
-        error: function (data) {
-            alert();
-        }
-    });
-}
-
-
 function pickCard(index){
     let object = {};
     var uuid = new Snowflake(1n, 1n, 0n).nextId().toString();
@@ -179,4 +166,8 @@ function pickCard(index){
     object.msg = index;
     object.fileType = "83";
     send(JSON.stringify(object));
+}
+
+function pickedCard(index){
+    console.log(index);
 }

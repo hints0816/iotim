@@ -5,6 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.checkerframework.checker.units.qual.A;
+import org.hints.game.Card;
 import org.hints.game.GamePropertis;
 import org.hints.game.Lobby;
 import org.hints.game.Player;
@@ -57,6 +58,7 @@ public class GameController {
         player.setIsOwner(true);
         players[0] = player;
         lobby.setPlayers(players);
+        lobby.setStage(0);
 
         lobby.initCards();
         SessionUtil.bindLobby(groupId, lobby);
@@ -75,7 +77,13 @@ public class GameController {
         Player[] players = lobby.getPlayers();
         map.put("players", players);
         map.put("isOwner",false);
+        for (int i = 0; i < lobby.getCards().length; i++) {
+            lobby.getCards()[i].setCardName("");
+            lobby.getCards()[i].setAvater("");
+        }
+        map.put("cards",lobby.getCards());
         map.put("cardNum",lobby.getCards().length);
+        map.put("stage",lobby.getStage());
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
             if (player!=null&&player.getName().equals(principal.getName())) {

@@ -20,6 +20,9 @@ public class Lobby {
 
     private String groupId;
 
+    // 游戏阶段0未开始1选牌阶段
+    private Integer stage;
+
     private Player[] players;
 
     private GamePropertis gamePropertis;
@@ -54,6 +57,9 @@ public class Lobby {
             cards[rand] = temp;
         }
 
+    }
+
+    public void splitCard(){
         List<Card> cardList = Arrays.asList(this.cards);
         cardList = cardList.subList(0, cardList.size() - 3);
         playerCards = cardList.toArray(new Card[cardList.size()]);
@@ -62,11 +68,38 @@ public class Lobby {
         remaindCards = cardList.toArray(new Card[cardList.size()]);
     }
 
+
     public Card pickUp(int i) {
-        Card playerCard = playerCards[i];
-        playerCard.setIsPicked(true);
-        return playerCard;
+        synchronized (this){
+            Card card = cards[i];
+            card.setIsPicked(true);
+            return card;
+        }
     }
+
+    public Player findPlayer(Long id){
+        for (int i1 = 0; i1 < players.length; i1++) {
+            if (players[i1] != null) {
+                if (players[i1].getId().equals(id)) {
+                    return players[i1];
+                }
+            }
+        }
+        return null;
+    }
+
+    public Boolean isAllPicked(){
+        for (int i1 = 0; i1 < players.length; i1++) {
+            if (players[i1] == null) {
+                return false;
+            }
+            if (players[i1].getOriganCard()==null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void setPlayer(Player player, int i) {
         synchronized (this) {

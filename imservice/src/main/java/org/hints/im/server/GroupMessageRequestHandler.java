@@ -95,18 +95,26 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
         if("82".equals(fileType)) {
             // 检查是否可以开始
             boolean fullPlayer = lobby.isFullPlayer();
-            if (!fullPlayer) {
+//            if (!fullPlayer) {
                 // 是否满员
                 // boolean isFullReady = lobby.isFullReady();
-            }else{
+//            }else{
                 // 初始化 洗牌
                 lobby.init();
-            }
+                lobby.setStage(1);
+//            }
         }
 
         if("83".equals(fileType)) {
             // pick card
-            lobby.pickUp(Integer.parseInt(groupBody.getMessage()));
+            Player player = lobby.findPlayer(user.getUserId());
+            if (player.getOriganCard()==null) {
+                Card card = lobby.pickUp(Integer.parseInt(groupBody.getMessage()));
+                player.setOriganCard(card);
+            }
+            if (lobby.isAllPicked()) {
+
+            }
         }
 
 
