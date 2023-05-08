@@ -8,21 +8,25 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import lombok.Synchronized;
-import org.hints.game.*;
+import lombok.extern.slf4j.Slf4j;
+import org.hints.game.Card;
+import org.hints.game.Lobby;
+import org.hints.game.Operate;
+import org.hints.game.Player;
 import org.hints.im.pojo.GroupBody;
 import org.hints.im.pojo.User;
 import org.hints.im.pojo.entity.GroupHistoryDO;
 import org.hints.im.utils.SessionUtil;
-import org.hints.im.utils.SpringUtils;
 import org.nutz.dao.Dao;
-//import org.springframework.kafka.core.KafkaTemplate;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+//import org.springframework.kafka.core.KafkaTemplate;
 
 /**
  * 发送群消息handler组件
@@ -31,6 +35,7 @@ import java.util.List;
  * 2020-11-16
  */
 @Sharable
+@Slf4j
 public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<GroupBody> {
 
     //	private KafkaTemplate kafkaTemplate;
@@ -41,6 +46,23 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 
     private GroupMessageRequestHandler() {
 
+    }
+
+
+    class RemindTask implements Runnable {
+        private String groupId;
+
+        public void setGroupId(String groupId) {
+            this.groupId = groupId;
+        }
+
+        @Override
+        public void run() {
+            Lobby lobby = SessionUtil.getLobby(groupId);
+
+            lobby.overTimePick();
+            log.info("已随机分配完成");
+        }
     }
 
     @Override
@@ -60,7 +82,7 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
         Lobby lobby = SessionUtil.getLobby(groupId);
 
 
-        if("80".equals(fileType)){
+        if ("80".equals(fileType)) {
             // 坐下
             Player player = new Player();
             player.setId(user.getUserId());
@@ -68,22 +90,22 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
             player.setAvater(user.getAvater());
             lobby.setPlayer(player, Integer.parseInt(groupBody.getMessage()));
         }
-        if("81".equals(fileType)){
+        if ("81".equals(fileType)) {
             // 离开房间
-            synchronized (this){
+            synchronized (this) {
                 Player player = new Player();
                 player.setId(user.getUserId());
                 lobby.offPlayer(player);
                 boolean flag = false;
                 for (int i = 0; i < lobby.getPlayers().length; i++) {
-                    if (lobby.getPlayers()[i] !=null) {
+                    if (lobby.getPlayers()[i] != null) {
                         // 房间存在玩家，不关闭，玩家继承owner
                         lobby.getPlayers()[i].setIsOwner(true);
                         flag = true;
                         break;
                     }
                 }
-                if(!flag){
+                if (!flag) {
                     SessionUtil.dropLobby(groupId);
                 }
             }
@@ -92,23 +114,29 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 
         /*// 准备
         lobby.ready(user.getUserId());*/
-        if("82".equals(fileType)) {
+        if ("82".equals(fileType)) {
             // 检查是否可以开始
             boolean fullPlayer = lobby.isFullPlayer();
 //            if (!fullPlayer) {
-                // 是否满员
-                // boolean isFullReady = lobby.isFullReady();
+            // 是否满员
+            // boolean isFullReady = lobby.isFullReady();
 //            }else{
-                // 初始化 洗牌
-                lobby.init();
-                lobby.setStage(1);
+            // 初始化 洗牌
+            lobby.init();
+            lobby.setStage(1);
 //            }
+
+            // 设置开始正式开始时间
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.SECOND,15);
+            lobby.setStartTime(calendar.getTime());
         }
 
-        if("83".equals(fileType)) {
+        if ("83".equals(fileType)) {
             // pick card
             Player player = lobby.findPlayer(user.getUserId());
-            if (player.getOriganCard()==null) {
+            if (player.getOriganCard() == null) {
                 Card card = lobby.pickUp(Integer.parseInt(groupBody.getMessage()));
                 player.setOriganCard(card);
             }
@@ -119,7 +147,11 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
 
 
         ByteBuf byteBuf = getByteBuf(ctx, groupId, groupBody.getMessage(), user, fileType, nameList);
-        channelGroup.remove(ctx.channel());
+
+        if (!fileType.startsWith("8")) {
+            channelGroup.remove(ctx.channel());
+        }
+
         channelGroup.writeAndFlush(new TextWebSocketFrame(byteBuf));
 
         GroupHistoryDO groupHistoryDO = new GroupHistoryDO();

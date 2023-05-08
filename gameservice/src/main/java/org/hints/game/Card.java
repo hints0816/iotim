@@ -16,6 +16,6 @@ public class Card {
 
     private String avater;
 
-    private Boolean isPicked;
+    private Boolean isPicked = false;
 
 }

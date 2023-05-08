@@ -1,5 +1,7 @@
 package org.hints.game;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.*;
@@ -26,6 +28,24 @@ public class Lobby {
     private Player[] players;
 
     private GamePropertis gamePropertis;
+
+    private Date startTime;
+
+    public void overTimePick() {
+        synchronized (this) {
+            for (Player player : this.players) {
+                if (player != null && player.getOriganCard() == null) {
+                    for (Card card : this.cards) {
+                        if (!card.getIsPicked()) {
+                            card.setIsPicked(true);
+                            player.setOriganCard(card);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void initCards() {
         GamePropertis gamePropertis = this.gamePropertis;
@@ -59,7 +79,7 @@ public class Lobby {
 
     }
 
-    public void splitCard(){
+    public void splitCard() {
         List<Card> cardList = Arrays.asList(this.cards);
         cardList = cardList.subList(0, cardList.size() - 3);
         playerCards = cardList.toArray(new Card[cardList.size()]);
@@ -70,14 +90,14 @@ public class Lobby {
 
 
     public Card pickUp(int i) {
-        synchronized (this){
+        synchronized (this) {
             Card card = cards[i];
             card.setIsPicked(true);
             return card;
         }
     }
 
-    public Player findPlayer(Long id){
+    public Player findPlayer(Long id) {
         for (int i1 = 0; i1 < players.length; i1++) {
             if (players[i1] != null) {
                 if (players[i1].getId().equals(id)) {
@@ -88,12 +108,12 @@ public class Lobby {
         return null;
     }
 
-    public Boolean isAllPicked(){
+    public Boolean isAllPicked() {
         for (int i1 = 0; i1 < players.length; i1++) {
             if (players[i1] == null) {
                 return false;
             }
-            if (players[i1].getOriganCard()==null) {
+            if (players[i1].getOriganCard() == null) {
                 return false;
             }
         }

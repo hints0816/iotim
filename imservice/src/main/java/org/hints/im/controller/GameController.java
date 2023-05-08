@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.security.acl.LastOwnerException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,9 @@ public class GameController {
 
     @GetMapping("/lobby/{groupid}")
     public ReturnVo getInfo(@PathVariable(value = "groupid") String groupId, Principal principal) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
         Lobby lobby = SessionUtil.getLobby(groupId);
         if(lobby == null){
             return ReturnVo.error("Room Is Not Exist!");
@@ -84,6 +88,10 @@ public class GameController {
         map.put("cards",lobby.getCards());
         map.put("cardNum",lobby.getCards().length);
         map.put("stage",lobby.getStage());
+        if(lobby.getStartTime()!=null){
+            map.put("startTime",simpleDateFormat.format(lobby.getStartTime()));
+        }
+
         for (int i = 0; i < players.length; i++) {
             Player player = players[i];
             if (player!=null&&player.getName().equals(principal.getName())) {
