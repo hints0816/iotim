@@ -76,15 +76,11 @@ public class GameController {
         if(lobby == null){
             return ReturnVo.error("Room Is Not Exist!");
         }
-        lobby.getPlayerCards();
         HashMap<String, Object> map = new HashMap<>();
         Player[] players = lobby.getPlayers();
         map.put("players", players);
         map.put("isOwner",false);
-        for (int i = 0; i < lobby.getCards().length; i++) {
-            lobby.getCards()[i].setCardName("");
-            lobby.getCards()[i].setAvater("");
-        }
+
         map.put("cards",lobby.getCards());
         map.put("cardNum",lobby.getCards().length);
         map.put("stage",lobby.getStage());

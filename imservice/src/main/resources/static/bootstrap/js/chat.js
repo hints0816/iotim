@@ -508,10 +508,11 @@ function init() {
                         }
                         openGame(toGroup);
                     }else if(data.params.fileType == 82){
-                        console.log(1);
                         openGame(toGroup);
                     }else if(data.params.fileType == 83){
                         openGame(toGroup);
+                    }else if(data.params.fileType == 84){
+                        enterNight(toGroup);
                     }else if(data.params.fileType == 90){
                         show.innerHTML +=
                             '<div style="text-align:left;margin: 3px;">' +

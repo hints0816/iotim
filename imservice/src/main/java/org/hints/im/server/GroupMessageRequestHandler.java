@@ -133,6 +133,7 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
             lobby.setStartTime(calendar.getTime());
         }
 
+
         if ("83".equals(fileType)) {
             // pick card
             Player player = lobby.findPlayer(user.getUserId());
@@ -143,6 +144,12 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
             if (lobby.isAllPicked()) {
 
             }
+        }
+
+        if ("84".equals(fileType)) {
+            lobby.overTimePick();
+
+            log.info("已随机分配完成");
         }
 
 

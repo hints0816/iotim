@@ -58,9 +58,9 @@ public class Lobby {
 
         for (String s : propertisMap.keySet()) {
             int integer = Integer.parseInt(propertisMap.get(s).toString());
-            Card card1 = new Card();
-            card1.setCardName(s);
             for (int j = 0; j < integer; j++) {
+                Card card1 = new Card();
+                card1.setCardName(s);
                 cards[i] = card1;
                 i++;
             }
